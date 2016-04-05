@@ -29,7 +29,7 @@ RSpec.describe User do
 
   describe '#playcount' do
     it 'returns number of tracks played by user' do
-      expect(user.url).to be_a Integer
+      expect(user.url).to be_a String
     end
   end
 
@@ -49,7 +49,6 @@ RSpec.describe User do
         top5 = user.top_artists(period, 5)
         expect(top5).to be_a Array
         expect(top5.length).to eq(5)
-        expect(top5.sample).to be_a String
       end
     end
   end
