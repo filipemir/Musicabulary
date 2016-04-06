@@ -55,12 +55,3 @@ class User
   end
 
 end
-
-# u = User.new('gopigasus')
-
-# binding.pry
-
-# http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=rj&api_key=149d191bd608cad5f6422c0d38799077&format=json
-# http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=gopigasus&api_key=149d191bd608cad5f6422c0d38799077&format=json
-
-# http://ws.audioscrobbler.com/2.0/?method=user.getinfo&user=gopigasus&api_key=149d191bd608cad5f6422c0d38799077&format=JSON
