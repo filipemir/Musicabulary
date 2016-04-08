@@ -5,39 +5,77 @@ require 'pry'
 
 Dotenv.load
 
-class User
+class LastFM
   include HTTParty
+  # debug_output $stdout
 
   attr_reader :username
 
   base_uri 'http://ws.audioscrobbler.com/2.0/'
 
-  def initialize(username)
-    @username = username
+  def user_info(username)
+    result = get(
+      'method=user.getinfo' + \
+      '&user=' + username
+    )
+    result['user']
   end
 
-  def top_artists(timeframe, number)
+  def user_avatar(username)
+    images = user_info(username)['image']
+    image = images.select { |image| image['size'] == 'large' }
+    image = image[0]['#text']
+    ['', nil].include?(image) ? 'default_avatar.jpg' : image
+  end
+
+  def user_top_artists(username, timeframe = "overall", number = 50)
     result = get(
       'method=user.gettopartists' + \
+      '&user=' + username + \
       '&period=' + timeframe + \
       '&limit=' + number.to_s
     )
     result['topartists']['artist']
   end
 
-  def avatar
-    images = user_info['image']
-    image = images.select { |image| image['size'] == 'large' }
-    image = image[0]['#text']
-    ['', nil].include?(image) ? 'default.jpg' : image
+  def user_playcount(username)
+    user_info(username)['playcount'].to_i
   end
 
-  def playcount
-    user_info['playcount'].to_i
+  def user_url(username)
+    user_info(username)['url']
   end
 
-  def url
-    user_info['url']
+  def artist_top_albums(artist, number = 1000)
+    get(
+      'method=artist.gettopalbums' + \
+      '&artist=' + artist + \
+      '&limit=' + number.to_s
+    )
+  end
+
+  def artist_top_tracks(artist, number = 1000)
+    get(
+      'method=artist.gettoptracks' + \
+      '&artist=' + artist + \
+      '&limit=' + number.to_s
+    )
+  end
+
+  def album_info(artist, album)
+    get(
+      'method=album.getinfo' + \
+      '&artist=' + artist + \
+      '&album=' + album
+    )
+  end
+
+  def track_info(artist, track)
+    get(
+      'method=track.getinfo' + \
+      '&artist=' + artist + \
+      '&track=' + track
+    )
   end
 
   private 
@@ -45,13 +83,11 @@ class User
   def get(query)
     self.class.get(
       '?api_key=' + ENV['LASTFM_KEY'] + \
-      '&format=json&user=' + username + \
-      '&' + query
+      '&format=json&' + query
     )
   end
-
-  def user_info
-    get('method=user.getinfo')['user']
-  end
-
 end
+
+connection = LastFM.new
+
+binding.pry
