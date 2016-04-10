@@ -5,89 +5,72 @@ require 'pry'
 
 Dotenv.load
 
-class LastFM
-  include HTTParty
-  # debug_output $stdout
+module LastFM
+  def self.included(receiving_class)
+    receiving_class.send :include, HTTParty
+    receiving_class.send :base_uri, 'http://ws.audioscrobbler.com/2.0/'
+  end
+
+  def lastfm_query(params)
+    params = params.merge(
+      api_key: ENV['LASTFM_KEY'], 
+      format: 'json'
+    )
+    self.class.get('', query: params)
+  end
+end
+
+class User
+  include LastFM
 
   attr_reader :username
 
-  base_uri 'http://ws.audioscrobbler.com/2.0/'
-
-  def user_info(username)
-    result = get(
-      'method=user.getinfo' + \
-      '&user=' + username
-    )
-    result['user']
+  def initialize(username)
+    @username = username
   end
 
-  def user_avatar(username)
-    images = user_info(username)['image']
-    image = images.select { |image| image['size'] == 'large' }
-    image = image[0]['#text']
-    ['', nil].include?(image) ? 'default_avatar.jpg' : image
-  end
-
-  def user_top_artists(username, timeframe = "overall", number = 50)
-    result = get(
-      'method=user.gettopartists' + \
-      '&user=' + username + \
-      '&period=' + timeframe + \
-      '&limit=' + number.to_s
+  def top_artists(timeframe = "overall", number = 50)
+    result = lastfm_query(
+      method: 'user.gettopartists',
+      user: username,
+      period: timeframe,
+      limit: number.to_s
     )
     result['topartists']['artist']
   end
+end
 
-  def user_playcount(username)
-    user_info(username)['playcount'].to_i
+class Artist
+  include LastFM
+
+  attr_reader :name
+
+  def initialize(name)
+    @name = name
   end
 
-  def user_url(username)
-    user_info(username)['url']
+  def top_records
+    top('albums')
   end
 
-  def artist_top_albums(artist, number = 1000)
-    get(
-      'method=artist.gettopalbums' + \
-      '&artist=' + artist + \
-      '&limit=' + number.to_s
-    )
+  def top_tracks
+    top('tracks')
   end
 
-  def artist_top_tracks(artist, number = 1000)
-    get(
-      'method=artist.gettoptracks' + \
-      '&artist=' + artist + \
-      '&limit=' + number.to_s
-    )
-  end
+  private
 
-  def album_info(artist, album)
-    get(
-      'method=album.getinfo' + \
-      '&artist=' + artist + \
-      '&album=' + album
-    )
-  end
-
-  def track_info(artist, track)
-    get(
-      'method=track.getinfo' + \
-      '&artist=' + artist + \
-      '&track=' + track
-    )
-  end
-
-  private 
-
-  def get(query)
-    self.class.get(
-      '?api_key=' + ENV['LASTFM_KEY'] + \
-      '&format=json&' + query
+  def top(item, number = 1000)
+    lastfm_query(
+      method: 'artist.gettop' + item,
+      artist: name,
+      limit: number.to_s
     )
   end
 end
 
-connection = LastFM.new
+
+# user = User.new('gopigasus')
+# artist = Artist.new('Laura Stevenson')
+
 
 binding.pry

@@ -69,4 +69,4 @@ genius = Genius.new
 # hop_along = genius.artist_info(hop_along_id) # Does not work
 # genius.get('/artists/37695') # Works
  
-binding.pry
+# binding.pry
