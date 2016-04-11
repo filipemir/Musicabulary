@@ -48,9 +48,11 @@ class Genius
   end
 
   def artist_songs(artist_id)
-    get(
-      '/artists/' + artist_id.to_s + '/songs'
-    )
+    get('/artists/' + artist_id.to_s + '/songs')
+  end
+
+  def get_song(id)
+    get('/songs/' + id.to_s)
   end
 
   private
