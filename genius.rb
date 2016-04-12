@@ -22,7 +22,7 @@ hop_along2 = HTTParty.get(
 
 
 
-class Genius
+class GeniusAPI
   include HTTParty
  # debug_output $stdout
 
