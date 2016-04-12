@@ -66,9 +66,23 @@ class GeniusAPI
 
 end
 
-genius = Genius.new
+#vgenius = Genius.new
 # hop_along_id = genius.find_artist_id('hop along')
 # hop_along = genius.artist_info(hop_along_id) # Does not work
 # genius.get('/artists/37695') # Works
  
-# binding.pry
+
+
+# search_hits = genius.search(track.artist + ' ' + track.title + ' ' + track.record)
+
+# track_id = search_hits['response']['hits'].each do |hit|
+#   type = hit['type'].strip
+#   title = hit['result']['title'].strip
+#   hit_artist = hit['result']['primary_artist']['name'].strip
+#   if hit_artist == artist.name.strip && type == 'song' && title == track.title.strip
+#     break hit['result']['id']
+#   else
+#     false
+#   end
+# end
+

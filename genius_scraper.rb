@@ -27,7 +27,7 @@ end
 include GeniusScraper
 
 
-  # lyrics1 = GeniusScraper.get_song_lyrics('Aesop Rock', 'Daylight')
-  # lyrics2 = GeniusScraper.get_song_lyrics('Converge', 'Locust Reign')
-  # lyrics3 = GeniusScraper.get_song_lyrics('Bob Dylan', 'One of us must know (sooner or later)')
+# lyrics1 = GeniusScraper.get_song_lyrics('Aesop Rock', 'Daylight')
+# lyrics2 = GeniusScraper.get_song_lyrics('Converge', 'Locust Reign')
+# lyrics3 = GeniusScraper.get_song_lyrics('Bob Dylan', 'One of us must know (sooner or later)')
 

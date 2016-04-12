@@ -27,21 +27,4 @@ tracks.each do |track|
 end
 
 
-# genius = Genius.new
-# search_hits = genius.search(track.artist + ' ' + track.title + ' ' + track.record)
-
-# track_id = search_hits['response']['hits'].each do |hit|
-#   type = hit['type'].strip
-#   title = hit['result']['title'].strip
-#   hit_artist = hit['result']['primary_artist']['name'].strip
-#   if hit_artist == artist.name.strip && type == 'song' && title == track.title.strip
-#     break hit['result']['id']
-#   else
-#     false
-#   end
-# end
-
-
-
-
 binding.pry
