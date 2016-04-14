@@ -1,7 +1,6 @@
-require_relative '../spec_helper'
+require 'rails_helper'
 
-RSpec.describe User do
-
+RSpec.describe User, type: :model do
   let!(:user) { User.new('gopigasus') }
   let!(:fake_user) { User.new('idonotexist')}
 
@@ -52,5 +51,4 @@ RSpec.describe User do
       end
     end
   end
-  
 end
