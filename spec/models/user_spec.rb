@@ -1,8 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   let!(:user) { User.new('gopigasus') }
   let!(:fake_user) { User.new('idonotexist')}
+
+  describe '#name' do
+    it 'returns name' do
+      expect(user.username).to eq('Filipe')
+    end
+  end
 
   describe '#username' do
     it 'returns username' do
@@ -13,22 +19,6 @@ RSpec.describe User, type: :model do
   describe '#avatar' do
     it 'returns url of users avatar picture' do
       expect(user.avatar).to match(/^(http:\/\/).*(.png)$/)
-    end
-
-    it 'returns default user pic if no user picture is available' do
-      expect(fake_user.avatar).to eq('default.jpg')
-    end
-  end
-
-  describe '#url' do
-    it 'returns url of users profile' do
-      expect(user.url).to eq("http://www.last.fm/user/gopigasus")
-    end
-  end
-
-  describe '#playcount' do
-    it 'returns number of tracks played by user' do
-      expect(user.url).to be_a String
     end
   end
 
