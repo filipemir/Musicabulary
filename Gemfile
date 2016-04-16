@@ -44,11 +44,11 @@ gem 'nokogiri'
 gem 'foundation-rails', '~> 6.2.1'
 gem 'devise'
 gem 'omniauth-lastfm'
+gem 'pry'
+gem 'dotenv-rails', group: :development
 
-group :test, :development do
-  gem 'dotenv-rails'
+group :test do
   gem 'rspec-rails'
-  gem 'pry'
   gem 'vcr'
   gem 'webmock'
   gem 'capybara-rails'
