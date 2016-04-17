@@ -238,7 +238,6 @@ Devise.setup do |config|
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
-  binding.pry
   config.omniauth :lastfm, ENV['LASTFM_KEY'], ENV['LASTFM_SECRET']
 
 
