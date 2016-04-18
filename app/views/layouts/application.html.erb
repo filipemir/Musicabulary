@@ -14,8 +14,9 @@
 
   <body>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% flash.each do |key, msg| %>
+      <%= content_tag :div, msg, id: key %>
+    <% end %>
 
     <%= yield %>
 

@@ -1,0 +1,275 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://ws.audioscrobbler.com/2.0?api_key=149d191bd608cad5f6422c0d38799077&format=json&limit=5&method=user.gettopartists&period=7day&user=gopigasus
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty/1.9.7.3
+      Date:
+      - Wed, 06 Apr 2016 12:42:17 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '3382'
+      Connection:
+      - keep-alive
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+    body:
+      encoding: UTF-8
+      string: '{"topartists":{"artist":[{"name":"Hop Along","playcount":"20","mbid":"91640d9b-b077-4271-9fb7-84f3ea543f24","url":"http://www.last.fm/music/Hop+Along","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/618c91a86a0850dfabe861ee96e380bf.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/618c91a86a0850dfabe861ee96e380bf.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/618c91a86a0850dfabe861ee96e380bf.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/618c91a86a0850dfabe861ee96e380bf.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/618c91a86a0850dfabe861ee96e380bf.png","size":"mega"}],"@attr":{"rank":"1"}},{"name":"Willie
+        Watson","playcount":"9","mbid":"6310db9e-f2c7-4e76-8af4-e56905993482","url":"http://www.last.fm/music/Willie+Watson","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/c354e9aeb88444d9c49b41771cca6ad7.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/c354e9aeb88444d9c49b41771cca6ad7.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/c354e9aeb88444d9c49b41771cca6ad7.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/c354e9aeb88444d9c49b41771cca6ad7.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/c354e9aeb88444d9c49b41771cca6ad7.png","size":"mega"}],"@attr":{"rank":"2"}},{"name":"Converge","playcount":"8","mbid":"fa31e7d4-a03a-4110-98fc-f8826e95ec25","url":"http://www.last.fm/music/Converge","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/ea0ec7fd1a764e17af753b4d3256dbd1.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/ea0ec7fd1a764e17af753b4d3256dbd1.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/ea0ec7fd1a764e17af753b4d3256dbd1.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/ea0ec7fd1a764e17af753b4d3256dbd1.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/ea0ec7fd1a764e17af753b4d3256dbd1.png","size":"mega"}],"@attr":{"rank":"3"}},{"name":"Lydia
+        Loveless","playcount":"8","mbid":"c306218f-6818-40ce-97ce-7cadd3d5213f","url":"http://www.last.fm/music/Lydia+Loveless","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/9399f29975af46daa6186eaaf0c4f7cc.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/9399f29975af46daa6186eaaf0c4f7cc.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/9399f29975af46daa6186eaaf0c4f7cc.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/9399f29975af46daa6186eaaf0c4f7cc.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/9399f29975af46daa6186eaaf0c4f7cc.png","size":"mega"}],"@attr":{"rank":"4"}},{"name":"Beach
+        Slang","playcount":"3","mbid":"3af2bc4c-b5b0-4fb5-91e3-d2290a1bc614","url":"http://www.last.fm/music/Beach+Slang","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/2bfbb7cbbf6a4dbacd18694eda8ff47f.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/2bfbb7cbbf6a4dbacd18694eda8ff47f.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/2bfbb7cbbf6a4dbacd18694eda8ff47f.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/2bfbb7cbbf6a4dbacd18694eda8ff47f.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/2bfbb7cbbf6a4dbacd18694eda8ff47f.png","size":"mega"}],"@attr":{"rank":"5"}}],"@attr":{"user":"gopigasus","page":"1","perPage":"5","totalPages":"3","total":"13"}}}'
+    http_version: 
+  recorded_at: Wed, 06 Apr 2016 12:42:17 GMT
+- request:
+    method: get
+    uri: http://ws.audioscrobbler.com/2.0?api_key=149d191bd608cad5f6422c0d38799077&format=json&limit=5&method=user.gettopartists&period=1month&user=gopigasus
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty/1.9.7.3
+      Date:
+      - Wed, 06 Apr 2016 12:42:17 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '3394'
+      Connection:
+      - keep-alive
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+    body:
+      encoding: UTF-8
+      string: '{"topartists":{"artist":[{"name":"Kevin Devine","playcount":"48","mbid":"6cb35b9f-1972-404a-8882-e915c39d33da","url":"http://www.last.fm/music/Kevin+Devine","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/14c2c16df7ec48edb6b941d10df4c00b.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/14c2c16df7ec48edb6b941d10df4c00b.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/14c2c16df7ec48edb6b941d10df4c00b.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/14c2c16df7ec48edb6b941d10df4c00b.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/14c2c16df7ec48edb6b941d10df4c00b.png","size":"mega"}],"@attr":{"rank":"1"}},{"name":"Bad
+        Books","playcount":"47","mbid":"3a768dc7-40d3-4c91-9d3e-2eabb12e5620","url":"http://www.last.fm/music/Bad+Books","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/737af9c062ce40aab54f2333daf08afd.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/737af9c062ce40aab54f2333daf08afd.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/737af9c062ce40aab54f2333daf08afd.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/737af9c062ce40aab54f2333daf08afd.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/737af9c062ce40aab54f2333daf08afd.png","size":"mega"}],"@attr":{"rank":"2"}},{"name":"The
+        Menzingers","playcount":"28","mbid":"3071d829-b9ca-4499-b4f5-74d6d8531aed","url":"http://www.last.fm/music/The+Menzingers","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/274e51c2d4fe4e41b80c14504be6e89b.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/274e51c2d4fe4e41b80c14504be6e89b.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/274e51c2d4fe4e41b80c14504be6e89b.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/274e51c2d4fe4e41b80c14504be6e89b.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/274e51c2d4fe4e41b80c14504be6e89b.png","size":"mega"}],"@attr":{"rank":"3"}},{"name":"Hop
+        Along","playcount":"20","mbid":"91640d9b-b077-4271-9fb7-84f3ea543f24","url":"http://www.last.fm/music/Hop+Along","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/618c91a86a0850dfabe861ee96e380bf.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/618c91a86a0850dfabe861ee96e380bf.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/618c91a86a0850dfabe861ee96e380bf.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/618c91a86a0850dfabe861ee96e380bf.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/618c91a86a0850dfabe861ee96e380bf.png","size":"mega"}],"@attr":{"rank":"4"}},{"name":"Strike
+        Anywhere","playcount":"17","mbid":"ac82cb46-f2b2-4f99-9cfa-d0c322a4ba16","url":"http://www.last.fm/music/Strike+Anywhere","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/34e161f1295c4e3798ba6d2ca6972d86.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/34e161f1295c4e3798ba6d2ca6972d86.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/34e161f1295c4e3798ba6d2ca6972d86.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/34e161f1295c4e3798ba6d2ca6972d86.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/34e161f1295c4e3798ba6d2ca6972d86.png","size":"mega"}],"@attr":{"rank":"5"}}],"@attr":{"user":"gopigasus","page":"1","perPage":"5","totalPages":"9","total":"44"}}}'
+    http_version: 
+  recorded_at: Wed, 06 Apr 2016 12:42:17 GMT
+- request:
+    method: get
+    uri: http://ws.audioscrobbler.com/2.0?api_key=149d191bd608cad5f6422c0d38799077&format=json&limit=5&method=user.gettopartists&period=3month&user=gopigasus
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty/1.9.7.3
+      Date:
+      - Wed, 06 Apr 2016 12:42:17 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '3388'
+      Connection:
+      - keep-alive
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+    body:
+      encoding: UTF-8
+      string: '{"topartists":{"artist":[{"name":"Bob Dylan","playcount":"2375","mbid":"72c536dc-7137-4477-a521-567eeb840fa8","url":"http://www.last.fm/music/Bob+Dylan","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/3329a821aec144ce94f93715743ea07d.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/3329a821aec144ce94f93715743ea07d.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/3329a821aec144ce94f93715743ea07d.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/3329a821aec144ce94f93715743ea07d.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/3329a821aec144ce94f93715743ea07d.png","size":"mega"}],"@attr":{"rank":"1"}},{"name":"Tom
+        Waits","playcount":"1206","mbid":"c3aeb863-7b26-4388-94e8-5a240f2be21b","url":"http://www.last.fm/music/Tom+Waits","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"mega"}],"@attr":{"rank":"2"}},{"name":"Wilco","playcount":"1202","mbid":"9e53f84d-ef44-4c16-9677-5fd4d78cbd7d","url":"http://www.last.fm/music/Wilco","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/a172818eb70a4914931fe3a942d37c0d.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/a172818eb70a4914931fe3a942d37c0d.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/a172818eb70a4914931fe3a942d37c0d.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/a172818eb70a4914931fe3a942d37c0d.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/a172818eb70a4914931fe3a942d37c0d.png","size":"mega"}],"@attr":{"rank":"3"}},{"name":"Aesop
+        Rock","playcount":"1134","mbid":"aba64937-3334-4c65-90a1-4e6b9d4d7ada","url":"http://www.last.fm/music/Aesop+Rock","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/c352be1fdd5f4f928355c9632c1644ee.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/c352be1fdd5f4f928355c9632c1644ee.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/c352be1fdd5f4f928355c9632c1644ee.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/c352be1fdd5f4f928355c9632c1644ee.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/c352be1fdd5f4f928355c9632c1644ee.png","size":"mega"}],"@attr":{"rank":"4"}},{"name":"The
+        Decemberists","playcount":"1050","mbid":"97b1142f-c71e-4971-8736-4a8ceaf6b4c3","url":"http://www.last.fm/music/The+Decemberists","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/59803738f83f404a9c9e233644161fe7.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/59803738f83f404a9c9e233644161fe7.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/59803738f83f404a9c9e233644161fe7.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/59803738f83f404a9c9e233644161fe7.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/59803738f83f404a9c9e233644161fe7.png","size":"mega"}],"@attr":{"rank":"5"}}],"@attr":{"user":"gopigasus","page":"1","perPage":"5","totalPages":"326","total":"1628"}}}'
+    http_version: 
+  recorded_at: Wed, 06 Apr 2016 12:42:17 GMT
+- request:
+    method: get
+    uri: http://ws.audioscrobbler.com/2.0?api_key=149d191bd608cad5f6422c0d38799077&format=json&limit=5&method=user.gettopartists&period=6month&user=gopigasus
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty/1.9.7.3
+      Date:
+      - Wed, 06 Apr 2016 12:42:17 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '3400'
+      Connection:
+      - keep-alive
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+    body:
+      encoding: UTF-8
+      string: '{"topartists":{"artist":[{"name":"Mikal Cronin","playcount":"300","mbid":"c1a217e0-4b3e-46d7-9613-6a14c9e70895","url":"http://www.last.fm/music/Mikal+Cronin","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"mega"}],"@attr":{"rank":"1"}},{"name":"Laura
+        Stevenson","playcount":"167","mbid":"70b166d1-b511-49f1-ad15-8b94603515d5","url":"http://www.last.fm/music/Laura+Stevenson","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"mega"}],"@attr":{"rank":"2"}},{"name":"Andy
+        Shauf","playcount":"138","mbid":"7a3809ff-b299-441b-a963-1c7bd635db78","url":"http://www.last.fm/music/Andy+Shauf","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/66c9dc6d71424afcb63015ca4d9db641.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/66c9dc6d71424afcb63015ca4d9db641.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/66c9dc6d71424afcb63015ca4d9db641.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/66c9dc6d71424afcb63015ca4d9db641.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/66c9dc6d71424afcb63015ca4d9db641.png","size":"mega"}],"@attr":{"rank":"3"}},{"name":"Hop
+        Along","playcount":"116","mbid":"91640d9b-b077-4271-9fb7-84f3ea543f24","url":"http://www.last.fm/music/Hop+Along","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/618c91a86a0850dfabe861ee96e380bf.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/618c91a86a0850dfabe861ee96e380bf.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/618c91a86a0850dfabe861ee96e380bf.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/618c91a86a0850dfabe861ee96e380bf.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/618c91a86a0850dfabe861ee96e380bf.png","size":"mega"}],"@attr":{"rank":"4"}},{"name":"Caroline
+        Rose","playcount":"92","mbid":"17862c0f-a9b1-46dd-b85d-7af965974afd","url":"http://www.last.fm/music/Caroline+Rose","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/01fc3f9b4d5342d6c283ab039d7397ec.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/01fc3f9b4d5342d6c283ab039d7397ec.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/01fc3f9b4d5342d6c283ab039d7397ec.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/01fc3f9b4d5342d6c283ab039d7397ec.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/01fc3f9b4d5342d6c283ab039d7397ec.png","size":"mega"}],"@attr":{"rank":"5"}}],"@attr":{"user":"gopigasus","page":"1","perPage":"5","totalPages":"75","total":"375"}}}'
+    http_version: 
+  recorded_at: Wed, 06 Apr 2016 12:42:17 GMT
+- request:
+    method: get
+    uri: http://ws.audioscrobbler.com/2.0?api_key=149d191bd608cad5f6422c0d38799077&format=json&limit=5&method=user.gettopartists&period=12month&user=gopigasus
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty/1.9.7.3
+      Date:
+      - Wed, 06 Apr 2016 12:42:18 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '3414'
+      Connection:
+      - keep-alive
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+    body:
+      encoding: UTF-8
+      string: '{"topartists":{"artist":[{"name":"Laura Stevenson","playcount":"530","mbid":"70b166d1-b511-49f1-ad15-8b94603515d5","url":"http://www.last.fm/music/Laura+Stevenson","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/0e825305aa0549a4881e6a0ed28cd4e1.png","size":"mega"}],"@attr":{"rank":"1"}},{"name":"Hop
+        Along","playcount":"481","mbid":"91640d9b-b077-4271-9fb7-84f3ea543f24","url":"http://www.last.fm/music/Hop+Along","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/618c91a86a0850dfabe861ee96e380bf.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/618c91a86a0850dfabe861ee96e380bf.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/618c91a86a0850dfabe861ee96e380bf.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/618c91a86a0850dfabe861ee96e380bf.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/618c91a86a0850dfabe861ee96e380bf.png","size":"mega"}],"@attr":{"rank":"2"}},{"name":"Mikal
+        Cronin","playcount":"301","mbid":"c1a217e0-4b3e-46d7-9613-6a14c9e70895","url":"http://www.last.fm/music/Mikal+Cronin","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/e9c4d03d5cfd49d6b67bab23d5c8eaaa.png","size":"mega"}],"@attr":{"rank":"3"}},{"name":"mewithoutYou","playcount":"276","mbid":"759b5ff1-91fe-4ec9-b9b7-75b7b2ceb283","url":"http://www.last.fm/music/mewithoutYou","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/14aa4979151f4feead893289591b186a.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/14aa4979151f4feead893289591b186a.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/14aa4979151f4feead893289591b186a.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/14aa4979151f4feead893289591b186a.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/14aa4979151f4feead893289591b186a.png","size":"mega"}],"@attr":{"rank":"4"}},{"name":"Chance
+        the Rapper","playcount":"254","mbid":"373a4c98-a46b-48e4-86ec-f6ca65b4f438","url":"http://www.last.fm/music/Chance+the+Rapper","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/00ef124320624931b82fe36c5d4843ef.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/00ef124320624931b82fe36c5d4843ef.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/00ef124320624931b82fe36c5d4843ef.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/00ef124320624931b82fe36c5d4843ef.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/00ef124320624931b82fe36c5d4843ef.png","size":"mega"}],"@attr":{"rank":"5"}}],"@attr":{"user":"gopigasus","page":"1","perPage":"5","totalPages":"139","total":"695"}}}'
+    http_version: 
+  recorded_at: Wed, 06 Apr 2016 12:42:18 GMT
+- request:
+    method: get
+    uri: http://ws.audioscrobbler.com/2.0?api_key=149d191bd608cad5f6422c0d38799077&format=json&limit=5&method=user.gettopartists&period=overall&user=gopigasus
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - openresty/1.9.7.3
+      Date:
+      - Wed, 06 Apr 2016 12:42:18 GMT
+      Content-Type:
+      - application/json; charset=UTF-8
+      Content-Length:
+      - '3388'
+      Connection:
+      - keep-alive
+      Access-Control-Request-Headers:
+      - Origin, X-Atmosphere-tracking-id, X-Atmosphere-Framework, X-Cache-Date, Content-Type,
+        X-Atmosphere-Transport, *
+      Access-Control-Allow-Methods:
+      - POST, GET, OPTIONS
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Max-Age:
+      - '86400'
+    body:
+      encoding: UTF-8
+      string: '{"topartists":{"artist":[{"name":"Bob Dylan","playcount":"2375","mbid":"72c536dc-7137-4477-a521-567eeb840fa8","url":"http://www.last.fm/music/Bob+Dylan","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/3329a821aec144ce94f93715743ea07d.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/3329a821aec144ce94f93715743ea07d.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/3329a821aec144ce94f93715743ea07d.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/3329a821aec144ce94f93715743ea07d.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/3329a821aec144ce94f93715743ea07d.png","size":"mega"}],"@attr":{"rank":"1"}},{"name":"Tom
+        Waits","playcount":"1206","mbid":"c3aeb863-7b26-4388-94e8-5a240f2be21b","url":"http://www.last.fm/music/Tom+Waits","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/706866dba74c49f3a4dfa6d1dc3e4d21.png","size":"mega"}],"@attr":{"rank":"2"}},{"name":"Wilco","playcount":"1202","mbid":"9e53f84d-ef44-4c16-9677-5fd4d78cbd7d","url":"http://www.last.fm/music/Wilco","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/a172818eb70a4914931fe3a942d37c0d.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/a172818eb70a4914931fe3a942d37c0d.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/a172818eb70a4914931fe3a942d37c0d.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/a172818eb70a4914931fe3a942d37c0d.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/a172818eb70a4914931fe3a942d37c0d.png","size":"mega"}],"@attr":{"rank":"3"}},{"name":"Aesop
+        Rock","playcount":"1134","mbid":"aba64937-3334-4c65-90a1-4e6b9d4d7ada","url":"http://www.last.fm/music/Aesop+Rock","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/c352be1fdd5f4f928355c9632c1644ee.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/c352be1fdd5f4f928355c9632c1644ee.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/c352be1fdd5f4f928355c9632c1644ee.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/c352be1fdd5f4f928355c9632c1644ee.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/c352be1fdd5f4f928355c9632c1644ee.png","size":"mega"}],"@attr":{"rank":"4"}},{"name":"The
+        Decemberists","playcount":"1050","mbid":"97b1142f-c71e-4971-8736-4a8ceaf6b4c3","url":"http://www.last.fm/music/The+Decemberists","streamable":"0","image":[{"#text":"http://img2-ak.lst.fm/i/u/34s/59803738f83f404a9c9e233644161fe7.png","size":"small"},{"#text":"http://img2-ak.lst.fm/i/u/64s/59803738f83f404a9c9e233644161fe7.png","size":"medium"},{"#text":"http://img2-ak.lst.fm/i/u/174s/59803738f83f404a9c9e233644161fe7.png","size":"large"},{"#text":"http://img2-ak.lst.fm/i/u/300x300/59803738f83f404a9c9e233644161fe7.png","size":"extralarge"},{"#text":"http://img2-ak.lst.fm/i/u/59803738f83f404a9c9e233644161fe7.png","size":"mega"}],"@attr":{"rank":"5"}}],"@attr":{"user":"gopigasus","page":"1","perPage":"5","totalPages":"326","total":"1628"}}}'
+    http_version: 
+  recorded_at: Wed, 06 Apr 2016 12:42:18 GMT
+recorded_with: VCR 2.5.0

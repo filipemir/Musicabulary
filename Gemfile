@@ -5,7 +5,7 @@ gem 'rails', '4.1.6'
 # Use postgresql as the database for Active Record
 gem 'pg'
 # Use SCSS for stylesheets
-gem 'sass-rails', '~> 4.0.3'
+gem 'sass-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .js.coffee assets and views
@@ -37,17 +37,18 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-gem 'dotenv'
 gem 'httparty'
 gem 'discogs-wrapper'
 gem 'musix_match'
 gem 'nokogiri'
-gem 'foundation-rails'
+gem 'foundation-rails', '~> 6.2.1'
 gem 'devise'
+gem 'omniauth-lastfm'
+gem 'pry'
+gem 'dotenv-rails', group: :development
 
-group :test, :development do
+group :test do
   gem 'rspec-rails'
-  gem 'pry'
   gem 'vcr'
   gem 'webmock'
   gem 'capybara-rails'
