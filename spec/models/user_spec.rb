@@ -1,12 +1,27 @@
 require 'rails_helper'
 
 RSpec.describe User do
-  let!(:user) { User.new('gopigasus') }
-  let!(:fake_user) { User.new('idonotexist')}
 
-  describe '#name' do
-    it 'returns name' do
-      expect(user.username).to eq('Filipe')
+  let!(:user) { FactoryGirl.create(:user, uid: 'gopigasus') }
+
+  describe '#from_omniauth:' do
+    it 'returns user if user already exists' do
+      existing_user_hash = mock_auth_hash
+      result = User.from_omniauth(existing_user_hash)
+      expect(result).to be_a(User)
+      expect(result.persisted?).to be(true)
+    end
+
+    it 'creates and returns persisted if user does not exist' do
+      non_existing_user_hash = OmniAuth::AuthHash.new({
+        "provider"=>"lastfm",
+        "uid"=>"idonotexist",
+        "info"=>{"name"=>nil, "image"=>"fake-image.png"},
+        "extra"=>{"raw_info"=>{"playcount"=>"666"}}
+      })
+      result = User.from_omniauth(non_existing_user_hash)
+      expect(result).to be_a(User)
+      expect(result.persisted?).to be(true)
     end
   end
 
@@ -16,9 +31,15 @@ RSpec.describe User do
     end
   end
 
-  describe '#avatar' do
-    it 'returns url of users avatar picture' do
+  describe '#image' do
+    it 'returns url of user profile picture' do
       expect(user.avatar).to match(/^(http:\/\/).*(.png)$/)
+    end
+  end
+
+  describe '#playcount' do
+    it 'returns user playcount' do
+      expect(user.avatar).to eq(46500)
     end
   end
 
@@ -26,10 +47,14 @@ RSpec.describe User do
     it 'returns top n artists' do
       top10 = user.top_artists('overall', 10)
       top15 = user.top_artists('overall', 15)
+
       expect(top10).to be_a Array
       expect(top10.length).to eq(10)
+      expect(top10.sample).to be_a Artist
+
       expect(top15).to be_a Array
       expect(top15.length).to eq(15)
+      expect(top15.sample).to be_a Artist
     end
 
     it 'returns top artists for different periods' do
@@ -41,4 +66,26 @@ RSpec.describe User do
       end
     end
   end
+
+  describe '#update_info' do
+    before :each do
+      user.username = 'n0body'
+      user.image = 'another_image.jpg'
+      user.playcount = 2
+      use.top_artist = ['cher', 'madonna', 'michael bolton']
+    end
+
+    it 'updates username' do
+    end
+
+    it 'updates user image' do
+    end
+
+    it 'updates user playcount' do
+    end
+
+    it 'updates user top artists' do  
+    end 
+  end
+
 end

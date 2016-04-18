@@ -1,4 +1,5 @@
-require 'vcr'
+require_relative 'support/vcr'
+require_relative 'support/omniauth_macro'
 
 RSpec.configure do |config|  
   config.expect_with :rspec do |expectations|
@@ -18,10 +19,4 @@ RSpec.configure do |config|
       VCR.use_cassette(name, options, &example)
     end
   end
-end
-
-VCR.configure do |config|
-  config.cassette_library_dir = 'spec/cassettes'
-  config.hook_into :webmock
-  config.default_cassette_options = { record: :new_episodes }
 end
