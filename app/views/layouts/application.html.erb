@@ -14,6 +14,9 @@
 
   <body>
 
+
+    <li><%= button_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+
     <% flash.each do |key, msg| %>
       <%= content_tag :div, msg, id: key %>
     <% end %>
