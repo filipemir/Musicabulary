@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
       user.password = Devise.friendly_token[0,20]
       user.name = auth.info.name
       user.image = auth.info.image
-      user.playcount = auth.extra.playcount
+      user.playcount = auth.extra.raw_info.playcount
     end
   end
 end
