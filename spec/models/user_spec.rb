@@ -72,20 +72,20 @@ RSpec.describe User do
       user.username = 'n0body'
       user.image = 'another_image.jpg'
       user.playcount = 2
-      use.top_artist = ['cher', 'madonna', 'michael bolton']
+      user.save
+      user.update_info
     end
 
     it 'updates username' do
+      expect(user.username).to eq('gopigasus')
     end
 
     it 'updates user image' do
+      expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
     end
 
     it 'updates user playcount' do
+      expect(user.playcount).to be_greater_than('46500') 
     end
-
-    it 'updates user top artists' do  
-    end 
   end
-
 end

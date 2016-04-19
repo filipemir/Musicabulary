@@ -6,4 +6,8 @@ FactoryGirl.define do
     sequence(:image) { |n| "sample-image#{n}.png" }
     sequence(:playcount) { |n| "#{n}" }
   end
+
+  factory :artist do
+    sequence(:name) { |n| "Artist Number #{n}"}
+  end
 end
