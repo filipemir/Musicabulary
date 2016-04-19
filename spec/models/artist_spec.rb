@@ -13,14 +13,14 @@ RSpec.describe Artist do
 
   describe '#id' do
     it "returns artist's lastfm id" do
-      expect(artist.id).to eq()
+      expect(artist.id).to eq(666)
     end
   end
 
   describe '#records' do
     it "returns array with artist's records" do
       expect(artist.records).to be_a Array
-      expect(artist.records.length).to eq()
+      expect(artist.records.length).to eq(1)
       expect(artist.records.sample).to be_a Record
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe Artist do
   describe '#songs' do
     it "returns array with artist's songs" do
       expect(artist.records).to be_a Array
-      expect(artist.records.length).to eq()
+      expect(artist.records.length).to eq(1)
       expect(artist.records.sample).to be_a Song
     end
   end
