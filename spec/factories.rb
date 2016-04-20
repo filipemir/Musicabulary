@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:username) { |n| "user#{n}" }
     provider 'lastfm'
     password 'password'
-    sequence(:image) { |n| "sample-image#{n}.png" }
+    image "sample-image.png"
     sequence(:playcount) { |n| "#{n}" }
   end
 

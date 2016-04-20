@@ -9,15 +9,15 @@ class User < ActiveRecord::Base
   include HTTParty
   base_uri 'http://ws.audioscrobbler.com/2.0/'
 
-  def update
-    update_info && update_favorites("overall", 10)
-    save
-  end
-
   def top_artists(timeframe = "overall", number = 10)
-    favorites.select do |fave|
-      fave.timeframe ==  timeframe && fave.rank <= number
-    end 
+    faves = self.favorites.order(:rank)
+    result = []
+    faves.each do |fave|
+      if fave.timeframe == timeframe && fave.rank <= number
+        result << fave.artist
+      end
+    end
+    result
   end
 
   def self.from_omniauth(auth)
@@ -30,10 +30,21 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
+  def update
+    update_info && update_favorites
+  end
 
   def update_info
-    
+    user_info = get_user_info
+    if user_info
+      images = user_info['image']
+      xl_image = images.select { |image| image['size'] == 'extralarge' }
+      self.image = xl_image.first['#text']
+      self.playcount = user_info['playcount'].to_i
+      save
+    else
+      false
+    end
   end
 
   def update_favorites(timeframe = "overall", number = 10)
@@ -51,8 +62,18 @@ class User < ActiveRecord::Base
     end
   end
 
+  private
+
   def email_required?
     false
+  end
+
+  def get_user_info
+    result = lastfm_query(
+      method: 'user.getinfo',
+      user: username
+    )
+    result ? result['user'] : false
   end
 
   def get_top_artists(timeframe, number)

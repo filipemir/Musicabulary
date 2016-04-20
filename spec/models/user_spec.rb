@@ -33,7 +33,7 @@ RSpec.describe User do
 
   describe '#image' do
     it 'returns url of user profile picture' do
-      expect(user.avatar).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+      expect(user.image).to eq('sample-image.png')
     end
   end
 
@@ -62,36 +62,67 @@ RSpec.describe User do
     end
   end
 
-  describe '#update' do
+  context 'Updates' do
     before :each do
-      user.username = 'n0body'
-      user.image = 'another_image.jpg'
-      user.playcount = 2
-      user.artists.destroy_all
-      user.favorites.destroy_all
-      user.save
-      binding.pry
-      user.update
+        user.image = 'another_image.jpg'
+        user.playcount = 2
+        user.save
     end
 
-    it 'updates username' do
-      expect(user.username).to eq('gopigasus')
+    describe '#update_favorites' do
+      it 'updates user top artists' do
+        user.update_favorites
+        expect(user.top_artists.length).to eq(10)
+        expect(user.top_artists.sample).to be_a Artist
+        user.top_artists.each_with_index do |artist, i|
+          favorite = Favorite.find_by(user: user, artist: artist, timeframe: 'overall')
+          expect(favorite.rank).to eq(i + 1)
+        end
+      end
     end
 
-    it 'updates user image' do
-      expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+    describe '#update_info' do
+      before :each do 
+        user.update_info
+      end
+
+      it 'updates username' do
+        expect(user.username).to eq('gopigasus')
+      end
+
+      it 'updates user image' do
+        expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+      end
+
+      it 'updates user playcount' do
+        expect(user.playcount).to be >= 46500
+      end
     end
 
-    it 'updates user playcount' do
-      expect(user.playcount).to be >= 46500
-    end
+    describe '#update' do
+      before :each do 
+        user.update
+      end
+      
+      it 'updates username' do
+        expect(user.username).to eq('gopigasus')
+      end
 
-    it 'updates user top artists' do
-      expect(user.top_artists.length).to eq(10)
-      expect(user.top_artists.sample).to be_a Artist
-      user.top_artists.each_with_index do |artist, i|
-        favorite = Favorite.find_by(user: user, artist: artist, timeframe: 'overall')
-        expect(favorite.rank).to eq(i + 1)
+      it 'updates user image' do
+        expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+      end
+
+      it 'updates user playcount' do
+        expect(user.playcount).to be >= 46500
+      end
+
+      it 'updates user top artists' do
+        expect(user.top_artists.length).to eq(10)
+        expect(user.top_artists.sample).to be_a Artist
+        user.top_artists.each_with_index do |artist, i|
+          favorite = Favorite.find_by(user: user, artist: artist, timeframe: 'overall')
+          expect(favorite.rank).to eq(i + 1)
+        end
       end
     end
   end
