@@ -21,13 +21,14 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-    where(provider: auth.provider, username: auth.uid).first_or_create do |user|
-      user.password = Devise.friendly_token[0,20]
-      user.name = auth.info.name
-      user.image = auth.info.image
-      user.playcount = auth.extra.raw_info.playcount
-      user.update_favorites
+    user = where(provider: auth.provider, username: auth.uid).first_or_create do |u|
+      u.password = Devise.friendly_token[0,20]
+      u.name = auth.info.name
+      u.image = auth.info.image
+      u.playcount = auth.extra.raw_info.playcount
     end
+    user.update_favorites
+    user
   end
 
   def update

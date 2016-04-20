@@ -6,8 +6,7 @@ RSpec.describe User do
 
   describe '#from_omniauth:' do
     it 'returns user if user already exists' do
-      existing_user_hash = mock_auth_hash
-      result = User.from_omniauth(existing_user_hash)
+      result = User.from_omniauth(mock_auth_hash)
       expect(result).to be_a(User)
       expect(result.persisted?).to be(true)
     end
@@ -126,4 +125,5 @@ RSpec.describe User do
       end
     end
   end
+
 end
