@@ -1,7 +1,5 @@
 class ArtistsController < ApplicationController
   def index
-  end
-
-  def show
+    @artists = current_user.top_artists
   end
 end

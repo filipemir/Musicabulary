@@ -46,6 +46,7 @@ gem 'devise'
 gem 'omniauth-lastfm'
 gem 'pry'
 gem 'dotenv-rails'
+gem 'pry-rails', group: :development
 
 group :test do
   gem 'rspec-rails'

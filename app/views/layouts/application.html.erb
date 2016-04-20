@@ -14,8 +14,11 @@
 
   <body>
 
-
-    <li><%= button_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+    <% if current_user %>
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
+    <% else %>
+      <%= button_to "Sign In", new_user_session_path, method: :get %>
+    <% end %>
 
     <% flash.each do |key, msg| %>
       <%= content_tag :div, msg, id: key %>

@@ -11,8 +11,8 @@ RSpec.describe Artist do
     end
   end
 
-  describe '#id' do
-    it "returns artist's lastfm id" do
+  describe '#discog_id' do
+    it "returns artist's discogs id" do
       expect(artist.id).to eq(666)
     end
   end

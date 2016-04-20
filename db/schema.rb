@@ -11,17 +11,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160418140820) do
+ActiveRecord::Schema.define(version: 20160419195410) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "artists", force: true do |t|
     t.string   "name",       null: false
-    t.integer  "lastfm_id"
+    t.integer  "discogs_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "favorites", force: true do |t|
+    t.integer "user_id",                null: false
+    t.integer "artist_id",              null: false
+    t.string  "timeframe", default: "", null: false
+    t.integer "rank",      default: 0,  null: false
+    t.integer "playcount"
+  end
+
+  add_index "favorites", ["user_id", "artist_id", "timeframe"], name: "index_favorites_on_user_id_and_artist_id_and_timeframe", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -37,7 +47,7 @@ ActiveRecord::Schema.define(version: 20160418140820) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "provider"
-    t.string   "uid"
+    t.string   "username"
     t.string   "name"
     t.string   "image"
     t.integer  "playcount"
