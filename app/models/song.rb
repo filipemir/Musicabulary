@@ -35,6 +35,7 @@ class Song < ActiveRecord::Base
       result.gsub!(/\[.*\]|\(x\d\)/, '')
       result.squeeze!("\n")
       result.strip
+      result == '' ? nil : result
     rescue
       nil
     end

@@ -10,7 +10,7 @@ class Artist < ActiveRecord::Base
 
   def update
     discogs_id
-    update_records
+    update_records if total_words < 3_500
   end
 
   def discogs_id
@@ -34,7 +34,6 @@ class Artist < ActiveRecord::Base
     page = get_artist_records_page(1)
     if page
       page['releases'].each do |release|
-        puts total_words
         break if total_words >= 3_500
         if release['type'] == 'master' && release['role'] == 'Main'
           record = Record.where(

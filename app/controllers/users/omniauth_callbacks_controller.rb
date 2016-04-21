@@ -4,7 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if @user.persisted?
       @user.update
       sign_in @user
-      flash[:success] = "Hello, #{@user.username}!"
+      flash[:success] = "Hello!"
       redirect_to artists_path
     else
       flash[:error] = "Oops. Login failed."

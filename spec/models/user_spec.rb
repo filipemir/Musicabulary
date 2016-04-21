@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User do
 
-  let(:user) { FactoryGirl.create(:user, username: 'gopigasus') }
+  let!(:user) { FactoryGirl.create(:user, username: 'gopigasus') }
 
   describe '#from_omniauth:' do
     it 'returns user if user already exists' do

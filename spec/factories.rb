@@ -7,10 +7,6 @@ FactoryGirl.define do
     sequence(:playcount) { |n| "#{n}" }
   end
 
-  factory :artist do
-    sequence(:name) { |n| "Artist Number #{n}"}
-  end
-
   factory :favorite do
     user
     artist
@@ -18,4 +14,20 @@ FactoryGirl.define do
     sequence(:rank) { |n| n }
     playcount 666
   end
+
+  factory :artist do
+    sequence(:name) { |n| "Artist Number #{n}" }
+  end
+
+  factory :record do
+    sequence(:title) { |n| "Record Title #{n}" }
+    year 1994
+    artist
+  end
+
+  factory :song do
+    sequence(:title) { |n| "Song Title #{n}" }
+    record
+  end
+
 end

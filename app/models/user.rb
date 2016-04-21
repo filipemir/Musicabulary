@@ -56,11 +56,11 @@ class User < ActiveRecord::Base
   def self.from_omniauth(auth)
     user = where(provider: auth.provider, username: auth.uid).first_or_create do |u|
       u.password = Devise.friendly_token[0,20]
-      u.name = auth.info.name
       u.image = auth.info.image
       u.playcount = auth.extra.raw_info.playcount
     end
     user.update_favorites
+    user
   end
 
   private
