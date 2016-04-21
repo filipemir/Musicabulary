@@ -13,10 +13,10 @@ RSpec.describe User do
 
     it 'creates and returns persisted user if user did not previously exist' do
       non_existing_user_hash = OmniAuth::AuthHash.new({
-        "provider"=>"lastfm",
-        "uid"=>"i_d0_n0t_exist_1931",
-        "info"=>{"name"=>nil, "image"=>"fake-image.png"},
-        "extra"=>{"raw_info"=>{"playcount"=>"665"}}
+        "provider" => "lastfm",
+        "uid" => "i_d0_n0t_exist_1931",
+        "info" => {"name" => nil, "image" => "fake-image.png"},
+        "extra" => {"raw_info" => {"playcount" => "665"}}
       })
       result = User.from_omniauth(non_existing_user_hash)
       expect(result).to be_a(User)
@@ -55,7 +55,11 @@ RSpec.describe User do
 
     it 'returns artists sorted by rank in ascending order' do
       user.top_artists.each_with_index do |artist, i|
-        favorite = Favorite.find_by(user: user, artist: artist, timeframe: 'overall')
+        favorite = Favorite.find_by(
+          user: user,
+          artist: artist,
+          timeframe: 'overall'
+        )
         expect(favorite.rank).to eq(i + 1)
       end
     end
@@ -63,9 +67,9 @@ RSpec.describe User do
 
   context 'Updates' do
     before :each do
-        user.image = 'another_image.jpg'
-        user.playcount = 2
-        user.save
+      user.image = 'another_image.jpg'
+      user.playcount = 2
+      user.save
     end
 
     describe '#update_favorites' do
@@ -74,14 +78,18 @@ RSpec.describe User do
         expect(user.top_artists.length).to eq(10)
         expect(user.top_artists.sample).to be_a Artist
         user.top_artists.each_with_index do |artist, i|
-          favorite = Favorite.find_by(user: user, artist: artist, timeframe: 'overall')
+          favorite = Favorite.find_by(
+            user: user,
+            artist: artist,
+            timeframe: 'overall'
+          )
           expect(favorite.rank).to eq(i + 1)
         end
       end
     end
 
     describe '#update_info' do
-      before :each do 
+      before :each do
         user.update_info
       end
 
@@ -99,10 +107,10 @@ RSpec.describe User do
     end
 
     describe '#update' do
-      before :each do 
+      before :each do
         user.update
       end
-      
+
       it 'updates username' do
         expect(user.username).to eq('gopigasus')
       end

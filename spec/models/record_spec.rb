@@ -5,13 +5,13 @@ RSpec.describe Record do
   let(:artist) { FactoryGirl.create(:artist, name: 'Hop Along') }
   let(:record) do
     FactoryGirl.create(
-      :record, 
-      artist: artist, 
+      :record,
+      artist: artist,
       title: "Painted Shut",
       discogs_id: 824583
-    ) 
+    )
   end
-  
+
   before { record.update }
 
   describe '#update' do
