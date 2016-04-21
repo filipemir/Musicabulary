@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419195410) do
+ActiveRecord::Schema.define(version: 20160420175215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,15 +23,40 @@ ActiveRecord::Schema.define(version: 20160419195410) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "artists", ["name"], name: "index_artists_on_name", unique: true, using: :btree
+
   create_table "favorites", force: true do |t|
-    t.integer "user_id",                null: false
-    t.integer "artist_id",              null: false
-    t.string  "timeframe", default: "", null: false
-    t.integer "rank",      default: 0,  null: false
-    t.integer "playcount"
+    t.integer  "user_id",                 null: false
+    t.integer  "artist_id",               null: false
+    t.string   "timeframe",  default: "", null: false
+    t.integer  "rank",       default: 0,  null: false
+    t.integer  "playcount"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "favorites", ["user_id", "artist_id", "timeframe"], name: "index_favorites_on_user_id_and_artist_id_and_timeframe", unique: true, using: :btree
+
+  create_table "records", force: true do |t|
+    t.integer  "artist_id",               null: false
+    t.string   "title",      default: "", null: false
+    t.integer  "discogs_id"
+    t.integer  "year",                    null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "records", ["artist_id", "title", "year"], name: "index_records_on_artist_id_and_title_and_year", unique: true, using: :btree
+
+  create_table "songs", force: true do |t|
+    t.integer  "record_id",               null: false
+    t.string   "title",      default: "", null: false
+    t.text     "lyrics"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  add_index "songs", ["record_id", "title"], name: "index_songs_on_record_id_and_title", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email"
@@ -48,7 +73,6 @@ ActiveRecord::Schema.define(version: 20160419195410) do
     t.datetime "updated_at",                          null: false
     t.string   "provider"
     t.string   "username"
-    t.string   "name"
     t.string   "image"
     t.integer  "playcount"
   end

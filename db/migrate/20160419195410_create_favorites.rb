@@ -6,6 +6,7 @@ class CreateFavorites < ActiveRecord::Migration
       t.string :timeframe, default: '', null: false
       t.integer :rank, default: '', null: false
       t.integer :playcount
+      t.timestamps null: false
     end
 
     add_index :favorites, [:user_id, :artist_id, :timeframe], unique: true

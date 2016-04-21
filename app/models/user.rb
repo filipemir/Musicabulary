@@ -9,28 +9,6 @@ class User < ActiveRecord::Base
   include HTTParty
   base_uri 'http://ws.audioscrobbler.com/2.0/'
 
-  def top_artists(timeframe = "overall", number = 10)
-    faves = self.favorites.order(:rank)
-    result = []
-    faves.each do |fave|
-      if fave.timeframe == timeframe && fave.rank <= number
-        result << fave.artist
-      end
-    end
-    result
-  end
-
-  def self.from_omniauth(auth)
-    user = where(provider: auth.provider, username: auth.uid).first_or_create do |u|
-      u.password = Devise.friendly_token[0,20]
-      u.name = auth.info.name
-      u.image = auth.info.image
-      u.playcount = auth.extra.raw_info.playcount
-    end
-    user.update_favorites
-    user
-  end
-
   def update
     update_info && update_favorites
   end
@@ -53,6 +31,7 @@ class User < ActiveRecord::Base
     if artists_info
       artists_info.each do |artist_info|
         artist = Artist.where(name: artist_info['name']).first_or_create
+        artist.update
         fave = Favorite.where(user: self, artist: artist, timeframe: timeframe).first_or_create
         fave.rank = artist_info['@attr']['rank'].to_i
         fave.playcount = artist_info['playcount']
@@ -61,6 +40,27 @@ class User < ActiveRecord::Base
     else 
       false
     end
+  end
+
+  def top_artists(timeframe = "overall", number = 10)
+    faves = self.favorites.order(:rank)
+    result = []
+    faves.each do |fave|
+      if fave.timeframe == timeframe && fave.rank <= number
+        result << fave.artist
+      end
+    end
+    result
+  end
+
+  def self.from_omniauth(auth)
+    user = where(provider: auth.provider, username: auth.uid).first_or_create do |u|
+      u.password = Devise.friendly_token[0,20]
+      u.name = auth.info.name
+      u.image = auth.info.image
+      u.playcount = auth.extra.raw_info.playcount
+    end
+    user.update_favorites
   end
 
   private
