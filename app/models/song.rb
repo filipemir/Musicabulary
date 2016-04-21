@@ -14,9 +14,10 @@ class Song < ActiveRecord::Base
   private
 
   def clean(attribute)
-    string = attribute
+    string = attribute.dup
     string.strip!
     string.gsub!("'", '')
+    string.gsub!("&", 'and')
     string.gsub!(/[^0-9A-Za-z\-]/, '-')
     string.squeeze!('-')
     string.chomp!('-')

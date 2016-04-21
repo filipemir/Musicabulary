@@ -6,23 +6,24 @@ RSpec.describe Song do
   let(:record)    { FactoryGirl.create(:record, artist: artist) }
   let(:song)      { FactoryGirl.create(:song, title: 'Big Bang', record: record) }
   let(:fake_song) { FactoryGirl.create(:song, title: 'asdjssdfdssd') }
+  let(:url)       { "http://genius.com/aesop-rock-big-bang-lyrics" }
 
   describe '#update' do
     it "updates song lyrics if lyrics weren't previously loaded" do
-      url = "http://genius.com/aesop-rock-big-bang-lyrics\n"
-      expect { song.update }.to output(url).to_stdout
+      song.update
+      expect(WebMock).to have_requested(:get, url).once
       expect(song.lyrics).to include("man I really can't afford the oxen")
     end
 
     it "leaves lyrics unchanged if lyrics already in db" do
-      song.update
-      expect { song.update }.to_not output.to_stdout
+      3.times { song.update }
+      expect(WebMock).to have_requested(:get, url).once
       expect(song.lyrics).to include("man I really can't afford the oxen")
     end
 
     it "leaves lyrics as nil if no lyrics found" do
       fake_song.update
-      expect(fake_song.lyrics).to eq(nil)
+      expect(fake_song.lyrics).to be_nil
     end
   end
 
@@ -54,5 +55,7 @@ RSpec.describe Song do
       expect(song.record).to be_a Record
     end
   end
+
+
 
 end

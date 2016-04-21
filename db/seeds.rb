@@ -1,7 +1,15 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+def artist_loader(name)
+  artist = Artist.create(name: name)
+  artist.update
+end
+
+artist_loader('Titus Andronicus')
+artist_loader('Tom Waits')
+artist_loader('Bob Dylan')
+artist_loader('Wilco')
+artist_loader('Bahamas')
+artist_loader('Shovels & Rope')
+artist_loader('Josh Ritter')
+artist_loader('The Decemberists')
+artist_loader('Justin Townes Earle')
+artist_loader('Aesop Rock')

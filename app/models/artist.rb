@@ -8,9 +8,17 @@ class Artist < ActiveRecord::Base
 
   attr_writer :discogs_id
 
+  def total_words
+    reload
+    songs.inject(0) do |sum, song|
+      sum + song.word_count
+    end
+  end
+
   def update
     discogs_id
-    update_records if total_words < 3_500
+    save
+    update_records if total_words < WORD_SAMPLE_SIZE
   end
 
   def discogs_id
@@ -23,25 +31,17 @@ class Artist < ActiveRecord::Base
     result
   end
 
-  def total_words
-    reload
-    songs.inject(0) do |sum, song|
-      sum + song.word_count
-    end
-  end
-
   def update_records
     page = get_artist_records_page(1)
     if page
       page['releases'].each do |release|
-        break if total_words >= 3_500
+        break if total_words >= WORD_SAMPLE_SIZE
         if release['type'] == 'master' && release['role'] == 'Main'
           record = Record.where(
             artist: self,
             title: release['title'],
             year: release['year']
           ).first_or_create
-
           record.discogs_id ||= release['id']
           record.update
         end
@@ -49,13 +49,12 @@ class Artist < ActiveRecord::Base
     end
   end
 
-  def update_record(title, year, release_id)
-    Record.where(
-      artist: self,
-      title: release['title'],
-      year: release['year']
-    ).first_or_create
-
+  def songs_sorted
+    songs.sort do |a, b|
+      a_vals = [a.record.year, a.record.title, a.position]
+      b_vals = [b.record.year, b.record.title, b.position]
+      a_vals <=> b_vals
+    end
   end
 
   private

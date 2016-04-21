@@ -9,11 +9,18 @@ class Record < ActiveRecord::Base
     tracks = get_songs
     if tracks
       tracks.each do |track|
-        song = Song.where(title: track['title'], record: self).first_or_create
-        song.update
+        Song.where(title: track['title'], record: self).first_or_create do |s|
+          position = track['position'].strip
+          if (Integer(position) rescue false)
+            position = position.rjust(3, padstr='0')
+          end
+          s.position = position
+          s.update
+        end
       end
     end
     save
+    reload
   end
 
   private
