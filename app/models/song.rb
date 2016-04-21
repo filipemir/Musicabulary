@@ -28,7 +28,8 @@ class Song < ActiveRecord::Base
     begin
       url = "http://genius.com/#{clean(artist.name)}-#{clean(title)}-lyrics".downcase
       puts url
-      response = Nokogiri::HTML(HTTParty.get(url))
+      response_html = HTTParty.get(url)
+      response = Nokogiri::HTML(response_html)
       lines = response.css('lyrics > p')
       result = ''
       lines.each { |line| result += ' ' + line }
