@@ -4,6 +4,7 @@ feature 'User authentication:' do
 
   before :each do
     visit root_path
+    click_on 'Sign In'
     click_on 'Sign in with Lastfm'
   end
 

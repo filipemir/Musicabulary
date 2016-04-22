@@ -2,23 +2,24 @@ require 'rails_helper'
 
 RSpec.describe User do
 
-  let!(:user) { FactoryGirl.create(:user, uid: 'gopigasus') }
+  let(:user) { FactoryGirl.create(:user, username: 'gopigasus') }
+  let(:non_existing_user_hash) do
+    OmniAuth::AuthHash.new({
+        "provider" => "lastfm",
+        "uid" => "i_d0_n0t_exist_1931",
+        "info" => {"name" => nil, "image" => "fake-image.png"},
+        "extra" => {"raw_info" => {"playcount" => "665"}}
+      })
+  end
 
   describe '#from_omniauth:' do
     it 'returns user if user already exists' do
-      existing_user_hash = mock_auth_hash
-      result = User.from_omniauth(existing_user_hash)
+      result = User.from_omniauth(mock_auth_hash)
       expect(result).to be_a(User)
       expect(result.persisted?).to be(true)
     end
 
-    it 'creates and returns persisted if user does not exist' do
-      non_existing_user_hash = OmniAuth::AuthHash.new({
-        "provider"=>"lastfm",
-        "uid"=>"idonotexist",
-        "info"=>{"name"=>nil, "image"=>"fake-image.png"},
-        "extra"=>{"raw_info"=>{"playcount"=>"666"}}
-      })
+    it 'creates and returns persisted user if user did not previously exist' do
       result = User.from_omniauth(non_existing_user_hash)
       expect(result).to be_a(User)
       expect(result.persisted?).to be(true)
@@ -33,59 +34,111 @@ RSpec.describe User do
 
   describe '#image' do
     it 'returns url of user profile picture' do
-      expect(user.avatar).to match(/^(http:\/\/).*(.png)$/)
+      expect(user.image).to eq('sample-image.png')
     end
   end
 
   describe '#playcount' do
     it 'returns user playcount' do
-      expect(user.avatar).to eq(46500)
+      expect(user.playcount).to be_a Integer
+      expect(user.playcount).to be > 0
     end
   end
 
-  describe '#top_artists(period, n)' do
-    it 'returns top n artists' do
-      top10 = user.top_artists('overall', 10)
-      top15 = user.top_artists('overall', 15)
-
-      expect(top10).to be_a Array
-      expect(top10.length).to eq(10)
-      expect(top10.sample).to be_a Artist
-
-      expect(top15).to be_a Array
-      expect(top15.length).to eq(15)
-      expect(top15.sample).to be_a Artist
+  describe '#top_artists' do
+    before :each do
+      10.times { FactoryGirl.create(:favorite, user: user) }
     end
 
-    it 'returns top artists for different periods' do
-      periods = ['7day', '1month', '3month', '6month', '12month', 'overall']
-      periods.each do |period|
-        top5 = user.top_artists(period, 5)
-        expect(top5).to be_a Array
-        expect(top5.length).to eq(5)
+    it 'returns top 10 artists in user favorites' do
+      expect(user.top_artists.length).to eq(10)
+      expect(user.top_artists.sample).to be_a Artist
+    end
+
+    it 'returns artists sorted by rank in ascending order' do
+      user.top_artists.each_with_index do |artist, i|
+        favorite = Favorite.find_by(
+          user: user,
+          artist: artist,
+          timeframe: 'overall'
+        )
+        expect(favorite.rank).to eq(i + 1)
       end
     end
   end
 
-  describe '#update_info' do
+  context 'Updates' do
     before :each do
-      user.username = 'n0body'
       user.image = 'another_image.jpg'
       user.playcount = 2
       user.save
-      user.update_info
     end
 
-    it 'updates username' do
-      expect(user.username).to eq('gopigasus')
+    describe '#update_favorites' do
+      it 'updates user top artists' do
+        user.update_favorites
+        expect(user.top_artists.length).to eq(10)
+        expect(user.top_artists.sample).to be_a Artist
+        user.top_artists.each_with_index do |artist, i|
+          favorite = Favorite.find_by(
+            user: user,
+            artist: artist,
+            timeframe: 'overall'
+          )
+          expect(favorite.rank).to eq(i + 1)
+        end
+      end
     end
 
-    it 'updates user image' do
-      expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+    describe '#update_info' do
+      before :each do
+        user.update_info
+      end
+
+      it 'updates username' do
+        expect(user.username).to eq('gopigasus')
+      end
+
+      it 'updates user image' do
+        expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+      end
+
+      it 'updates user playcount' do
+        expect(user.playcount).to be >= 46500
+      end
+
+      it 'returns false if user does not exist in last.fm' do
+        fake_user = User.from_omniauth(non_existing_user_hash)
+        expect(fake_user.update_info).to eq(false)
+      end
     end
 
-    it 'updates user playcount' do
-      expect(user.playcount).to be_greater_than('46500') 
+    describe '#update' do
+      before :each do
+        user.update
+      end
+
+      it 'updates username' do
+        expect(user.username).to eq('gopigasus')
+      end
+
+      it 'updates user image' do
+        expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+      end
+
+      it 'updates user playcount' do
+        expect(user.playcount).to be >= 46500
+      end
+
+      it 'updates user top artists' do
+        expect(user.top_artists.length).to eq(10)
+        expect(user.top_artists.sample).to be_a Artist
+        user.top_artists.each_with_index do |artist, i|
+          favorite = Favorite.find_by(user: user, artist: artist, timeframe: 'overall')
+          expect(favorite.rank).to eq(i + 1)
+        end
+      end
     end
   end
+
 end

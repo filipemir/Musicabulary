@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
+  devise_for :users, controllers: {
+    omniauth_callbacks: "users/omniauth_callbacks",
+    sessions: "sessions"
+  }
 
-  get '/auth/:provider/callback', to: 'sessions#create'
-  
+  root 'pages#show', page: 'welcome'
+
+  get "/pages/:page" => "pages#show"
+
   authenticate do
-  root 'artists#index'
-
-    resource :artists, only: [:index]
+    resources :artists, only: [:index]
   end
 end
