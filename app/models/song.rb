@@ -27,6 +27,7 @@ class Song < ActiveRecord::Base
 
   def scrape_song_lyrics
     url = "http://genius.com/#{clean(artist.name)}-#{clean(title)}-lyrics".downcase
+    puts url
     response_html = HTTParty.get(url)
     response = Nokogiri::HTML(response_html)
     lines = response.css('lyrics > p')
