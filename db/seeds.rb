@@ -1,5 +1,5 @@
 def artist_loader(name)
-  artist = Artist.create(name: name)
+  artist = Artist.where(name: name).first_or_create
   artist.update
 end
 
