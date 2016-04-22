@@ -3,6 +3,9 @@ class Artist < ActiveRecord::Base
   has_many :records
   has_many :songs, through: :records
 
+  validates :name, presence: true
+  validates :name, allow_nil: true, uniqueness: { case_sensitive: false }
+
   include HTTParty
   base_uri 'https://api.discogs.com/'
 
