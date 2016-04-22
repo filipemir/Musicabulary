@@ -29,16 +29,17 @@ class Artist < ActiveRecord::Base
     words.length >= WORD_SAMPLE_SIZE ? words[0..WORD_SAMPLE_SIZE - 1] : false
   end
 
-  def wordiness
+  def update_wordiness
     if first_words
-      first_words.uniq.length.to_f / WORD_SAMPLE_SIZE
+      self.wordiness = first_words.uniq.length
+      save
     end
   end
 
   def update
     discogs_id
-    save
     update_records if total_words < WORD_SAMPLE_SIZE
+    update_wordiness
   end
 
   def discogs_id
@@ -46,6 +47,7 @@ class Artist < ActiveRecord::Base
     if result.nil?
       id = get_discogs_id
       write_attribute(:discogs_id, id)
+      save
       return id
     end
     result
