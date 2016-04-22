@@ -124,16 +124,16 @@ RSpec.describe Artist do
   end
 
   describe '#wordiness' do
-    it 'returns ratio of number unique first words to WORD_SAMPLE_SIZE' do
+    it 'returns number of unique words within first words' do
       artist.update
-      expect(artist.wordiness).to be_between(0, 1).exclusive
+      expect(artist.wordiness).to be_between(0, WORD_SAMPLE_SIZE).exclusive
     end
 
-    it 'returns false if no lyrics are in db' do
+    it 'returns nil if no lyrics are in db' do
       expect(artist.wordiness).to be_nil
     end
 
-    it 'returns false if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
+    it 'returns nil if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
       record = FactoryGirl.create(:record, artist: artist)
       FactoryGirl.create(:song, record: record, lyrics: 'Here are five more words')
       expect(artist.wordiness).to be_nil
