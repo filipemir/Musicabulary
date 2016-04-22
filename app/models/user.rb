@@ -59,7 +59,7 @@ class User < ActiveRecord::Base
       u.image = auth.info.image
       u.playcount = auth.extra.raw_info.playcount
     end
-    user.update_favorites
+    # user.update_favorites
     user
   end
 

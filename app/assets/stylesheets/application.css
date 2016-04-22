@@ -12,6 +12,41 @@
  *
  *= require_tree .
  *= require_self
- *= require foundation_and_overrides
 
  */
+
+g.axis path, g.axis line {
+    fill:none;
+    stroke:royalblue;
+}
+g.axis text, g.bubbles text {
+    fill:royalblue;
+    font-family:sans-serif;
+}
+
+g.bubbles line {
+    stroke-width:5;
+    stroke:royalblue;
+}
+
+g.bubbles circle {
+    fill:rgba(255,0,64,0.5);
+    stroke:rgb(255,0,64);
+    stroke-width:3;
+}
+g.bubbles text {
+    text-anchor:middle;
+    alignment-baseline:middle;
+    opacity:0;
+    pointer-events:all;
+    transition:1s;
+}
+g.bubbles text:hover {
+    opacity:1;
+}
+
+g.threads line {
+    fill:none;
+    stroke:navy;
+    opacity:0.5;
+}
