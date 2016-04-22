@@ -29,7 +29,6 @@ class Artist < ActiveRecord::Base
   def wordiness
     if first_words
       first_words.uniq.length.to_f / WORD_SAMPLE_SIZE
-    else nil
     end
   end
 
