@@ -74,14 +74,14 @@ RSpec.describe Artist do
 
     it "returns songs sorted by release year in ascending order" do
       songs = artist.songs_sorted
-      (1..songs.length-1).each do |i|
+      (1..songs.length - 1).each do |i|
         expect(songs[i - 1].record.year).to be <= songs[i].record.year
       end
     end
 
     it "sorts songs by record title within the same year" do
       songs = artist.songs_sorted.select { |song| song.record.year == 1973 }
-      (1..songs.length-1).each do |i|
+      (1..songs.length - 1).each do |i|
         expect(songs[i - 1].record.title <=> songs[i].record.title).to be <= 0
       end
     end
@@ -89,7 +89,7 @@ RSpec.describe Artist do
     it "sorts songs by position within the same record" do
       record = artist.records.first
       songs = artist.songs_sorted.select { |song| song.record_id == record.id }
-      (1..songs.length-1).each do |i|
+      (1..songs.length - 1).each do |i|
         expect(songs[i - 1].position <=> songs[i].position).to be <= 0
       end
     end

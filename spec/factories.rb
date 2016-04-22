@@ -29,5 +29,4 @@ FactoryGirl.define do
     sequence(:title) { |n| "Song Title #{n}" }
     record
   end
-
 end

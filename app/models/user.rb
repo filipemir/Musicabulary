@@ -37,13 +37,13 @@ class User < ActiveRecord::Base
         fave.playcount = artist_info['playcount']
         fave.save
       end
-    else 
+    else
       false
     end
   end
 
   def top_artists(timeframe = "overall", number = 10)
-    faves = self.favorites.order(:rank)
+    faves = favorites.order(:rank)
     result = []
     faves.each do |fave|
       if fave.timeframe == timeframe && fave.rank <= number
@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth(auth)
     user = where(provider: auth.provider, username: auth.uid).first_or_create do |u|
-      u.password = Devise.friendly_token[0,20]
+      u.password = Devise.friendly_token[0, 20]
       u.image = auth.info.image
       u.playcount = auth.extra.raw_info.playcount
     end
@@ -90,11 +90,11 @@ class User < ActiveRecord::Base
   def lastfm_query(params)
     begin
       params = params.merge(
-        api_key: ENV['LASTFM_KEY'], 
+        api_key: ENV['LASTFM_KEY'],
         format: 'json'
       )
       response = self.class.get('', query: params)
-      response.keys.include?('error')? false : response
+      response.keys.include?('error') ? false : response
     rescue
       false
     end
