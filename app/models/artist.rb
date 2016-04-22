@@ -86,13 +86,11 @@ class Artist < ActiveRecord::Base
   end
 
   def discogs_query(path, params = {})
-    begin
       params = params.merge(token: ENV['DISCOGS_TOKEN'])
       response = self.class.get(path, query: params)
       success = response.empty? || response['message'] != 'The requested resource was not found.'
       success ? response : false
     rescue
       false
-    end
   end
 end

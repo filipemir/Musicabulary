@@ -88,7 +88,6 @@ class User < ActiveRecord::Base
   end
 
   def lastfm_query(params)
-    begin
       params = params.merge(
         api_key: ENV['LASTFM_KEY'],
         format: 'json'
@@ -97,6 +96,5 @@ class User < ActiveRecord::Base
       response.keys.include?('error') ? false : response
     rescue
       false
-    end
   end
 end

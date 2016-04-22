@@ -26,7 +26,6 @@ class Song < ActiveRecord::Base
   end
 
   def scrape_song_lyrics
-    begin
       url = "http://genius.com/#{clean(artist.name)}-#{clean(title)}-lyrics".downcase
       puts url
       response_html = HTTParty.get(url)
@@ -40,6 +39,5 @@ class Song < ActiveRecord::Base
       result == '' ? nil : result
     rescue
       nil
-    end
   end
 end
