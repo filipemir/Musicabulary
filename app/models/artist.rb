@@ -72,25 +72,23 @@ class Artist < ActiveRecord::Base
   end
 
   def get_artist_records_page(page_num)
-    begin
-      discogs_query(
-        '/artists/' + discogs_id.to_s + '/releases',
-        sort: 'year',
-        sort_order: 'asc',
-        page: page_num,
-        per_page: 100
-      )
-    rescue
-      false
-    end
+    discogs_query(
+      '/artists/' + discogs_id.to_s + '/releases',
+      sort: 'year',
+      sort_order: 'asc',
+      page: page_num,
+      per_page: 100
+    )
+  rescue
+    false
   end
 
   def discogs_query(path, params = {})
-      params = params.merge(token: ENV['DISCOGS_TOKEN'])
-      response = self.class.get(path, query: params)
-      success = response.empty? || response['message'] != 'The requested resource was not found.'
-      success ? response : false
-    rescue
-      false
+    params = params.merge(token: ENV['DISCOGS_TOKEN'])
+    response = self.class.get(path, query: params)
+    success = response.empty? || response['message'] != 'The requested resource was not found.'
+    success ? response : false
+  rescue
+    false
   end
 end
