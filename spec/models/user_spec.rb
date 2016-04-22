@@ -2,7 +2,15 @@ require 'rails_helper'
 
 RSpec.describe User do
 
-  let!(:user) { FactoryGirl.create(:user, username: 'gopigasus') }
+  let(:user) { FactoryGirl.create(:user, username: 'gopigasus') }
+  let(:non_existing_user_hash) do
+    OmniAuth::AuthHash.new({
+        "provider" => "lastfm",
+        "uid" => "i_d0_n0t_exist_1931",
+        "info" => {"name" => nil, "image" => "fake-image.png"},
+        "extra" => {"raw_info" => {"playcount" => "665"}}
+      })
+  end
 
   describe '#from_omniauth:' do
     it 'returns user if user already exists' do
@@ -12,12 +20,6 @@ RSpec.describe User do
     end
 
     it 'creates and returns persisted user if user did not previously exist' do
-      non_existing_user_hash = OmniAuth::AuthHash.new({
-        "provider" => "lastfm",
-        "uid" => "i_d0_n0t_exist_1931",
-        "info" => {"name" => nil, "image" => "fake-image.png"},
-        "extra" => {"raw_info" => {"playcount" => "665"}}
-      })
       result = User.from_omniauth(non_existing_user_hash)
       expect(result).to be_a(User)
       expect(result.persisted?).to be(true)
@@ -103,6 +105,11 @@ RSpec.describe User do
 
       it 'updates user playcount' do
         expect(user.playcount).to be >= 46500
+      end
+
+      it 'returns false if user does not exist in last.fm' do
+        fake_user = User.from_omniauth(non_existing_user_hash)
+        expect(fake_user.update_info).to eq(false)
       end
     end
 

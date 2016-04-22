@@ -6,9 +6,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in @user
       flash[:success] = "Hello!"
       redirect_to artists_path
-    else
-      flash[:error] = "Oops. Login failed."
-      redirect_to root_path
     end
   end
 end

@@ -71,27 +71,6 @@ class Artist < ActiveRecord::Base
     nil
   end
 
-  # def get_artist_records
-  #   i = 1
-  #   result = []
-  #   total_pages = nil
-  #   begin
-  #     page = get_artist_records_page(i)
-  #     if page
-  #       total_pages ||= page['pagination']['pages'].to_i
-  #       page['releases'].each do |release|
-  #         if release['type'] == 'master' && release['role'] == 'Main'
-  #           result << release
-  #         end
-  #       end
-  #       i += 1
-  #     else
-  #       break
-  #     end
-  #   end while i <= total_pages
-  #   binding.pry
-  # end
-
   def get_artist_records_page(page_num)
     begin
       discogs_query(
@@ -99,8 +78,7 @@ class Artist < ActiveRecord::Base
         sort: 'year',
         sort_order: 'asc',
         page: page_num,
-        per_page: 100,
-
+        per_page: 100
       )
     rescue
       false
