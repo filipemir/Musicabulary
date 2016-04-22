@@ -11,9 +11,7 @@ class Record < ActiveRecord::Base
       tracks.each do |track|
         Song.where(title: track['title'], record: self).first_or_create do |s|
           position = track['position'].strip
-          if (Integer(position) rescue false)
-            position = position.rjust(3, padstr='0')
-          end
+          position = position.rjust(3, '0') if Integer(position) rescue false
           s.position = position
           s.update
         end
@@ -26,7 +24,6 @@ class Record < ActiveRecord::Base
   private
 
   def get_songs
-    result = []
     record = discogs_query('/masters/' + discogs_id.to_s)
     record ? record['tracklist'] : false
   end
