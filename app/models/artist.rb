@@ -9,9 +9,27 @@ class Artist < ActiveRecord::Base
   attr_writer :discogs_id
 
   def total_words
+    words.length
+  end
+
+  def words
     reload
-    songs.inject(0) do |sum, song|
-      sum + song.word_count
+    result = []
+    songs_sorted.each do |song|
+      next if song.lyrics.nil?
+      result += song.lyrics.split
+    end
+    result
+  end
+
+  def first_words
+    words.length >= WORD_SAMPLE_SIZE ? words[0..WORD_SAMPLE_SIZE - 1] : false
+  end
+
+  def wordiness
+    if first_words
+      first_words.uniq.length.to_f / WORD_SAMPLE_SIZE
+    else nil
     end
   end
 
