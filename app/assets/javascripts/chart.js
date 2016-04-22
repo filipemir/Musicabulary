@@ -8,11 +8,10 @@
   var randNorm = d3.random.normal(0.5,0.2)
   while(i--)data.push({
     x: randNorm(),
-    r: 0.1
+    r: 0.2
   });
-    //x for x-position
-    //r for radius; value will be proportional to area  
-  //________________//
+  //x for x-position
+  //r for radius; value will be proportional to area
       
   //Set up SVG and axis//   
   var svg = d3.select("svg");
