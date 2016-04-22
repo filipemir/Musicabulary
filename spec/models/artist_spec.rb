@@ -29,15 +29,8 @@ RSpec.describe Artist do
   end
 
   describe '#update_records' do
-    it "updates records if records weren't previously loaded" do
-      expect { artist.update_records }.to output.to_stdout
-      expect(artist.records).to_not be([])
-      expect(artist.records.sample).to be_a Record
-    end
-
-    it "leaves records unchanged if records already in db" do
+    it "updates records" do
       artist.update_records
-      expect { artist.update_records }.to_not output.to_stdout
       expect(artist.records).to_not be([])
       expect(artist.records.sample).to be_a Record
     end
@@ -50,15 +43,8 @@ RSpec.describe Artist do
       expect(artist.read_attribute(:discogs_id)).to eq(82294)
     end
 
-    it "updates records if records weren't previously loaded" do
-      expect { artist.update }.to output.to_stdout
-      expect(artist.records).to_not be([])
-      expect(artist.records.sample).to be_a Record
-    end
-
-    it "leaves records unchanged if records already in db" do
+    it "updates records" do
       artist.update
-      expect { artist.update }.to_not output.to_stdout
       expect(artist.records).to_not be([])
       expect(artist.records.sample).to be_a Record
     end
@@ -92,6 +78,65 @@ RSpec.describe Artist do
       (1..songs.length - 1).each do |i|
         expect(songs[i - 1].position <=> songs[i].position).to be <= 0
       end
+    end
+  end
+
+  describe '#words' do
+    it 'returns array of words in lyrics by artist in db' do
+      record = FactoryGirl.create(:record, artist: artist)
+      FactoryGirl.create(:song, record: record, lyrics: 'Here are four words')
+      expect(artist.words.sample).to be_a String
+      expect(artist.words.length).to eq(4)
+    end
+
+    it 'returns empty array if no lyrics are in db' do
+      expect(artist.words).to eq([])
+    end
+
+    it 'returns words in order of recording' do
+      record1 = FactoryGirl.create(:record, artist: artist, year: 2016)
+      record2 = FactoryGirl.create(:record, artist: artist, year: 1997)
+      record3 = FactoryGirl.create(:record, artist: artist, year: 1998)
+      FactoryGirl.create(:song, record: record1, lyrics: 'across the bluebird sky')
+      FactoryGirl.create(:song, record: record2, lyrics: 'chuckled prayer')
+      FactoryGirl.create(:song, record: record3, lyrics: 'tangled talk')
+      expected_result = %w(chuckled prayer tangled talk across the bluebird sky)
+      expect(artist.words).to eq(expected_result)
+    end
+  end
+
+  describe '#first_words' do
+    it 'returns first n words, up to WORD_SAMPLE_SIZE' do
+      artist.update
+      expect(artist.first_words.sample).to be_a String
+      expect(artist.first_words.length).to eq(WORD_SAMPLE_SIZE)
+    end
+
+    it 'returns false if no lyrics are in db' do
+      expect(artist.first_words).to eq(false)
+    end
+
+    it 'returns false if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
+      record = FactoryGirl.create(:record, artist: artist)
+      FactoryGirl.create(:song, record: record, lyrics: 'Here are four words')
+      expect(artist.first_words).to eq(false)
+    end
+  end
+
+  describe '#wordiness' do
+    it 'returns ratio of number unique first words to WORD_SAMPLE_SIZE' do
+      artist.update
+      expect(artist.wordiness).to be_between(0, 1).exclusive
+    end
+
+    it 'returns false if no lyrics are in db' do
+      expect(artist.wordiness).to be_nil
+    end
+
+    it 'returns false if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
+      record = FactoryGirl.create(:record, artist: artist)
+      FactoryGirl.create(:song, record: record, lyrics: 'Here are five more words')
+      expect(artist.wordiness).to be_nil
     end
   end
 
