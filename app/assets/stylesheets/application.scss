@@ -21,45 +21,13 @@ svg {
   height: 350px;
   width: 100%;
 
-  g.axis path, g.axis line {
-      fill: none;
-      stroke: red;
-  }
-  g.axis text, g.bubbles text {
-      fill: royalblue;
-      font-family: sans-serif;
-  }
-
-  g.bubbles line {
+ line {
       stroke-width:3;
       stroke: $axis-primary;
   }
-
-  g.bubbles circle {
-      fill: none;
-      stroke:rgb(255,0,64);
-      stroke-width:2;
-  }
-  g.bubbles text {
-      text-anchor:middle;
-      alignment-baseline:middle;
-      opacity:0;
-      pointer-events:all;
-      transition:1s;
-  }
-  g.bubbles text:hover {
-      opacity:1;
-  }
-
-  g.threads line {
-      fill:none;
-      stroke:navy;
-      opacity:0.5;
-  }
-
 }
 
-#artist-test {
+.artist-bubble {
   display: inline-block;
   width: 40px;
   height: 40px;
@@ -89,11 +57,6 @@ svg {
   margin-top: 0px;
 }
 
-
-.popup {
-margin-bottom:0px;
-}
-
 .popup:after {
   bottom: 100%;
   left: 50%;
@@ -109,11 +72,4 @@ margin-bottom:0px;
 
 .hidden {
   display: none;
-}
-
-
-#popup p {
-  margin: 0;
-    font-size: 12px;
-    line-height: 20px;
 }

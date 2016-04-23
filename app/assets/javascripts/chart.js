@@ -1,82 +1,60 @@
-// Adapted from Amelia Bellamy-Royds' js-fiddle here: http://fiddle.jshell.net/6cW9u/8/
+// Adapted from Amelia Bellamy-Royds' code here: http://fiddle.jshell.net/6cW9u/8/
+var svg = d3.select("svg");
+var chart = d3.select("div.chart")
 
-//create data array//
+// Set spatial variables
+var margins = 150;
+var padding = 5;
+var radius = 20;
+var diameter = 2 * radius;
+var popupWidth = 270;
+
+var width = window.getComputedStyle(svg[0][0])["width"];
+var height = window.getComputedStyle(svg[0][0])["height"];
+width = /(\d*)/.exec(width)[0];
+height = Math.min(/(\d*)/.exec(height)[0], width);
+
+var baselineHeight = (margins + height)/2;
+
+// Create data array
 var dataset = [];
 var N = 50, i = N;
-var randNorm = d3.random.normal(0.5,0.2)
-while(i--)dataset.push({
-  x: randNorm()
-});
+var randNorm = d3.random.normal(0.5, 0.2)
+while(i--)dataset.push({ x: randNorm() });
 
-var radius = 20;
-var diameter = 2*radius;
-var popupWidth = 270;
-var svg = d3.select("svg");
-var margin = 150;
-var padding = 6;
-var maxRadius = 25;
-
-var digits_regex = /(\d*)/;
-var width = window.getComputedStyle(svg[0][0])["width"];
-width = digits_regex.exec(width)[0];
-var height = window.getComputedStyle(svg[0][0])["height"];
-height = Math.min(digits_regex.exec(height)[0], width);
-
-var baselineHeight = (margin + height)/2;
-
-xValues = dataset.map(function(o) {
-    return o.x
-  });
-min = d3.min(xValues)
-max = d3.max(xValues)
+xValues = dataset.map(function(o) { return o.x });
+var min = d3.min(xValues)
+var max = d3.max(xValues)
 
 var xScale = d3.scale.linear()
-        .domain([min,max])
-        .range([margin,width-margin]);
+  .domain([min, max])
+  .range([margins - radius, width - margins - radius]);
 
+svg.append("line")
+  .attr("x1", xScale.range()[0] + radius)
+  .attr("x2", xScale.range()[1] + radius )
+  .attr("transform", "translate(0," + baselineHeight + ")");
 
-var threads = svg.append("g")
-    .attr("class", "threads");
-
-var bubbleLine = svg.append("g")
-        .attr("class", "bubbles")
-        .attr("transform",
-              "translate(0," + baselineHeight + ")");
-
-    bubbleLine.append("line")
-        .attr("x1", xScale.range()[0])
-        .attr("x2", xScale.range()[1]);
-//________________//
-
-//Create Quadtree to manage data conflicts & define functions//
+// Quadtree to manage data conflicts
 var quadtree = d3.geom.quadtree()
-        .x(function(d) { return xScale(d.x); })
-        .y(0) //constant, they are all on the same line
-        .extent([[xScale(min),0],[xScale(max),0]]);
-    //extent sets the domain for the tree
-    //using the format [[minX,minY],[maxX, maxY]]
-    //optional if you're adding all the data at once
+  .x(function(d) { return xScale(d.x); })
+  .y(0)
+  .extent([[xScale(min),0],[xScale(max),0]]);
 
 var quadroot = quadtree([]);
-          //create an empty adjacency tree;
-          //the function returns the root node.
 
-// Find the all nodes in the tree that overlap a given circle.
-// quadroot is the root node of the tree, scaledX is the position
-// of the circle on screen.
+// Function to find potential overlapping circles
 function findNeighbours(root, scaledX) {
   var neighbours = [];
   root.visit(function(node, x1, x2, y1, y2) {
     var p = node.point;
     if (p) {
-      var overlap, scaledX2 = xScale(p.x);
-      if (scaledX2 < scaledX) {
-        //the point is to the left of x
-        overlap = (scaledX2 + radius + padding >= scaledX - radius);
-      } else {
-        //the point is to the right
-        overlap = (scaledX + radius + padding >= scaledX2 - radius);
-      }
+      var overlap, neighborX = xScale(p.x);
+      if (neighborX < scaledX) { //the point is to the left of x
+        overlap = (neighborX + radius + padding >= scaledX - radius);
+      } else { //the point is to the right
+        overlap = (scaledX + radius + padding >= neighborX - radius);
+      };
       if (overlap) neighbours.push(p);
     }
     return (x1 - radius > scaledX + radius + padding) &&
@@ -85,56 +63,65 @@ function findNeighbours(root, scaledX) {
   return neighbours;
 }
 
+// Function to calculate offset when circles overlap
 function calculateOffset() {
   return function(d) {
     neighbours = findNeighbours(quadroot, xScale(d.x));
     var n = neighbours.length;
     var upperEnd = 0, lowerEnd = 0;
     if (n) {
-        //for every circle in the neighbour array
-        // calculate how much farther above
-        //or below this one has to be to not overlap;
-        //keep track of the max values
-        var j = n, occupied = new Array(n);
-        while (j--) {
-            var p = neighbours[j];
-            var hypotenuse = 2*radius + padding;
-            var base = xScale(d.x) - xScale(p.x);
-            var vertical = Math.sqrt(hypotenuse*hypotenuse - base*base);
-            occupied[j] = [p.offset + vertical, p.offset - vertical];
-            //max and min of the zone occupied
-            //by this circle at x=xScale(d.x)
-        }
-        occupied = occupied.sort(function(a,b) { return a[0] - b[0]; });
-        //sort by the max value of the occupied block
-        j = n;
-        lowerEnd = upperEnd = 1/0;//infinity
-        while (j--) {
-          //working from the end of the "occupied" array,
-          //i.e. the circle with highest positive blocking value:
-          if (lowerEnd > occupied[j][0]) {
-              upperEnd = Math.min(lowerEnd, occupied[j][0]);
-              lowerEnd = occupied[j][1];
-          } else {
-              lowerEnd = Math.min(lowerEnd, occupied[j][1]);
-          }
+      var j = n, occupied = new Array(n);
+      while (j--) {
+        var p = neighbours[j];
+        var hypotenuse = 2*radius + padding;
+        var base = xScale(d.x) - xScale(p.x);
+        var vertical = Math.sqrt(hypotenuse*hypotenuse - base*base);
+        occupied[j] = [p.offset + vertical, p.offset - vertical];
+      }
+      occupied = occupied.sort(function(a,b) { return a[0] - b[0]; });
+      j = n;
+      lowerEnd = upperEnd = 1/0; //infinity
+      while (j--) {
+        if (lowerEnd > occupied[j][0]) {
+          upperEnd = Math.min(lowerEnd, occupied[j][0]);
+          lowerEnd = occupied[j][1];
+        } else {
+          lowerEnd = Math.min(lowerEnd, occupied[j][1]);
         }
       }
-      //assign this circle the offset that is smaller
-      //in magnitude:
-      d.offset = (Math.abs(upperEnd)<Math.abs(lowerEnd)) ? upperEnd : lowerEnd;
-      return baselineHeight  - radius + d.offset + 'px'
+    }
+    d.offset = (Math.abs(upperEnd) < Math.abs(lowerEnd)) ? upperEnd : lowerEnd;
+    d.y = baselineHeight - radius + d.offset;
+    return d.y + 'px';
   };
 }
 
-// <div id="artist-test" style="position: absolute; left: 30px; top: 30px;">
+var setBubbleHeight = function(artistBubble, order) {
+  var scaledX = xScale(artistBubble.x) + 'px';
+  var startingY = '0px'
+  d3.select(this)
+    .style("left", scaledX)
+    .style("top", startingY)
+    .transition().delay(110 * order).duration(100)
+    .style("top", calculateOffset());
+  quadroot.add(artistBubble);
+};
 
-//Create circles!//
-var maxR = 0;
-
-var chart = $('div.chart')
-
-var chart = d3.select('div.chart')
+var attachPopUp = function(artistBubble) {
+  var bubble = d3.select(this)
+  var popup = d3.select('.popup');
+  bubble.on("mouseover", function() {
+    var x = xScale(artistBubble.x) - popupWidth/2 + radius;
+    var y = parseFloat(d3.select(this).style("top")) + diameter + padding + 10;
+    popup.classed("hidden", false);
+    popup.style("left", x + "px")
+      .style("top", y + "px")
+      .moveToFront();
+  })
+  bubble.on("mouseout", function() {
+    popup.classed("hidden", true);
+  })
+};
 
 d3.selection.prototype.moveToFront = function() {
   return this.each(function(){
@@ -142,37 +129,12 @@ d3.selection.prototype.moveToFront = function() {
   });
 };
 
-chart.selectAll("div")
-          .data(dataset)
-          .enter()
-          .append("div")
-          .attr("id", "artist-test")
-          .style("position", "absolute")
-          .each(function(d, i) {
-            //for each circle, calculate it's position
-            //then add it to the quadtree
-            //so the following circles will avoid it.
-            var scaledX = xScale(d.x) - radius + 'px';
-            var scaledY = '0px'
-            d3.select(this)
-                .style("left", scaledX)
-                .style("top", scaledY)
-                .transition().delay(110*i).duration(100)
-                .style("top", calculateOffset());
-            quadroot.add(d);
-
-            d3.select(this)
-                .on("mouseover", function() {
-        var xPosition = parseFloat(d3.select(this).style("left")) - popupWidth/2 + radius;
-        var yPosition = parseFloat(d3.select(this).style("top")) + diameter + padding + 10;
-                    var popup = d3.select('.popup');
-                  popup.classed("hidden", false);
-                    popup.style("left", xPosition + "px")
-                         .style("top", yPosition + "px")
-                         .moveToFront();
-                })
-                .on("mouseout", function() {
-                  var popup = d3.select('.popup');
-                  popup.classed("hidden", true);
-                })
-          });
+chart.selectAll("div.artist-bubble")
+  .data(dataset)
+  .enter()
+  .append("div")
+  .attr("class", "artist-bubble")
+  .attr("id", "artist-test")
+  .style("position", "absolute")
+  .each(setBubbleHeight)
+  .each(attachPopUp)
