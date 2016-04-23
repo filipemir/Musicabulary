@@ -15,11 +15,15 @@
 
 */
 
+$axis-primary: #E94953;
+
 svg {
+  height: 350px;
+  width: 100%;
 
   g.axis path, g.axis line {
       fill: none;
-      stroke: royalblue;
+      stroke: red;
   }
   g.axis text, g.bubbles text {
       fill: royalblue;
@@ -28,13 +32,13 @@ svg {
 
   g.bubbles line {
       stroke-width:5;
-      stroke:royalblue;
+      stroke: $axis-primary;
   }
 
   g.bubbles circle {
-      fill:rgba(255,0,64,0.5);
+      fill: none;
       stroke:rgb(255,0,64);
-      stroke-width:3;
+      stroke-width:2;
   }
   g.bubbles text {
       text-anchor:middle;
@@ -53,4 +57,20 @@ svg {
       opacity:0.5;
   }
 
+}
+
+#artist-test {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: solid 2px black;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-image: url("http://poly-graph.co/css/aesop.png");
+
+  &:hover {
+    border-color: $axis-primary;
+  }
 }
