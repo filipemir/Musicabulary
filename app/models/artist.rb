@@ -38,6 +38,7 @@ class Artist < ActiveRecord::Base
 
   def update
     discogs_id
+    get_discogs_image
     update_records if total_words < WORD_SAMPLE_SIZE
     update_wordiness
   end
@@ -91,6 +92,15 @@ class Artist < ActiveRecord::Base
       end
     end
     nil
+  end
+
+  def get_discogs_image
+    if image_discogs.nil?
+      response = discogs_query('/artists/' + discogs_id.to_s)
+      response ? self.image_discogs = response['images'].first['uri'] : nil
+      save
+    end
+    image_discogs
   end
 
   def get_artist_records_page(page_num)
