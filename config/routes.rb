@@ -15,5 +15,6 @@ Rails.application.routes.draw do
 
   authenticate do
     resources :favorites, only: [:index]
+    resources :artists, only: [:show]
   end
 end
