@@ -1,6 +1,7 @@
 // Adapted from Amelia Bellamy-Royds' code here: http://fiddle.jshell.net/6cW9u/8/
 var svg = d3.select("svg.bubble-chart");
 var chart = d3.select("div.top-artists")
+var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
 var margins = 150;
@@ -9,41 +10,29 @@ var radius = 20;
 var diameter = 2 * radius;
 var popupWidth = 270;
 
-var digitsRegex = /\d+/
+var digitsRegex = /\d+/;
+var prettyInteger = d3.format(",");
 
 var width = window.getComputedStyle(svg[0][0])["width"];
 var height = window.getComputedStyle(svg[0][0])["height"];
 width = digitsRegex.exec(width)[0];
 height = Math.min(digitsRegex.exec(height)[0], width);
+var canvasWidth = width - 2 * margins;
 
 var baselineHeight = (margins + height)/2;
 
-// Create data array
-// $.ajax({
-//   url: path,
-//   method: 'GET',
-//   datatype: 'json',
-//   data: { vote: voteDir },
-//   success: function(response) {
-//     if (response.status === '200') {
-//       voteTotal.text(response.votes);
-//     } else {
-//       flashError('You cannot vote on your own reviews');
-//     }
-//   },
-//   error: function(response) {
-//     flashError('You need to sign in or sign up before continuing.');
-//   }
-// });
+// Initialize data array
+dataset = []
+var N = bubbles[0].length, i = N;
+while(i--)dataset.push({ 
+  x: margins - radius + i * (canvasWidth / (N - 1))
+});
 
-var dataset = [];
-var N = 50, i = N;
-var randNorm = d3.random.normal(0.5, 0.2)
-while(i--)dataset.push({ x: randNorm() });
-
-xValues = dataset.map(function(o) { return o.x });
-var min = d3.min(xValues)
-var max = d3.max(xValues)
+// xValues = dataset.map(function(o) { return o.x });
+// var min = d3.min(xValues)
+// var max = d3.max(xValues)
+var min = 0;
+var max = 3500;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
@@ -115,19 +104,17 @@ function calculateOffset() {
   };
 }
 
-var setBubblePosition = function(artistBubble, order) {
-  var scaledX = xScale(artistBubble.x) + 'px';
-  var startingY = '0px'
-  d3.select(this)
-    .transition().delay(110 * order).duration(100)
-    .style("left", scaledX)
-    .style("top", calculateOffset());
-  quadroot.add(artistBubble);
+var setInitialPosition = function(d, i) {
+  var bubble = d3.select(this);
+  var x = d.x + 'px';
+  var y = '10%';
+  bubble.style("left", x)
+    .style("top", y);
 };
 
-var attachPopUp = function(artistBubble) {
-  var bubble = d3.select(this)
-  var artistID = digitsRegex.exec(bubble.attr("id"))[0]
+var attachPopUp = function(d, i) {
+  var bubble = d3.select(this);
+  var artistID = digitsRegex.exec(bubble.attr("id"))[0];
   var popup = d3.select('#popup-' + artistID);
   bubble.on("mouseover", function() {
     var x = parseFloat(d3.select(this).style("left")) - popupWidth/2 + radius;
@@ -141,12 +128,43 @@ var attachPopUp = function(artistBubble) {
   })
 };
 
-chart.selectAll("div.artist-bubble")
-  .data(dataset)
-  .each(attachPopUp)
-  .each(setBubblePosition)
+var setWordiness = function(d, i) {
+  var bubble = d3.select(this);
+  var artistID = digitsRegex.exec(bubble.attr("id"))[0];
+  var popup = d3.select('#popup-' + artistID);
 
-// Select all bubbles
-// For each bubble:
-// 1) Pull wordiness
-// 2) Place
+  request = $.ajax({
+    url: '/artists/' + artistID,
+    method: 'GET',
+    datatype: 'json',
+    success: function(response) {
+      placeBubble(response, bubble, d, i);
+    }
+  });
+};
+
+function placeBubble(response, bubble, d, i) {
+  if (response.wordiness !== null) {
+    d.x = response.wordiness;
+    var scaledX = xScale(d.x) + 'px';
+    bubble.transition().delay(110 * i).duration(100)
+      .style("left", scaledX)
+      .style("top", calculateOffset());
+    quadroot.add(d);
+    updatePopup(bubble, response.wordiness);
+  };
+}
+
+var updatePopup = function(bubble, wordiness) {
+  var artistID = digitsRegex.exec(bubble.attr("id"))[0];
+  var popup = d3.select("#popup-" + artistID);
+  popup.select(".wordiness").classed("hidden", false);
+  popup.select(".wordiness-number").text(prettyInteger(wordiness));
+  popup.select(".placeholder").remove();
+}
+
+bubbles.data(dataset)
+  .classed("hidden", false)
+  .each(setInitialPosition)
+  .each(attachPopUp)
+  .each(setWordiness)
