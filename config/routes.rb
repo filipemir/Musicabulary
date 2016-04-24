@@ -4,11 +4,17 @@ Rails.application.routes.draw do
     sessions: "sessions"
   }
 
-  root 'pages#show', page: 'welcome'
+  authenticated do
+    root 'artists#index', as: :authentictaed_root
+  end
+  unauthenticated do
+    root 'pages#show', page: 'welcome', as: :unauthenticated_root
+  end
 
   get "/pages/:page" => "pages#show"
 
   authenticate do
     resources :artists, only: [:index]
   end
+
 end
