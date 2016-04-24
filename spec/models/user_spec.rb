@@ -88,6 +88,11 @@ RSpec.describe User do
           expect(favorite.rank).to eq(i + 1)
         end
       end
+
+      it 'saves lastfm images to artists' do
+        user.update_favorites
+        expect(user.top_artists.sample.image_lastfm).to be_a String
+      end
     end
 
     describe '#update_info' do

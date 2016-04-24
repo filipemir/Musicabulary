@@ -48,6 +48,11 @@ RSpec.describe Artist do
       expect(artist.records).to_not be([])
       expect(artist.records.sample).to be_a Record
     end
+
+    it "updates discogs image" do
+      artist.update
+      expect(artist.image_discogs).to be_a String
+    end
   end
 
   describe '#songs_sorted' do
