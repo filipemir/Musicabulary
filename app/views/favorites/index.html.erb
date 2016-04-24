@@ -3,7 +3,14 @@
 
     <div class="bubbles">
       <% @artists.each_with_index do |artist, i| %>
-          <div class="artist-bubble" id="bubble-<%= artist.id %>" style="background-image: url('http://poly-graph.co/css/aesop.png');">
+
+          <div class="artist-bubble" id="bubble-<%= artist.id %>"
+          style="
+            background-image: url('http://poly-graph.co/css/aesop.png');
+            /* background-image: url('<%= artist.image_discogs %>'); */
+            left: <%= 87 - i * 80 / 50 %>%;
+            top: 10%;
+          ">
           </div>
       <% end %>
     </div>

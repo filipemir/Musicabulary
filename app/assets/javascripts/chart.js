@@ -115,13 +115,12 @@ function calculateOffset() {
   };
 }
 
-var setBubbleHeight = function(artistBubble, order) {
+var setBubblePosition = function(artistBubble, order) {
   var scaledX = xScale(artistBubble.x) + 'px';
   var startingY = '0px'
   d3.select(this)
-    .style("left", scaledX)
-    .style("top", startingY)
     .transition().delay(110 * order).duration(100)
+    .style("left", scaledX)
     .style("top", calculateOffset());
   quadroot.add(artistBubble);
 };
@@ -131,7 +130,7 @@ var attachPopUp = function(artistBubble) {
   var artistID = digitsRegex.exec(bubble.attr("id"))[0]
   var popup = d3.select('#popup-' + artistID);
   bubble.on("mouseover", function() {
-    var x = xScale(artistBubble.x) - popupWidth/2 + radius;
+    var x = parseFloat(d3.select(this).style("left")) - popupWidth/2 + radius;
     var y = parseFloat(d3.select(this).style("top")) + diameter + padding + 10;
     popup.classed("hidden", false);
     popup.style("left", x + "px")
@@ -144,9 +143,8 @@ var attachPopUp = function(artistBubble) {
 
 chart.selectAll("div.artist-bubble")
   .data(dataset)
-  .style("position", "absolute")
-  .each(setBubbleHeight)
   .each(attachPopUp)
+  .each(setBubblePosition)
 
 // Select all bubbles
 // For each bubble:
