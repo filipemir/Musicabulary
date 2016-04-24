@@ -5,7 +5,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       # @user.update
       sign_in @user
       flash[:success] = "Hello!"
-      redirect_to artists_path
+      redirect_to favorites_path
     end
   end
 end

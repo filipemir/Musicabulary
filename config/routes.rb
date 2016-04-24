@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   }
 
   authenticated do
-    root 'artists#index', as: :authentictaed_root
+    root 'favorites#index', as: :authenticated_root
   end
   unauthenticated do
     root 'pages#show', page: 'welcome', as: :unauthenticated_root
@@ -14,7 +14,6 @@ Rails.application.routes.draw do
   get "/pages/:page" => "pages#show"
 
   authenticate do
-    resources :artists, only: [:index]
+    resources :favorites, only: [:index]
   end
-
 end
