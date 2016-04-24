@@ -17,14 +17,22 @@
 
 $axis-primary: #E94953;
 
+div.top-artists {
+  position: relative;
+}
+
 svg {
-  height: 350px;
+  height: 800px;
   width: 100%;
 
  line {
       stroke-width:3;
       stroke: $axis-primary;
   }
+}
+
+.artist {
+  display: inline-block;
 }
 
 .artist-bubble {

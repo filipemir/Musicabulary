@@ -1,6 +1,6 @@
 // Adapted from Amelia Bellamy-Royds' code here: http://fiddle.jshell.net/6cW9u/8/
-var svg = d3.select("svg");
-var chart = d3.select("div.chart")
+var svg = d3.select("svg.bubble-chart");
+var chart = d3.select("div.top-artists")
 
 // Set spatial variables
 var margins = 150;
@@ -9,14 +9,33 @@ var radius = 20;
 var diameter = 2 * radius;
 var popupWidth = 270;
 
+var digitsRegex = /\d+/
+
 var width = window.getComputedStyle(svg[0][0])["width"];
 var height = window.getComputedStyle(svg[0][0])["height"];
-width = /(\d*)/.exec(width)[0];
-height = Math.min(/(\d*)/.exec(height)[0], width);
+width = digitsRegex.exec(width)[0];
+height = Math.min(digitsRegex.exec(height)[0], width);
 
 var baselineHeight = (margins + height)/2;
 
 // Create data array
+// $.ajax({
+//   url: path,
+//   method: 'GET',
+//   datatype: 'json',
+//   data: { vote: voteDir },
+//   success: function(response) {
+//     if (response.status === '200') {
+//       voteTotal.text(response.votes);
+//     } else {
+//       flashError('You cannot vote on your own reviews');
+//     }
+//   },
+//   error: function(response) {
+//     flashError('You need to sign in or sign up before continuing.');
+//   }
+// });
+
 var dataset = [];
 var N = 50, i = N;
 var randNorm = d3.random.normal(0.5, 0.2)
@@ -109,32 +128,27 @@ var setBubbleHeight = function(artistBubble, order) {
 
 var attachPopUp = function(artistBubble) {
   var bubble = d3.select(this)
-  var popup = d3.select('.popup');
+  var artistID = digitsRegex.exec(bubble.attr("id"))[0]
+  var popup = d3.select('#popup-' + artistID);
   bubble.on("mouseover", function() {
     var x = xScale(artistBubble.x) - popupWidth/2 + radius;
     var y = parseFloat(d3.select(this).style("top")) + diameter + padding + 10;
     popup.classed("hidden", false);
     popup.style("left", x + "px")
-      .style("top", y + "px")
-      .moveToFront();
+      .style("top", y + "px");
   })
   bubble.on("mouseout", function() {
     popup.classed("hidden", true);
   })
 };
 
-d3.selection.prototype.moveToFront = function() {
-  return this.each(function(){
-    this.parentNode.appendChild(this);
-  });
-};
-
 chart.selectAll("div.artist-bubble")
   .data(dataset)
-  .enter()
-  .append("div")
-  .attr("class", "artist-bubble")
-  .attr("id", "artist-test")
   .style("position", "absolute")
   .each(setBubbleHeight)
   .each(attachPopUp)
+
+// Select all bubbles
+// For each bubble:
+// 1) Pull wordiness
+// 2) Place

@@ -26,7 +26,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def update_favorites(timeframe = FAVORITES_TIMEFRAME, number = 10)
+  def update_favorites(timeframe = FAVORITES_TIMEFRAME, number = FAVORITES_NUM)
     artists_info = get_top_artists(timeframe, number)
     if artists_info
       artists_info.each do |artist_info|
@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def top_artists(timeframe = FAVORITES_TIMEFRAME, number = 10)
+  def top_artists(timeframe = FAVORITES_TIMEFRAME, number = FAVORITES_NUM)
     faves = favorites.order(:rank)
     result = []
     faves.each do |fave|
@@ -60,7 +60,6 @@ class User < ActiveRecord::Base
       u.image = auth.info.image
       u.playcount = auth.extra.raw_info.playcount
     end
-    # user.update_favorites
     user
   end
 
