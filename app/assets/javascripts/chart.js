@@ -18,6 +18,7 @@ var height = window.getComputedStyle(svg[0][0])["height"];
 width = digitsRegex.exec(width)[0];
 height = Math.min(digitsRegex.exec(height)[0], width);
 var canvasWidth = width - 2 * margins;
+var canvasHeight = height - 2 * margins;
 
 var baselineHeight = (margins + height)/2;
 
@@ -25,14 +26,15 @@ var baselineHeight = (margins + height)/2;
 dataset = []
 var N = bubbles[0].length, i = N;
 while(i--)dataset.push({ 
-  x: margins - radius + i * (canvasWidth / (N - 1))
+  startX: margins - radius + i * (canvasWidth / (N - 1)),
+  startY: margins / 2
 });
 
 // xValues = dataset.map(function(o) { return o.x });
 // var min = d3.min(xValues)
 // var max = d3.max(xValues)
 var min = 0;
-var max = 3500;
+var max = 1;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
@@ -46,7 +48,7 @@ svg.append("line")
 // Quadtree to manage data conflicts
 var quadtree = d3.geom.quadtree()
   .x(function(d) { return xScale(d.x); })
-  .y(0)
+  .y(function(d) { return d.y; })
   .extent([[xScale(min),0],[xScale(max),0]]);
 
 var quadroot = quadtree([]);
@@ -106,10 +108,7 @@ function calculateOffset() {
 
 var setInitialPosition = function(d, i) {
   var bubble = d3.select(this);
-  var x = d.x + 'px';
-  var y = '10%';
-  bubble.style("left", x)
-    .style("top", y);
+  bubble.style("left", d.startX + 'px').style("top", d.startY + 'px');
 };
 
 var attachPopUp = function(d, i) {
@@ -138,22 +137,41 @@ var setWordiness = function(d, i) {
     method: 'GET',
     datatype: 'json',
     success: function(response) {
-      placeBubble(response, bubble, d, i);
+      updateData(response.wordiness, bubble, d, i);
     }
   });
 };
 
-function placeBubble(response, bubble, d, i) {
-  if (response.wordiness !== null) {
-    d.x = response.wordiness;
-    var scaledX = xScale(d.x) + 'px';
-    bubble.transition().delay(110 * i).duration(100)
-      .style("left", scaledX)
-      .style("top", calculateOffset());
-    quadroot.add(d);
-    updatePopup(bubble, response.wordiness);
+function updateData(xValue, bubble, d, i) {
+  if (xValue !== null) {
+    d.x = xValue;
+    if (xValue > xScale.domain()[1]) {
+      rescale(xValue);
+    };
+    placeBubble.call(bubble[0][0], d, i);
   };
-}
+};
+
+function placeBubble(d, i) {
+    bubble = d3.select(this);
+    var xScaled = xScale(d.x) + 'px';
+    bubble.transition().delay(110 * i).duration(100)
+      .style("left", xScaled)
+      .style("top", calculateOffset());
+    bubble.classed("loading", false);
+    quadroot.add(d);
+    updatePopup(bubble, d.x);
+};
+
+function rescale(newValue) {
+  var max = newValue;
+  xScale.domain([min, max]);
+  quadroot = quadtree([]);
+  loaded = bubbles.filter(function(d, i) {
+    return !d3.select(this).classed('loading');
+  });
+  loaded.each(placeBubble);
+};
 
 var updatePopup = function(bubble, wordiness) {
   var artistID = digitsRegex.exec(bubble.attr("id"))[0];
