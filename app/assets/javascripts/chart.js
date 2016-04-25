@@ -5,7 +5,7 @@ var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
 var margins = 150;
-var padding = 5;
+var padding = 4;
 var radius = 20;
 var diameter = 2 * radius;
 var popupWidth = 270;
@@ -33,8 +33,8 @@ while(i--)dataset.push({
 // xValues = dataset.map(function(o) { return o.x });
 // var min = d3.min(xValues)
 // var max = d3.max(xValues)
-var min = 0;
-var max = 1;
+var min = 1000;
+var max = 1001;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
@@ -145,11 +145,22 @@ var setWordiness = function(d, i) {
 function updateData(xValue, bubble, d, i) {
   if (xValue !== null) {
     d.x = xValue;
-    if (xValue > xScale.domain()[1]) {
+    if (xValue < min || xValue > max) {
       rescale(xValue);
     };
     placeBubble.call(bubble[0][0], d, i);
   };
+};
+
+function rescale(newValue) {
+  min = d3.min([min, newValue])
+  max = d3.max([max, newValue]);
+  xScale.domain([min, max]);
+  quadroot = quadtree([]);
+  loaded = bubbles.filter(function(d, i) {
+    return !d3.select(this).classed('loading');
+  });
+  loaded.each(placeBubble);
 };
 
 function placeBubble(d, i) {
@@ -161,16 +172,6 @@ function placeBubble(d, i) {
     bubble.classed("loading", false);
     quadroot.add(d);
     updatePopup(bubble, d.x);
-};
-
-function rescale(newValue) {
-  var max = newValue;
-  xScale.domain([min, max]);
-  quadroot = quadtree([]);
-  loaded = bubbles.filter(function(d, i) {
-    return !d3.select(this).classed('loading');
-  });
-  loaded.each(placeBubble);
 };
 
 var updatePopup = function(bubble, wordiness) {
