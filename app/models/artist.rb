@@ -23,14 +23,8 @@ class Artist < ActiveRecord::Base
   end
 
   def first_words
-    if total_words < WORD_SAMPLE_SIZE
-      if records_loaded
-        return false
-      else
-        update_records
-      end
-    end
-    words[0..WORD_SAMPLE_SIZE - 1]
+    update_records unless records_loaded
+    total_words < WORD_SAMPLE_SIZE ? false : words[0..WORD_SAMPLE_SIZE - 1]
   end
 
   def wordiness
@@ -40,9 +34,6 @@ class Artist < ActiveRecord::Base
       result = result.uniq.length if result
       write_attribute(:wordiness, result)
       save
-    end
-    if id == 146
-      binding.pry
     end
     result
   end
@@ -98,6 +89,8 @@ class Artist < ActiveRecord::Base
     end
   end
 
+  private
+
   def update_record(title, year, discogs_id, release_type, role)
     if release_type == 'master' && role == 'Main'
       record = Record.where(artist: self, title: title, year: year).first_or_create
@@ -106,8 +99,6 @@ class Artist < ActiveRecord::Base
       reload
     end
   end
-
-  private
 
   def get_discogs_id
     response = discogs_query('/database/search', q: name)
