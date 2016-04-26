@@ -25,6 +25,10 @@ RSpec.configure do |config|
     end
   end
 
+  config.before :suite do
+    FAVORITES_NUM = 5
+  end
+
   config.before :each do
     DatabaseCleaner.start
   end

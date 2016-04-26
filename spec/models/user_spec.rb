@@ -47,11 +47,11 @@ RSpec.describe User do
 
   describe '#top_artists' do
     before :each do
-      10.times { FactoryGirl.create(:favorite, user: user) }
+      FAVORITES_NUM.times { FactoryGirl.create(:favorite, user: user) }
     end
 
     it 'returns top 10 artists in user favorites' do
-      expect(user.top_artists.length).to eq(10)
+      expect(user.top_artists.length).to eq(FAVORITES_NUM)
       expect(user.top_artists.sample).to be_a Artist
     end
 

@@ -12,18 +12,18 @@ class Song < ActiveRecord::Base
     increment_artist_total_words
   end
 
+  def total_words
+    lyrics.nil? ? 0 : lyrics.split.length
+  end
+
+  private
+
   def increment_artist_total_words
     unless lyrics.nil?
       artist.total_words += total_words
       artist.save
     end
   end
-
-  def total_words
-    lyrics.nil? ? 0 : lyrics.split.length
-  end
-
-  private
 
   def clean(attribute)
     string = attribute.dup

@@ -8,38 +8,45 @@ RSpec.describe Song do
   let(:fake_song) { FactoryGirl.create(:song, title: 'asdjssdfdssd') }
   let(:url)       { "http://genius.com/aesop-rock-big-bang-lyrics" }
 
-  describe '#update' do
+  describe '#update_lyrics' do
     it "updates song lyrics if lyrics weren't previously loaded" do
-      song.update
+      song.update_lyrics
       expect(WebMock).to have_requested(:get, url).once
       expect(song.lyrics).to include("man I really can't afford the oxen")
     end
 
     it "leaves lyrics unchanged if lyrics already in db" do
-      3.times { song.update }
+      3.times { song.update_lyrics }
       expect(WebMock).to have_requested(:get, url).once
       expect(song.lyrics).to include("man I really can't afford the oxen")
     end
 
     it "leaves lyrics as nil if no lyrics found" do
-      fake_song.update
+      fake_song.update_lyrics
       expect(fake_song.lyrics).to be_nil
+    end
+
+    it "increments the artist's count of words by the number of words in lyrics" do
+      expect(artist.total_words).to eq(0)
+      song.update_lyrics
+      artist.reload
+      expect(artist.total_words).to eq(1091)
     end
   end
 
-  describe '#word_count' do
+  describe '#total_words' do
     it "returns 0 if song has no lyrics or lyrics haven't been loaded" do
-      expect(song.word_count).to eq(0)
+      expect(song.total_words).to eq(0)
     end
 
     it "returns count of words if lyrics loaded" do
-      song.update
-      expect(song.word_count).to eq(1091)
+      song.update_lyrics
+      expect(song.total_words).to eq(1091)
     end
 
     it "returns 0 if no lyrics found" do
-      fake_song.update
-      expect(fake_song.word_count).to eq(0)
+      fake_song.update_lyrics
+      expect(fake_song.total_words).to eq(0)
     end
   end
 
@@ -55,5 +62,4 @@ RSpec.describe Song do
       expect(song.record).to be_a Record
     end
   end
-
 end
