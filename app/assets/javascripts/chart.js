@@ -14,9 +14,8 @@ var digitsRegex = /\d+/;
 var prettyInteger = d3.format(",");
 
 var width = window.getComputedStyle(svg[0][0])["width"];
-var height = window.getComputedStyle(svg[0][0])["height"];
 width = digitsRegex.exec(width)[0];
-height = Math.min(digitsRegex.exec(height)[0], width);
+height = 0.4 * width;
 var canvasWidth = width - 2 * margins;
 var canvasHeight = height - 2 * margins;
 
@@ -30,9 +29,6 @@ while(i--)dataset.push({
   startY: margins / 2
 });
 
-// xValues = dataset.map(function(o) { return o.x });
-// var min = d3.min(xValues)
-// var max = d3.max(xValues)
 var min = 1000;
 var max = 1001;
 
@@ -83,9 +79,9 @@ function calculateOffset() {
       var j = n, occupied = new Array(n);
       while (j--) {
         var p = neighbours[j];
-        var hypotenuse = 2*radius + padding;
+        var hypotenuse = 2 * radius + padding;
         var base = xScale(d.x) - xScale(p.x);
-        var vertical = Math.sqrt(hypotenuse*hypotenuse - base*base);
+        var vertical = Math.sqrt(hypotenuse * hypotenuse - base * base);
         occupied[j] = [p.offset + vertical, p.offset - vertical];
       }
       occupied = occupied.sort(function(a,b) { return a[0] - b[0]; });
@@ -137,13 +133,16 @@ var setWordiness = function(d, i) {
     method: 'GET',
     datatype: 'json',
     success: function(response) {
+      debugger;
       updateData(response.wordiness, bubble, d, i);
     }
   });
+
 };
 
 function updateData(xValue, bubble, d, i) {
-  if (xValue !== null) {
+  debugger;
+  if (xValue) {
     d.x = xValue;
     if (xValue < min || xValue > max) {
       rescale(xValue);

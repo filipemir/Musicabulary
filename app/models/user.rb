@@ -30,9 +30,10 @@ class User < ActiveRecord::Base
     artists_info = get_top_artists(timeframe, number)
     if artists_info
       artists_info.each do |artist_info|
-        artist = Artist.where(name: artist_info['name']).first_or_create
-        artist.image_lastfm = artist_info['image'][2]['#text']
-        artist.update
+        artist = Artist.where(name: artist_info['name']).first_or_create do |a|
+          a.lastfm_image = artist_info['image'][2]['#text']
+          a.update_info
+        end
         fave = Favorite.where(user: self, artist: artist, timeframe: timeframe).first_or_create
         fave.rank = artist_info['@attr']['rank'].to_i
         fave.playcount = artist_info['playcount']

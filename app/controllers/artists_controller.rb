@@ -1,14 +1,12 @@
 class ArtistsController < ApplicationController
-  def index
-    @artists = current_user.top_artists
-  end
-
   def show
     @artist = Artist.find(params['id'])
+    @total_words = @artist.total_words
+    @wordiness = @artist.wordiness
     if @artist
       response = {
         status: '200',
-        wordiness: @artist.wordiness
+        wordiness: @wordiness
       }
     else
       response = { status: '404' }

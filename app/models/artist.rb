@@ -11,13 +11,10 @@ class Artist < ActiveRecord::Base
 
   attr_writer :discogs_id
 
-  def total_words
-    words.length
-  end
-
   def words
     reload
     result = []
+    update_records unless records_loaded
     songs_sorted.each do |song|
       next if song.lyrics.nil?
       result += song.lyrics.split
@@ -26,30 +23,59 @@ class Artist < ActiveRecord::Base
   end
 
   def first_words
-    words.length >= WORD_SAMPLE_SIZE ? words[0..WORD_SAMPLE_SIZE - 1] : false
+    if total_words < WORD_SAMPLE_SIZE
+      if records_loaded
+        return false
+      else
+        update_records
+      end
+    end
+    words[0..WORD_SAMPLE_SIZE - 1]
   end
 
-  def update_wordiness
-    if first_words
-      self.wordiness = first_words.uniq.length
+  def wordiness
+    result = read_attribute(:wordiness)
+    if result.nil?
+      result = first_words
+      result = result.uniq.length if result
+      write_attribute(:wordiness, result)
       save
+    end
+    if id == 146
+      binding.pry
+    end
+    result
+  end
+
+  def songs_sorted
+    songs.sort do |a, b|
+      a_vals = [a.record.year, a.record.title, a.position]
+      b_vals = [b.record.year, b.record.title, b.position]
+      a_vals <=> b_vals
     end
   end
 
-  def update
+  def update_info
     discogs_id
-    get_discogs_image
-    update_records if total_words < WORD_SAMPLE_SIZE
-    update_wordiness
+    discogs_image
   end
 
   def discogs_id
     result = read_attribute(:discogs_id)
     if result.nil?
-      id = get_discogs_id
-      write_attribute(:discogs_id, id)
+      result = get_discogs_id
+      write_attribute(:discogs_id, result)
       save
-      return id
+    end
+    result
+  end
+
+  def discogs_image
+    result = read_attribute(:discogs_image)
+    if result.nil?
+      result = get_discogs_image
+      write_attribute(:discogs_image, result)
+      save
     end
     result
   end
@@ -59,24 +85,25 @@ class Artist < ActiveRecord::Base
     if page
       page['releases'].each do |release|
         break if total_words >= WORD_SAMPLE_SIZE
-        if release['type'] == 'master' && release['role'] == 'Main'
-          record = Record.where(
-            artist: self,
-            title: release['title'],
-            year: release['year']
-          ).first_or_create
-          record.discogs_id ||= release['id']
-          record.update
-        end
+        update_record(
+          release['title'],
+          release['year'],
+          release['id'],
+          release['type'],
+          release['role']
+        )
       end
+      records_loaded = true
+      save
     end
   end
 
-  def songs_sorted
-    songs.sort do |a, b|
-      a_vals = [a.record.year, a.record.title, a.position]
-      b_vals = [b.record.year, b.record.title, b.position]
-      a_vals <=> b_vals
+  def update_record(title, year, discogs_id, release_type, role)
+    if release_type == 'master' && role == 'Main'
+      record = Record.where(artist: self, title: title, year: year).first_or_create
+      record.discogs_id ||= discogs_id
+      record.update_songs
+      reload
     end
   end
 
@@ -95,12 +122,12 @@ class Artist < ActiveRecord::Base
   end
 
   def get_discogs_image
-    if image_discogs.nil?
-      response = discogs_query('/artists/' + discogs_id.to_s)
-      response ? self.image_discogs = response['images'].first['uri'] : nil
-      save
+    response = discogs_query('/artists/' + discogs_id.to_s)
+    if response
+      images = response['images']
+      return images.first['uri'] if images
     end
-    image_discogs
+    nil
   end
 
   def get_artist_records_page(page_num)
