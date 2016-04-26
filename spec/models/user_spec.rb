@@ -64,8 +64,8 @@ RSpec.describe User do
         )
         favorite.rank
       end
-      i = 1;
-      while i < ranks.length do
+      i = 1
+      while i < ranks.length
         expect(ranks[i]).to be >= ranks[i - 1]
         i += 1
       end
@@ -97,8 +97,8 @@ RSpec.describe User do
           )
           favorite.rank
         end
-        i = 1;
-        while i < ranks.length do
+        i = 1
+        while i < ranks.length
           expect(ranks[i]).to be >= ranks[i - 1]
           i += 1
         end
@@ -158,8 +158,8 @@ RSpec.describe User do
           )
           favorite.rank
         end
-        i = 1;
-        while i < ranks.length do
+        i = 1
+        while i < ranks.length
           expect(ranks[i]).to be >= ranks[i - 1]
           i += 1
         end

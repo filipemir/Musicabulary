@@ -21,47 +21,50 @@ def artist_loader(name)
     get_records_hash
   )
 
-  records['releases'].each do |release| if records
-    break if artist.total_words >= WORD_SAMPLE_SIZE
-    if release['type'] == 'master' && release['role'] == 'Main'
-      record_id = release['id']
-      record = Record.where(
-          artist: artist,
-          title: release['title'],
-          year: release['year']
-        ).first_or_create
-      record.discogs_id ||= record_id
+  if records
+    records['releases'].each do |release|
+      break if artist.total_words >= WORD_SAMPLE_SIZE
+      if release['type'] == 'master' && release['role'] == 'Main'
+        record_id = release['id']
+        record = Record.where(
+            artist: artist,
+            title: release['title'],
+            year: release['year']
+          ).first_or_create
+        record.discogs_id ||= record_id
 
-      tracks = discogs_query('/masters/' + record_id.to_s)['tracklist']
+        tracks = discogs_query('/masters/' + record_id.to_s)['tracklist']
 
-      tracks.each do |track|
-        song = Song.where(title: track['title'], record: record).first_or_create do |s|
-          position = track['position'].strip
-          position = position.rjust(3, '0') if Integer(position) rescue false
-          s.position = position
-        end
-
-        if song.lyrics.nil?
-          filepath = "./db/lyrics_archive/#{clean(artist.name)}-#{clean(song.title)}.csv"
-          if File.file?(filepath)
-            puts filepath
-            song.lyrics = CSV.read(filepath).flatten[0]
-            song.save
+        tracks.each do |track|
+          song = Song.where(title: track['title'], record: record).first_or_create do |s|
+            position = track['position'].strip
+            position = position.rjust(3, '0') if Integer(position) rescue false
+            s.position = position
           end
-          if song.lyrics.nil? || song.lyrics == ''
-            song.lyrics = scrape_song_lyrics(artist.name, song.title)
-            unless song.lyrics.nil?
-              CSV.open(filepath, 'wb') { |file| file << [song.lyrics] }
+
+          if song.lyrics.nil?
+            filepath = "./db/lyrics_archive/#{clean(artist.name)}-#{clean(song.title)}.csv"
+            if File.file?(filepath)
+              puts filepath
+              song.lyrics = CSV.read(filepath).flatten[0]
+              song.save
             end
+            if song.lyrics.nil? || song.lyrics == ''
+              song.lyrics = scrape_song_lyrics(artist.name, song.title)
+              unless song.lyrics.nil?
+                CSV.open(filepath, 'wb') { |file| file << [song.lyrics] }
+              end
+            end
+            song.save
+            artist.total_words += song.lyrics.split.length unless song.lyrics.nil?
+            artist.wordiness
+            artist.save
           end
-          song.save
-          artist.total_words += song.lyrics.split.length unless song.lyrics.nil?
-          artist.wordiness
-          artist.save
         end
       end
     end
   end
+
 end
 
 def lastfm_query(params)
@@ -142,12 +145,3 @@ artists = artists['topartists']['artist']
 artists.each_with_index do |artist, i|
   artist_loader(artist['name'])
 end
-
-# # artist_loader('Bob Dylan')
-# # artist_loader('Wilco')
-# # artist_loader('Bahamas')
-# # artist_loader('Shovels & Rope')
-# # artist_loader('Josh Ritter')
-# # artist_loader('The Decemberists')
-# # artist_loader('Justin Townes Earle')
-# # artist_loader('Aesop Rock')

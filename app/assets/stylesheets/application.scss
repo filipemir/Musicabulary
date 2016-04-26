@@ -17,7 +17,7 @@
 
 $axis-primary: #E94953;
 
-div.top-artists {
+.top-artists {
   position: relative;
 }
 
@@ -58,19 +58,19 @@ svg {
   height: auto;
   padding: 10px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
-  text-align:left;
+  text-align: left;
   background-color: #E94953;
   border-radius: 3px;
-  width:250px;
-  margin-left: 0px;
-  margin-top: 0px;
+  width: 250px;
+  margin-left: 0;
+  margin-top: 0;
 }
 
 .popup:after {
   bottom: 100%;
   left: 50%;
   border: solid transparent;
-  content: '';
+  content: "";
   height: 0;
   width: 0;
   position: absolute;
