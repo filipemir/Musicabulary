@@ -24,4 +24,11 @@ RSpec.configure do |config|
       VCR.use_cassette(name, options, &example)
     end
   end
+
+  config.before :each do
+    DatabaseCleaner.start
+  end
+  config.after :each do
+    DatabaseCleaner.clean
+  end
 end

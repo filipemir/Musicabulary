@@ -251,6 +251,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   coveralls
   d3-rails
+  database_cleaner
   devise
   dotenv-rails
   factory_girl_rails
