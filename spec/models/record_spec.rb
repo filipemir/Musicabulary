@@ -12,9 +12,11 @@ RSpec.describe Record do
     )
   end
 
-  before { record.update }
+  before :each do
+    record.update_songs
+  end
 
-  describe '#update' do
+  describe '#update_songs' do
     it "loads songs if songs were not previously loaded in db" do
       songs = record.songs
       expect(songs.length).to eq(10)
@@ -24,7 +26,7 @@ RSpec.describe Record do
     it "leaves songs unchanged if they had already been previously loaded" do
       songs = record.songs
       mod_times = songs.map { |song| song.updated_at }
-      record.update
+      record.update_songs
       updated_songs = record.songs
       updated_mod_times = updated_songs.map { |song| song.updated_at }
       expect(updated_mod_times).to eq(mod_times)
@@ -34,7 +36,7 @@ RSpec.describe Record do
       record.songs.where(title: 'Sister Cities').delete_all
       expect(record.songs.length).to eq(9)
 
-      record.update
+      record.update_songs
       search = record.songs.where(title: 'Sister Cities')
       expect(record.songs.length).to eq(10)
       expect(search.length).to eq(1)
