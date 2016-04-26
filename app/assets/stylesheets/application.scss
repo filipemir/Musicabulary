@@ -1,0 +1,84 @@
+/*
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+* or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any styles
+* defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+* file per style scope.
+*
+*= require_tree .
+*= require_self
+
+*/
+
+$axis-primary: #E94953;
+
+.top-artists {
+  position: relative;
+}
+
+svg {
+  height: 800px;
+  width: 100%;
+
+ line {
+      stroke-width:3;
+      stroke: $axis-primary;
+  }
+}
+
+.artist {
+  display: inline-block;
+}
+
+.artist-bubble {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: solid 2px black;
+  position: absolute;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: $axis-primary;
+
+  &:hover {
+    border-color: $axis-primary;
+  }
+}
+
+.popup {
+  color: white;
+  position: absolute;
+  height: auto;
+  padding: 10px;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
+  text-align: left;
+  background-color: #E94953;
+  border-radius: 3px;
+  width: 250px;
+  margin-left: 0;
+  margin-top: 0;
+}
+
+.popup:after {
+  bottom: 100%;
+  left: 50%;
+  border: solid transparent;
+  content: "";
+  height: 0;
+  width: 0;
+  position: absolute;
+  border-bottom-color: #E94953;
+  border-width: 10px;
+  margin-left: -10px;
+}
+
+.hidden {
+  display: none;
+}

@@ -26,13 +26,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def update_favorites(timeframe = "overall", number = 10)
+  def update_favorites(timeframe = FAVORITES_TIMEFRAME, number = FAVORITES_NUM)
     artists_info = get_top_artists(timeframe, number)
     if artists_info
       artists_info.each do |artist_info|
-        artist = Artist.where(name: artist_info['name']).first_or_create
-        artist.image_lastfm = artist_info['image'][2]['#text']
-        artist.update
+        artist = Artist.where(name: artist_info['name']).first_or_create do |a|
+          a.lastfm_image = artist_info['image'][2]['#text']
+          a.update_info
+        end
         fave = Favorite.where(user: self, artist: artist, timeframe: timeframe).first_or_create
         fave.rank = artist_info['@attr']['rank'].to_i
         fave.playcount = artist_info['playcount']
@@ -43,7 +44,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def top_artists(timeframe = "overall", number = 10)
+  def top_artists(timeframe = FAVORITES_TIMEFRAME, number = FAVORITES_NUM)
     faves = favorites.order(:rank)
     result = []
     faves.each do |fave|
@@ -60,7 +61,6 @@ class User < ActiveRecord::Base
       u.image = auth.info.image
       u.playcount = auth.extra.raw_info.playcount
     end
-    user.update_favorites
     user
   end
 

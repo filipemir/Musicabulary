@@ -47,22 +47,27 @@ RSpec.describe User do
 
   describe '#top_artists' do
     before :each do
-      10.times { FactoryGirl.create(:favorite, user: user) }
+      FAVORITES_NUM.times { FactoryGirl.create(:favorite, user: user) }
     end
 
     it 'returns top 10 artists in user favorites' do
-      expect(user.top_artists.length).to eq(10)
+      expect(user.top_artists.length).to eq(FAVORITES_NUM)
       expect(user.top_artists.sample).to be_a Artist
     end
 
     it 'returns artists sorted by rank in ascending order' do
-      user.top_artists.each_with_index do |artist, i|
+      ranks = user.top_artists.map do |artist|
         favorite = Favorite.find_by(
           user: user,
           artist: artist,
-          timeframe: 'overall'
+          timeframe: FAVORITES_TIMEFRAME
         )
-        expect(favorite.rank).to eq(i + 1)
+        favorite.rank
+      end
+      i = 1
+      while i < ranks.length
+        expect(ranks[i]).to be >= ranks[i - 1]
+        i += 1
       end
     end
   end
@@ -77,27 +82,33 @@ RSpec.describe User do
     describe '#update_favorites' do
       it 'updates user top artists' do
         user.update_favorites
-        expect(user.top_artists.length).to eq(10)
+        expect(user.top_artists.length).to eq(FAVORITES_NUM)
         expect(user.top_artists.sample).to be_a Artist
-        user.top_artists.each_with_index do |artist, i|
-          favorite = Favorite.find_by(
-            user: user,
-            artist: artist,
-            timeframe: 'overall'
-          )
-          expect(favorite.rank).to eq(i + 1)
-        end
       end
 
       it 'saves lastfm images to artists' do
         user.update_favorites
-        expect(user.top_artists.sample.image_lastfm).to be_a String
+        expect(user.top_artists.sample.lastfm_image).to be_a String
+        ranks = user.top_artists.map do |artist|
+          favorite = Favorite.find_by(
+            user: user,
+            artist: artist,
+            timeframe: FAVORITES_TIMEFRAME
+          )
+          favorite.rank
+        end
+        i = 1
+        while i < ranks.length
+          expect(ranks[i]).to be >= ranks[i - 1]
+          i += 1
+        end
       end
     end
 
     describe '#update_info' do
       before :each do
         user.update_info
+        user.save
       end
 
       it 'updates username' do
@@ -121,6 +132,7 @@ RSpec.describe User do
     describe '#update' do
       before :each do
         user.update
+        user.save
       end
 
       it 'updates username' do
@@ -136,11 +148,20 @@ RSpec.describe User do
       end
 
       it 'updates user top artists' do
-        expect(user.top_artists.length).to eq(10)
+        expect(user.top_artists.length).to eq(FAVORITES_NUM)
         expect(user.top_artists.sample).to be_a Artist
-        user.top_artists.each_with_index do |artist, i|
-          favorite = Favorite.find_by(user: user, artist: artist, timeframe: 'overall')
-          expect(favorite.rank).to eq(i + 1)
+        ranks = user.top_artists.map do |artist|
+          favorite = Favorite.find_by(
+            user: user,
+            artist: artist,
+            timeframe: FAVORITES_TIMEFRAME
+          )
+          favorite.rank
+        end
+        i = 1
+        while i < ranks.length
+          expect(ranks[i]).to be >= ranks[i - 1]
+          i += 1
         end
       end
     end

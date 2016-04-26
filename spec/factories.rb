@@ -10,7 +10,7 @@ FactoryGirl.define do
   factory :favorite do
     user
     artist
-    timeframe 'overall'
+    timeframe FAVORITES_TIMEFRAME
     sequence(:rank) { |n| n }
     playcount 666
   end
