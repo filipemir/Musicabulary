@@ -36,6 +36,11 @@ RSpec.describe Artist do
       expect(artist.records).to_not be([])
       expect(artist.records.sample).to be_a Record
     end
+
+    it "changes the state of records_loaded to true" do
+      artist.update_records
+      expect(artist.records_loaded).to eq(true)
+    end
   end
 
   describe '#update_info' do
@@ -114,12 +119,12 @@ RSpec.describe Artist do
       expect(artist.first_words.length).to eq(WORD_SAMPLE_SIZE)
     end
 
-    it 'returns false if no lyrics are in db' do
-      expect(fake_artist.first_words).to eq(false)
+    it 'returns nil if no lyrics are in db' do
+      expect(fake_artist.first_words).to eq(nil)
     end
 
-    it 'returns false if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
-      expect(taciturn_artist.first_words).to eq(false)
+    it 'returns nil if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
+      expect(taciturn_artist.first_words).to eq(nil)
     end
   end
 
@@ -128,12 +133,12 @@ RSpec.describe Artist do
       expect(artist.wordiness).to be_between(0, WORD_SAMPLE_SIZE).exclusive
     end
 
-    it 'returns false if no lyrics are in db' do
-      expect(fake_artist.wordiness).to eq(false)
+    it 'returns nil if no lyrics are in db' do
+      expect(fake_artist.wordiness).to eq(nil)
     end
 
-    it 'returns false if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
-      expect(taciturn_artist.wordiness).to eq(false)
+    it 'returns nil if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
+      expect(taciturn_artist.wordiness).to eq(nil)
     end
   end
 

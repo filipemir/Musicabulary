@@ -1,12 +1,12 @@
 class ArtistsController < ApplicationController
   def show
     @artist = Artist.find(params['id'])
-    @total_words = @artist.total_words
-    @wordiness = @artist.wordiness
     response = if @artist
       {
         status: '200',
-        wordiness: @wordiness
+        wordiness: @artist.wordiness,
+        total_words: @artist.total_words,
+        word_sample_size: WORD_SAMPLE_SIZE
       }
     else
       { status: '404' }

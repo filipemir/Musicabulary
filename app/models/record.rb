@@ -14,7 +14,6 @@ class Record < ActiveRecord::Base
           position = position.rjust(3, '0') if Integer(position) rescue false
           s.position = position
           s.update_lyrics
-          s.save
         end
       end
     end
