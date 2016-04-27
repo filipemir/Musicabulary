@@ -4,22 +4,22 @@ var chart = d3.select("div.top-artists")
 var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
-var margins = 150;
+var margins = 100;
 var padding = 4;
 var radius = 20;
 var diameter = 2 * radius;
 var popupWidth = 270;
 
 var digitsRegex = /\d+/;
-var prettyInteger = d3.format(",");
+var prettyInt = d3.format(",");
 
 var width = window.getComputedStyle(svg[0][0])["width"];
 width = digitsRegex.exec(width)[0];
-height = 0.4 * width;
+height = 0.3 * width;
 var canvasWidth = width - 2 * margins;
 var canvasHeight = height - 2 * margins;
 
-var baselineHeight = (margins + height)/2;
+var baselineHeight = height + margins;
 
 // Initialize data array
 dataset = []
@@ -133,15 +133,17 @@ var setWordiness = function(d, i) {
     method: 'GET',
     datatype: 'json',
     success: function(response) {
-      debugger;
-      updateData(response.wordiness, bubble, d, i);
+      if (response.wordiness !== null) {
+        updateData(response.wordiness, bubble, d, i)
+      } else {
+        updatePopup(bubble, false)
+      };
     }
   });
 
 };
 
 function updateData(xValue, bubble, d, i) {
-  debugger;
   if (xValue) {
     d.x = xValue;
     if (xValue < min || xValue > max) {
@@ -165,7 +167,7 @@ function rescale(newValue) {
 function placeBubble(d, i) {
     bubble = d3.select(this);
     var xScaled = xScale(d.x) + 'px';
-    bubble.transition().delay(110 * i).duration(100)
+    bubble.transition().delay(100 * i).duration(100)
       .style("left", xScaled)
       .style("top", calculateOffset());
     bubble.classed("loading", false);
@@ -173,11 +175,16 @@ function placeBubble(d, i) {
     updatePopup(bubble, d.x);
 };
 
-var updatePopup = function(bubble, wordiness) {
+var updatePopup = function(bubble, wordiness, total_words) {
   var artistID = digitsRegex.exec(bubble.attr("id"))[0];
   var popup = d3.select("#popup-" + artistID);
-  popup.select(".wordiness").classed("hidden", false);
-  popup.select(".wordiness-number").text(prettyInteger(wordiness));
+    popup.select(".wordiness").classed("hidden", false);
+  if (wordiness) { 
+    popup.select(".wordiness-number").text(prettyInt(wordiness));
+  } else {
+    text = "Sorry but I couldn't find enough lyrics for this artist";
+    popup.select(".wordiness").text(text);
+  }
   popup.select(".placeholder").remove();
 }
 

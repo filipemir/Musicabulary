@@ -24,7 +24,7 @@ class Artist < ActiveRecord::Base
 
   def first_words
     update_records unless records_loaded
-    total_words < WORD_SAMPLE_SIZE ? false : words[0..WORD_SAMPLE_SIZE - 1]
+    total_words < WORD_SAMPLE_SIZE ? nil : words[0..WORD_SAMPLE_SIZE - 1]
   end
 
   def wordiness
@@ -84,7 +84,7 @@ class Artist < ActiveRecord::Base
           release['role']
         )
       end
-      records_loaded = true
+      self.records_loaded = true
       save
     end
   end

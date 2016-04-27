@@ -1,12 +1,13 @@
 require_relative 'support/vcr'
 require_relative 'support/omniauth_macro'
+require_relative 'helpers'
 
 require 'coveralls'
 require 'webmock/rspec'
 
-Coveralls.wear!('rails')
+RSpec.configure do |config|
+  config.include Helpers
 
-RSpec.configure do |config|  
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
   end
@@ -27,12 +28,5 @@ RSpec.configure do |config|
 
   config.before :suite do
     FAVORITES_NUM = 5
-  end
-
-  config.before :each do
-    DatabaseCleaner.start
-  end
-  config.after :each do
-    DatabaseCleaner.clean
   end
 end

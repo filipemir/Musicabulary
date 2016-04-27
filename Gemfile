@@ -53,6 +53,7 @@ group :test do
   gem 'vcr'
   gem 'webmock'
   gem 'capybara-rails'
+  gem 'poltergeist'
   gem 'selenium-webdriver'
   gem 'launchy'
   gem 'factory_girl_rails'

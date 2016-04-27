@@ -2,12 +2,13 @@ class Song < ActiveRecord::Base
   belongs_to :record
   has_one :artist, through: :record
 
+  validates :title, uniqueness: { scope: :record }
+
   def update_lyrics
     result = read_attribute(:lyrics)
     if result.nil?
       result = scrape_song_lyrics
       write_attribute(:lyrics, result)
-      save
     end
     increment_artist_total_words
   end
