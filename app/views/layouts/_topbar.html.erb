@@ -1,0 +1,42 @@
+<!-- <nav class="clearfix">
+  <ul class="login-buttons">
+    <% if current_user %>
+      <li>
+        <%= link_to "Sign Out", destroy_user_session_path, method: :delete %>
+      </li>
+    <% else %>
+      <li>
+        <%= link_to "Sign In", new_user_session_path, method: :get %>
+      </li>
+    <% end %>
+    <li>
+      <%=  link_to "Somewhere Else", root_path %>
+    </li>
+  </div>
+</nav> -->
+
+
+<div id="intro">
+  <div id="name" class="larger">
+    <h1>MUSICABULARY</h1>
+    <div class="buttons">
+     <% if current_user %>
+        <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: :button %>
+    <% else %>
+        <%= button_to "Sign In", user_lastfm_omniauth_authorize_path, method: :get, class: :button %>
+    <% end %>
+    </div>
+    <!-- <div class="buttons">
+      <button data-hover='hi'>about</button>
+      <button>login</button>
+    </div> -->
+  </div>
+  <div class="section-arrow">
+    <div class="block"></div>
+    <div class="triangle left"></div>
+    <div class="triangle right"></div>
+    <div class="block"></div>
+  </div>
+</div>
+
+ <%= javascript_include_tag "topbar"%>

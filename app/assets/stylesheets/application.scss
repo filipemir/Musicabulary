@@ -1,0 +1,88 @@
+/*
+* This is a manifest file that'll be compiled into application.css, which will include all the files
+* listed below.
+*
+* Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+* or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+*
+* You're free to add application-wide styles to this file and they'll appear at the bottom of the
+* compiled file so the styles you add here take precedence over styles defined in any styles
+* defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+* file per style scope.
+*
+*= require_tree .
+*= require_self
+
+*/
+@import url(https://fonts.googleapis.com/css?family=Expletus+Sans|Droid+Sans|Open-Sans);
+
+$logo-font: 'Expletus Sans', "Montserrat", sans-serif;
+$header-font: "Droid Sans";
+$body-font: 'Open Sans', sans-serif;
+
+$beige-light: #fff2e7;
+$beige-darker: #d0cabf;
+$beige-darkest: #b9b1a8;
+$light-gray: #d3d3d3;
+$orange: darken(#de8642, 10%);
+$red: #e94953;
+$dark: #4b4d52;
+
+$background: $light-gray;
+
+$footer-height: 200px;
+
+body {
+  height: 100%;
+  background-color: $background;
+  font-family: $body-font;
+  padding-bottom: $footer-height;
+  position: relative;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font;
+}
+
+.container {
+  padding: 10px 30px 70px 70px;
+}
+
+.text {
+  max-width: 1000px;
+  margin: 0 auto;
+  font-size: 16px;
+
+  .title {
+  text-align: center;
+  }
+}
+
+.footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: $footer-height;
+  background-image: url(http://cdn.barnimages.com/wp-content/uploads/2015/09/2015-09-21-abigailkeenan-001-768x519@2x.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: 0 -500px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
+}
+
+.hidden {
+  display: none;
+}
