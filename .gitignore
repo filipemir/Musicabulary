@@ -12,6 +12,6 @@
 /tmp
 
 .env
-spec/cassettes/*
+spec/cassettes
 /coverage
-/db/lyrics_archive
+db/lyrics_archive

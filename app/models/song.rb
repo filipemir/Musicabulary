@@ -2,16 +2,29 @@ class Song < ActiveRecord::Base
   belongs_to :record
   has_one :artist, through: :record
 
-  def update
-    self.lyrics ||= scrape_song_lyrics
-    save
+  validates :title, uniqueness: { scope: :record }
+
+  def update_lyrics
+    result = read_attribute(:lyrics)
+    if result.nil?
+      result = scrape_song_lyrics
+      write_attribute(:lyrics, result)
+    end
+    increment_artist_total_words
   end
 
-  def word_count
-    lyrics ? lyrics.split.length : 0
+  def total_words
+    lyrics.nil? ? 0 : lyrics.split.length
   end
 
   private
+
+  def increment_artist_total_words
+    unless lyrics.nil?
+      artist.total_words += total_words
+      artist.save
+    end
+  end
 
   def clean(attribute)
     string = attribute.dup

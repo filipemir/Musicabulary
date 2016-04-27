@@ -5,7 +5,7 @@ class Record < ActiveRecord::Base
   include HTTParty
   base_uri 'https://api.discogs.com/'
 
-  def update
+  def update_songs
     tracks = get_songs
     if tracks
       tracks.each do |track|
@@ -13,11 +13,10 @@ class Record < ActiveRecord::Base
           position = track['position'].strip
           position = position.rjust(3, '0') if Integer(position) rescue false
           s.position = position
-          s.update
+          s.update_lyrics
         end
       end
     end
-    save
     reload
   end
 

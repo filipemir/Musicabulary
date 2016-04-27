@@ -37,22 +37,23 @@ gem 'spring',        group: :development
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+gem 'dotenv-rails'
 gem 'httparty'
-gem 'discogs-wrapper'
-gem 'musix_match'
 gem 'nokogiri'
 gem 'foundation-rails', '~> 6.2.1'
 gem 'devise'
 gem 'omniauth-lastfm'
+gem 'd3-rails'
 gem 'pry'
-gem 'dotenv-rails'
-gem 'pry-rails', group: :development
+gem 'pry-rails'
 
 group :test do
   gem 'rspec-rails'
+  gem 'database_cleaner'
   gem 'vcr'
   gem 'webmock'
   gem 'capybara-rails'
+  gem 'poltergeist'
   gem 'selenium-webdriver'
   gem 'launchy'
   gem 'factory_girl_rails'

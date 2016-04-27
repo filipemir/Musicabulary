@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe Artist do
 
   let(:artist) { FactoryGirl.create(:artist, name: 'Tom Waits') }
+  let(:fake_artist) { FactoryGirl.create(:artist, name: 'kmsdkjfdfgx') }
+  let(:taciturn_artist) { FactoryGirl.create(:artist, name: 'Russian Circles') }
 
   describe '#discogs_id' do
     it "returns artist's discogs id" do
@@ -22,9 +24,35 @@ RSpec.describe Artist do
     end
 
     it 'returns total number of words in lyrics stored in db' do
-      artist.update
+      artist.update_records
       expect(artist.total_words).to be_a Integer
-      expect(artist.total_words).to be > WORD_SAMPLE_SIZE
+      expect(artist.total_words).to be >= WORD_SAMPLE_SIZE
+    end
+  end
+
+  describe '#update_records' do
+    it "updates records" do
+      artist.update_records
+      expect(artist.records).to_not be([])
+      expect(artist.records.sample).to be_a Record
+    end
+
+    it "changes the state of records_loaded to true" do
+      artist.update_records
+      expect(artist.records_loaded).to eq(true)
+    end
+  end
+
+  describe '#update_info' do
+    it "updates artist's discogs id" do
+      expect(artist.read_attribute(:discogs_id)).to be_nil
+      artist.update_info
+      expect(artist.read_attribute(:discogs_id)).to eq(82294)
+    end
+
+    it "updates discogs image" do
+      artist.update_info
+      expect(artist.discogs_image).to be_a String
     end
   end
 
@@ -36,27 +64,8 @@ RSpec.describe Artist do
     end
   end
 
-  describe '#update' do
-    it "updates artist's discogs id" do
-      expect(artist.read_attribute(:discogs_id)).to be_nil
-      artist.update
-      expect(artist.read_attribute(:discogs_id)).to eq(82294)
-    end
-
-    it "updates records" do
-      artist.update
-      expect(artist.records).to_not be([])
-      expect(artist.records.sample).to be_a Record
-    end
-
-    it "updates discogs image" do
-      artist.update
-      expect(artist.image_discogs).to be_a String
-    end
-  end
-
   describe '#songs_sorted' do
-    before { artist.update }
+    before { artist.update_records }
 
     it "returns artist's songs" do
       expect(artist.songs_sorted.length).to eq(artist.songs.length)
@@ -88,60 +97,48 @@ RSpec.describe Artist do
 
   describe '#words' do
     it 'returns array of words in lyrics by artist in db' do
-      record = FactoryGirl.create(:record, artist: artist)
-      FactoryGirl.create(:song, record: record, lyrics: 'Here are four words')
       expect(artist.words.sample).to be_a String
-      expect(artist.words.length).to eq(4)
+      expect(artist.words.length).to be >= WORD_SAMPLE_SIZE
     end
 
     it 'returns empty array if no lyrics are in db' do
-      expect(artist.words).to eq([])
+      expect(fake_artist.words).to eq([])
     end
 
-    it 'returns words in order of recording' do
-      record1 = FactoryGirl.create(:record, artist: artist, year: 2016)
-      record2 = FactoryGirl.create(:record, artist: artist, year: 1997)
-      record3 = FactoryGirl.create(:record, artist: artist, year: 1998)
-      FactoryGirl.create(:song, record: record1, lyrics: 'across the bluebird sky')
-      FactoryGirl.create(:song, record: record2, lyrics: 'chuckled prayer')
-      FactoryGirl.create(:song, record: record3, lyrics: 'tangled talk')
-      expected_result = %w(chuckled prayer tangled talk across the bluebird sky)
-      expect(artist.words).to eq(expected_result)
+    it 'returns words sorted by release year in ascending order' do
+      words = artist.words
+      songs = artist.songs_sorted
+      expect(songs[0].lyrics).to include words[0]
+      expect(songs[-1].lyrics).to include words[-1]
     end
   end
 
   describe '#first_words' do
     it 'returns first n words, up to WORD_SAMPLE_SIZE' do
-      artist.update
       expect(artist.first_words.sample).to be_a String
       expect(artist.first_words.length).to eq(WORD_SAMPLE_SIZE)
     end
 
-    it 'returns false if no lyrics are in db' do
-      expect(artist.first_words).to eq(false)
+    it 'returns nil if no lyrics are in db' do
+      expect(fake_artist.first_words).to eq(nil)
     end
 
-    it 'returns false if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
-      record = FactoryGirl.create(:record, artist: artist)
-      FactoryGirl.create(:song, record: record, lyrics: 'Here are four words')
-      expect(artist.first_words).to eq(false)
+    it 'returns nil if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
+      expect(taciturn_artist.first_words).to eq(nil)
     end
   end
 
   describe '#wordiness' do
     it 'returns number of unique words within first words' do
-      artist.update
       expect(artist.wordiness).to be_between(0, WORD_SAMPLE_SIZE).exclusive
     end
 
     it 'returns nil if no lyrics are in db' do
-      expect(artist.wordiness).to be_nil
+      expect(fake_artist.wordiness).to eq(nil)
     end
 
     it 'returns nil if lyrics in db do not add up to WORD_SAMPLE_SIZE' do
-      record = FactoryGirl.create(:record, artist: artist)
-      FactoryGirl.create(:song, record: record, lyrics: 'Here are five more words')
-      expect(artist.wordiness).to be_nil
+      expect(taciturn_artist.wordiness).to eq(nil)
     end
   end
 

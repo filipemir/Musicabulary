@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User authentication:' do
 
   before :each do
-    visit root_path
+    visit unauthenticated_root_path
     click_on 'Sign In'
     click_on 'Sign in with Lastfm'
   end
@@ -20,8 +20,7 @@ feature 'User authentication:' do
   end
 
   scenario 'User sees top artists upon logging in' do
-    expect(page).to have_css('.top-artists')
-    expect(page).to have_css('.artist', count: 10)
+    expect(page).to have_current_path favorites_path
   end
 
 end
