@@ -128,43 +128,6 @@ RSpec.describe User do
         expect(fake_user.update_info).to eq(false)
       end
     end
-
-    describe '#update' do
-      before :each do
-        user.update
-        user.save
-      end
-
-      it 'updates username' do
-        expect(user.username).to eq('gopigasus')
-      end
-
-      it 'updates user image' do
-        expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
-      end
-
-      it 'updates user playcount' do
-        expect(user.playcount).to be >= 46500
-      end
-
-      it 'updates user top artists' do
-        expect(user.top_artists.length).to eq(FAVORITES_NUM)
-        expect(user.top_artists.sample).to be_a Artist
-        ranks = user.top_artists.map do |artist|
-          favorite = Favorite.find_by(
-            user: user,
-            artist: artist,
-            timeframe: FAVORITES_TIMEFRAME
-          )
-          favorite.rank
-        end
-        i = 1
-        while i < ranks.length
-          expect(ranks[i]).to be >= ranks[i - 1]
-          i += 1
-        end
-      end
-    end
   end
 
 end

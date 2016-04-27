@@ -9,10 +9,6 @@ class User < ActiveRecord::Base
   include HTTParty
   base_uri 'http://ws.audioscrobbler.com/2.0/'
 
-  def update
-    update_info && update_favorites
-  end
-
   def update_info
     user_info = get_user_info
     if user_info
