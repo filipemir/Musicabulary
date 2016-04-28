@@ -1,18 +1,7 @@
 /*
-* This is a manifest file that'll be compiled into application.css, which will include all the files
-* listed below.
-*
-* Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
-* or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
-*
-* You're free to add application-wide styles to this file and they'll appear at the bottom of the
-* compiled file so the styles you add here take precedence over styles defined in any styles
-* defined in the other CSS/SCSS files in this directory. It is generally better to create a new
-* file per style scope.
-*
+*= require normalize
 *= require_tree .
 *= require_self
-
 */
 
 @import url(https://fonts.googleapis.com/css?family=Expletus+Sans|Droid+Sans|Open+Sans);
@@ -39,14 +28,25 @@ body {
   font-family: $body-font;
   padding-bottom: $footer-height;
   position: relative;
+  z-index: 10;
+
+  &.sticky {
+    padding-top: 700px;
+  }
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: $header-font;
 }
 
-.container {
-  padding: 10px 30px 70px 70px;
+.main {
+  z-index: 0;
+  position: relative;
+  top: -140px;
+}
+
+.content {
+  padding: 10px 40px;
 }
 
 .text {
@@ -55,15 +55,15 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 16px;
 
   .title {
-  text-align: center;
+    text-align: center;
   }
 }
 
 .footer {
   position: absolute;
   right: 0;
-  bottom: 0;
   left: 0;
+  bottom: 0;
   width: 100%;
   height: $footer-height;
   background-image: url(http://cdn.barnimages.com/wp-content/uploads/2015/09/2015-09-21-abigailkeenan-001-768x519@2x.jpg);

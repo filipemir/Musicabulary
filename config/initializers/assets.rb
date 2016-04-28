@@ -1,2 +1,2 @@
 Rails.application.config.assets.version = '1.0'
-Rails.application.config.assets.precompile += %w( favorites.js sessions.js )
+Rails.application.config.assets.precompile += %w( favorites.js sessions.js  topbar.js)

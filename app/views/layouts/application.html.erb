@@ -16,30 +16,31 @@
       <%= content_tag :div, msg, id: key %>
     <% end %>
 
-    <div class="container">
-      <div class="text">
-        <span class="title"><h1>Musicians, by the word</h1></span>
-        <p>Cupcake ipsum dolor sit. Amet tiramisu I love gummies I love. Carrot cake gummi bears jujubes. Oat cake chocolate cake chocolate. Wafer I love jelly pie oat cake. Toffee I love I love sugar plum gingerbread candy cupcake chocolate bar I love. Liquorice carrot cake cotton candy gummies. Caramels topping candy canes oat cake powder I love tart jelly beans icing. Topping macaroon sugar plum I love. Croissant pie chocolate. Sweet roll cookie danish. Halvah I love sweet roll cookie icing icing.</p>
+    <div class="main">
 
-        <p>Chocolate cake cheesecake jelly beans powder pudding pudding. Lollipop soufflé toffee muffin. Gummi bears jelly-o gummies marshmallow dragée danish cake I love I love. Carrot cake croissant sweet dessert cookie I love tart.</p>
+      <div class="content">
+        <div class="text">
+          <span class="title"><h1>A Look At Lyrical Diversity In Music</h1></span>
+          <p>Cupcake ipsum dolor sit. Amet tiramisu I love gummies I love. Carrot cake gummi bears jujubes. Oat cake chocolate cake chocolate. Wafer I love jelly pie oat cake. Toffee I love I love sugar plum gingerbread candy cupcake chocolate bar I love. Liquorice carrot cake cotton candy gummies. Caramels topping candy canes oat cake powder I love tart jelly beans icing. Topping macaroon sugar plum I love. Croissant pie chocolate. Sweet roll cookie danish. Halvah I love sweet roll cookie icing icing.</p>
 
-        <p>Brownie I love sweet roll jelly-o dessert cupcake dragée. Muffin lemon drops macaroon chocolate cake I love. Lemon drops soufflé chocolate I love topping croissant fruitcake I love.</p>
-      </div>
-    </h1>
+          <p>Chocolate cake cheesecake jelly beans powder pudding pudding. Lollipop soufflé toffee muffin. Gummi bears jelly-o gummies marshmallow dragée danish cake I love I love. Carrot cake croissant sweet dessert cookie I love tart.</p>
 
-    <%= yield %>
+          <p>Brownie I love sweet roll jelly-o dessert cupcake dragée. Muffin lemon drops macaroon chocolate cake I love. Lemon drops soufflé chocolate I love topping croissant fruitcake I love.</p>
+        </div>
 
-      <div class="text">
-        <p>Chocolate cake cheesecake jelly beans powder pudding pudding. Lollipop soufflé toffee muffin. Gummi bears jelly-o gummies marshmallow dragée danish cake I love I love. Carrot cake croissant sweet dessert cookie I love tart.</p>
+        <%= yield %>
+
+        <div class="text">
+          <p>Chocolate cake cheesecake jelly beans powder pudding pudding. Lollipop soufflé toffee muffin. Gummi bears jelly-o gummies marshmallow dragée danish cake I love I love. Carrot cake croissant sweet dessert cookie I love tart.</p>
+        </div>
       </div>
 
     </div>
 
-    <div class="footer">
-    </div>
-
-  </div>
+    <div class="footer"></div>
 
   </body>
   <%= javascript_include_tag "application", params[:controller]%>
+
+  <%= javascript_include_tag "topbar"%>
 </html>

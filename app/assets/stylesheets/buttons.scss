@@ -1,23 +1,5 @@
 // http://codepen.io/madshaakansson/pen/iqDsG
-@import 'application';
 
-
-.buttons {
-  min-width: 500px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.button {
-  width: 200px;
-  background: transparent; 
-  outline: none;
-  position: relative;
-  border: 2px solid black;
-  padding: 15px 50px;
-  overflow: hidden;
-  cursor: pointer;
-}
 
 // /*button:before (attr data-hover)*/
 // button:hover:before{
