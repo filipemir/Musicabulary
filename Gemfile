@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.2.3'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.6'
 # Use postgresql as the database for Active Record
@@ -46,6 +48,9 @@ gem 'omniauth-lastfm'
 gem 'd3-rails'
 gem 'pry'
 gem 'pry-rails'
+
+gem 'rails_12factor', group: :production
+gem 'puma', group: :production
 
 group :test do
   gem 'rspec-rails'
