@@ -50,6 +50,7 @@ gem 'pry'
 gem 'pry-rails'
 
 gem 'rails_12factor', group: :production
+gem 'puma', group: :production
 
 group :test do
   gem 'rspec-rails'
