@@ -8,7 +8,6 @@ function init() {
     if (distanceY > shrinkOn) {
       $('#logo').addClass("small");
       $('.nav').addClass("sticky");
-      console.log(distanceY);
     } else {
       $('#logo').removeClass("small");
       $('.nav').removeClass("sticky");
@@ -33,4 +32,5 @@ function init() {
     };
   });
 }
+
 window.onload = init();
