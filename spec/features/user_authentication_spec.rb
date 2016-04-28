@@ -13,7 +13,6 @@ feature 'User authentication:' do
 
   scenario 'User can log out after logging in' do
     click_on 'Sign Out'
-    save_and_open_page
     expect(page).to have_content('Goodbye')
     expect(page).to have_button('Sign In')
     expect(page).to_not have_content('Sign Out')

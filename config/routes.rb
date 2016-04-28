@@ -4,7 +4,6 @@ Rails.application.routes.draw do
     sessions: "sessions"
   }
 
-
   authenticated do
     root 'favorites#index', as: :authenticated_root
   end
