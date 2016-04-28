@@ -14,7 +14,7 @@ $beige-light: #fff2e7;
 $beige-darker: #d0cabf;
 $beige-darkest: #b9b1a8;
 $light-gray: #d3d3d3;
-$orange: darken(#de8642, 10%);
+$orange: #de8642;
 $red: #e94953;
 $dark: #4b4d52;
 
@@ -84,13 +84,24 @@ h1, h2, h3, h4, h5, h6 {
 .button {
   width: 100px;
   background: transparent; 
-  border: 2px solid black;
   padding: 15px 0;
   overflow: hidden;
+  border: none;
   cursor: pointer;
   position: fixed;
   top: 18px;
   right: 40px;
+  transition: background-color 0.1s;
+  background-position: center center;
+}
+
+.sign-in:hover {
+  background-color: #B90000;
+  color: transparent;
+  border-color: #B90000;
+  background-image: url(http://static-web.last.fm/static/images/footer_logo.ddcfd65712a6.png);
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .footer {
