@@ -5,8 +5,8 @@ var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
 var margins = 100;
-var padding = 4;
 var radius = 20;
+var padding = 4;
 var diameter = 2 * radius;
 var popupWidth = 270;
 
