@@ -2,28 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <title><%= content_for?(:title) ? yield(:title) : "foundation-rails" %></title>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Musicabulary</title>
     <%= stylesheet_link_tag "application" %>
     <%= csrf_meta_tags %>
   </head>
 
   <body>
 
-    <% if current_user %>
-      <%= button_to "Sign Out", destroy_user_session_path, method: :delete %>
-    <% else %>
-      <%= button_to "Sign In", new_user_session_path, method: :get %>
-    <% end %>
+    <%= render 'layouts/topbar' %>
 
-    <% flash.each do |key, msg| %>
-      <%= content_tag :div, msg, id: key %>
-    <% end %>
+    <div class="main">
 
-    <%= yield %>
+      <% flash.each do |key, msg| %>
+        <%= content_tag :div, msg, id: key %>
+      <% end %>
+
+      <div class="content">
+
+        <%= yield %>
+
+      </div>
+
+    </div>
+
+  </div>
+  <%= render 'layouts/footer' %>
 
   </body>
-    <%= javascript_include_tag "application", params[:controller]%>
+
+
+  <%= javascript_include_tag "application", params[:controller]%>
+
 </html>

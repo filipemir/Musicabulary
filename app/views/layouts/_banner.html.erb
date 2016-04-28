@@ -1,0 +1,22 @@
+<div class="banner clearfix">
+
+  <div class="nav">
+    <h1 id="logo">MUSICABULARY</h1>
+
+   <% if current_user %>
+      <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: :button %>
+    <% else %>
+      <%= button_to "Sign In", user_lastfm_omniauth_authorize_path, method: :get, class: :button %>
+    <% end %>
+
+    </div>
+  </div>
+
+  <div class="section-arrow">
+    <div class="block"></div>
+    <div class="triangle left"></div>
+    <div class="triangle right"></div>
+    <div class="block"></div>
+  </div>
+
+</div>

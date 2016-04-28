@@ -5,7 +5,6 @@ feature 'User authentication:' do
   before :each do
     visit unauthenticated_root_path
     click_on 'Sign In'
-    click_on 'Sign in with Lastfm'
   end
 
   scenario 'User can login with lastfm' do

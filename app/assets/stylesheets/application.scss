@@ -1,82 +1,118 @@
 /*
-* This is a manifest file that'll be compiled into application.css, which will include all the files
-* listed below.
-*
-* Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
-* or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
-*
-* You're free to add application-wide styles to this file and they'll appear at the bottom of the
-* compiled file so the styles you add here take precedence over styles defined in any styles
-* defined in the other CSS/SCSS files in this directory. It is generally better to create a new
-* file per style scope.
-*
-*= require_tree .
+*= require normalize
 *= require_self
-
+*= require_tree .
 */
 
-$axis-primary: #E94953;
+@import url(https://fonts.googleapis.com/css?family=Expletus+Sans|Droid+Sans|Open+Sans);
 
-.top-artists {
+$logo-font: 'Expletus Sans', "Montserrat", sans-serif;
+$header-font: "Droid Sans";
+$body-font: 'Open Sans', sans-serif;
+
+$beige-light: #fff2e7;
+$beige-darker: #d0cabf;
+$beige-darkest: #b9b1a8;
+$light-gray: #d3d3d3;
+$orange: darken(#de8642, 10%);
+$red: #e94953;
+$dark: #4b4d52;
+
+$background: $light-gray;
+
+$footer-height: 150px;
+
+
+html {
+  height: 100%
+}
+
+body {
+  min-height: calc(100% - 150px);
+  background-color: $background;
+  font-family: $body-font;
+  padding-bottom: $footer-height;
   position: relative;
-}
+  z-index: 10;
 
-svg {
-  height: 800px;
-  width: 100%;
-
- line {
-      stroke-width:3;
-      stroke: $axis-primary;
+  &.sticky {
+    padding-top: 700px;
   }
 }
 
-.artist {
-  display: inline-block;
+h1, h2, h3, h4, h5, h6 {
+  font-family: $header-font;
 }
 
-.artist-bubble {
-  display: inline-block;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  border: solid 2px black;
-  position: absolute;
-  background-repeat: no-repeat;
-  background-position: center center;
+.main {
+  z-index: 0;
+  position: relative;
+  top: 100px;
+}
+
+.content {
+  padding: 10px 40px;
+}
+
+.text {
+  max-width: 1000px;
+  margin: 0 auto;
+  font-size: 16px;
+
+  .title {
+    text-align: center;
+  }
+}
+
+#logo {
+  font-family: $logo-font;
+  letter-spacing: 1em;
+  font-size: 50px;
+  transition: all 0.5s;
+
+  &.small {
+    font-size: 24px;
+  }
+}
+
+.banner, .topbar, .footer {
+  background-image: url(http://cdn.barnimages.com/wp-content/uploads/2015/09/2015-09-21-abigailkeenan-001-768x519@2x.jpg);
   background-size: cover;
-  background-color: $axis-primary;
-
-  &:hover {
-    border-color: $axis-primary;
-  }
+  background-attachment: fixed;
 }
 
-.popup {
-  color: white;
-  position: absolute;
-  height: auto;
-  padding: 10px;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
-  text-align: left;
-  background-color: #E94953;
-  border-radius: 3px;
-  width: 250px;
-  margin-left: 0;
-  margin-top: 0;
+.button {
+  width: 100px;
+  background: transparent; 
+  border: 2px solid black;
+  padding: 15px 0;
+  overflow: hidden;
+  cursor: pointer;
+  position: fixed;
+  top: 18px;
+  right: 40px;
 }
 
-.popup:after {
-  bottom: 100%;
-  left: 50%;
-  border: solid transparent;
-  content: "";
-  height: 0;
-  width: 0;
+.footer {
   position: absolute;
-  border-bottom-color: #E94953;
-  border-width: 10px;
-  margin-left: -10px;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height;
+  background-position: 0 -500px;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix {
+    *zoom: 1;
 }
 
 .hidden {
