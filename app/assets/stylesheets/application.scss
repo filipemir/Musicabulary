@@ -20,10 +20,15 @@ $dark: #4b4d52;
 
 $background: $light-gray;
 
-$footer-height: 200px;
+$footer-height: 150px;
+
+
+html {
+  height: 100%
+}
 
 body {
-  height: 100%;
+  min-height: calc(100% - 150px);
   background-color: $background;
   font-family: $body-font;
   padding-bottom: $footer-height;
@@ -42,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 .main {
   z-index: 0;
   position: relative;
-  top: -140px;
+  top: 100px;
 }
 
 .content {
@@ -59,6 +64,35 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+#logo {
+  font-family: $logo-font;
+  letter-spacing: 1em;
+  font-size: 50px;
+  transition: all 0.5s;
+
+  &.small {
+    font-size: 24px;
+  }
+}
+
+.banner, .topbar, .footer {
+  background-image: url(http://cdn.barnimages.com/wp-content/uploads/2015/09/2015-09-21-abigailkeenan-001-768x519@2x.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.button {
+  width: 100px;
+  background: transparent; 
+  border: 2px solid black;
+  padding: 15px 0;
+  overflow: hidden;
+  cursor: pointer;
+  position: fixed;
+  top: 18px;
+  right: 40px;
+}
+
 .footer {
   position: absolute;
   right: 0;
@@ -66,9 +100,6 @@ h1, h2, h3, h4, h5, h6 {
   bottom: 0;
   width: 100%;
   height: $footer-height;
-  background-image: url(http://cdn.barnimages.com/wp-content/uploads/2015/09/2015-09-21-abigailkeenan-001-768x519@2x.jpg);
-  background-size: cover;
-  background-attachment: fixed;
   background-position: 0 -500px;
 }
 

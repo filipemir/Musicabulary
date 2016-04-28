@@ -1,0 +1,31 @@
+@import 'application';
+
+// http://codepen.io/gregkohn/pen/xbzKMo
+// background photo by: http://www.abigailkeenan.com/
+// found here: http://barnimages.com/record-store/
+
+$bar-height: 100px;
+
+.topbar {
+  position: fixed;
+  height: $bar-height;
+
+  z-index: 3;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+
+  background-position: 0 -200px;
+}
+
+.nav {
+  margin: 0 auto;
+  text-align: center;
+  font-weight: 400;
+  margin: auto;
+
+  position: fixed;
+  top: 15px;
+}
+
