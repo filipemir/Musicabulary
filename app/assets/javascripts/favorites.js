@@ -13,20 +13,23 @@ var popupWidth = 270;
 var digitsRegex = /\d+/;
 var prettyInt = d3.format(",");
 
-var width = window.getComputedStyle(svg[0][0])["width"];
+    var width = parseInt(d3.select("#graph").style("width")) - margin * 2;
+    // var height = parseInt(d3.select("#graph").style("height")) - margin * 2;
+debugger;
+// var width = window.getComputedStyle(svg[0][0])["width"];
 width = digitsRegex.exec(width)[0];
 height = 0.3 * width;
 var canvasWidth = width - 2 * margins;
 var canvasHeight = height - 2 * margins;
 
-var baselineHeight = height + margins;
+var baselineHeight = height / 2;
 
 // Initialize data array
 dataset = []
 var N = bubbles[0].length, i = N;
 while(i--)dataset.push({ 
   startX: margins - radius + i * (canvasWidth / (N - 1)),
-  startY: margins / 2
+  startY: 0
 });
 
 var min = 1000;
@@ -188,8 +191,46 @@ var updatePopup = function(bubble, wordiness, total_words) {
   popup.select(".placeholder").remove();
 }
 
+var borderPath = svg.append("rect")
+  .attr("x", 0)
+  .attr("y", 0)
+  .attr("height", height)
+  .attr("width", width)
+  .style("stroke", 'black')
+  .style("fill", "none")
+  .style("stroke-width", 1);
+
 bubbles.data(dataset)
   .classed("hidden", false)
   .each(setInitialPosition)
   .each(attachPopUp)
   .each(setWordiness)
+
+
+// function resize() {
+//     var width = parseInt(d3.select("#graph").style("width")) - margin * 2;
+//     var height = parseInt(d3.select("#graph").style("height")) - margin * 2;
+
+//     /* Update the range of the scale with new width/height */
+//     xScale.range([0, width]).nice(d3.time.year);
+//     yScale.range([height, 0]).nice();
+
+//      Update the axis with the new scale 
+//     graph.select('.x.axis')
+//       .attr("transform", "translate(0," + height + ")")
+//       .call(xAxis);
+
+//     graph.select('.y.axis')
+//       .call(yAxis);
+
+//     /* Force D3 to recalculate and update the line */
+//     graph.selectAll('.line')
+//       .attr("d", line);
+//   }
+
+//   d3.select(window).on('resize', resize); 
+
+//   resize();
+// });
+
+
