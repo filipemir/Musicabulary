@@ -14,7 +14,7 @@ feature 'User authentication:' do
   scenario 'User can log out after logging in' do
     click_on 'Sign Out'
     expect(page).to have_content('Goodbye')
-    expect(page).to have_content('Sign in')
+    expect(page).to have_button('Sign In')
     expect(page).to_not have_content('Sign Out')
   end
 

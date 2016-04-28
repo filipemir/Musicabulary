@@ -6,7 +6,7 @@
    <% if current_user %>
       <%= button_to "Sign Out", destroy_user_session_path, method: :delete, class: :button %>
     <% else %>
-      <%= button_to "Sign In", user_lastfm_omniauth_authorize_path, method: :get, class: :button %>
+      <%= button_to "Sign In", user_lastfm_omniauth_authorize_path, method: :get, class: "button sign-in" %>
     <% end %>
 
     </div>
