@@ -1,5 +1,3 @@
-require_relative 'modules/genius'
-
 class Song < ActiveRecord::Base
   include Genius
 

@@ -52,7 +52,8 @@ def create_artists(artists_info, user)
         user: user,
         artist: artist
       ).first_or_create
-      fave.rank = i.to_s
+      fave.rank = (i + 1).to_s
+      fave.save
     end
     artist.update_info
     records = artist.get_artist_records_page(1)

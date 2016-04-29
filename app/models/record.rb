@@ -1,5 +1,3 @@
-require_relative 'modules/discogs'
-
 class Record < ActiveRecord::Base
   include Discogs
 

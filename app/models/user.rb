@@ -1,5 +1,3 @@
-require_relative 'modules/lastfm'
-
 class User < ActiveRecord::Base
   include LastFM
 

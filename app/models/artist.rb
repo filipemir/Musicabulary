@@ -1,5 +1,3 @@
-require_relative 'modules/discogs'
-
 class Artist < ActiveRecord::Base
   include Discogs
 
