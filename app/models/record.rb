@@ -7,7 +7,7 @@ class Record < ActiveRecord::Base
   has_many :songs
 
   def update_songs
-    tracks = get_songs
+    tracks = get_record_songs
     if tracks
       tracks.each do |track|
         Song.where(title: track['title'], record: self).first_or_create do |s|
@@ -19,12 +19,5 @@ class Record < ActiveRecord::Base
       end
     end
     reload
-  end
-
-  private
-
-  def get_songs
-    record = discogs_query('/masters/' + discogs_id.to_s)
-    record ? record['tracklist'] : false
   end
 end

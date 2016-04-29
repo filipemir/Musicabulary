@@ -37,6 +37,11 @@ module Discogs
     false
   end
 
+  def get_record_songs
+    record = discogs_query('/masters/' + discogs_id.to_s)
+    record ? record['tracklist'] : false
+  end
+
   def discogs_query(path, params = {})
     params = params.merge(token: ENV['DISCOGS_TOKEN'])
     response = self.class.get(path, query: params)
