@@ -22,6 +22,15 @@ module LastFM
     result ? result['topartists']['artist'] : false
   end
 
+  def get_lastfm_top_artists(number, page)
+    result = lastfm_query(
+      method: 'chart.gettopartists',
+      limit: number,
+      page: page
+    )
+    result ? result['artists']['artist'] : false
+  end
+
   def lastfm_query(params)
     params = params.merge(
       api_key: ENV['LASTFM_KEY'],

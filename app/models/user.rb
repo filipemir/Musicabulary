@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :favorites
   has_many :artists, through: :favorites
 
+  validates :username, uniqueness: true
 
   def update_info
     user_info = get_user_info
