@@ -1,10 +1,10 @@
 // Adapted from Amelia Bellamy-Royds' code here: http://fiddle.jshell.net/6cW9u/8/
-var svg = d3.select("svg.bubble-chart");
 var chart = d3.select("div.top-artists")
+var svg = d3.select("svg.bubble-chart");
 var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
-var margins = 100;
+var margins = 200;
 var radius = 20;
 var padding = 4;
 var diameter = 2 * radius;
@@ -13,14 +13,10 @@ var popupWidth = 270;
 var digitsRegex = /\d+/;
 var prettyInt = d3.format(",");
 
-    var width = parseInt(d3.select("#graph").style("width")) - margin * 2;
-    // var height = parseInt(d3.select("#graph").style("height")) - margin * 2;
-debugger;
-// var width = window.getComputedStyle(svg[0][0])["width"];
-width = digitsRegex.exec(width)[0];
-height = 0.3 * width;
-var canvasWidth = width - 2 * margins;
-var canvasHeight = height - 2 * margins;
+var width = parseInt(d3.select(".top-artists").style("width")) - margins * 2;
+var height = parseInt(d3.select(".top-artists").style("width")) - margins * 2;;
+var canvasWidth = width;
+var canvasHeight = height;
 
 var baselineHeight = height / 2;
 
@@ -37,8 +33,8 @@ var max = 1001;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
-  .range([margins - radius, width - margins - radius]);
-
+  .range([margins, width + margins]);
+debugger;
 svg.append("line")
   .attr("x1", xScale.range()[0] + radius)
   .attr("x2", xScale.range()[1] + radius )
@@ -190,15 +186,6 @@ var updatePopup = function(bubble, wordiness, total_words) {
   }
   popup.select(".placeholder").remove();
 }
-
-var borderPath = svg.append("rect")
-  .attr("x", 0)
-  .attr("y", 0)
-  .attr("height", height)
-  .attr("width", width)
-  .style("stroke", 'black')
-  .style("fill", "none")
-  .style("stroke-width", 1);
 
 bubbles.data(dataset)
   .classed("hidden", false)
