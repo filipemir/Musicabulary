@@ -1,9 +1,10 @@
+require_relative 'modules/discogs'
+
 class Record < ActiveRecord::Base
+  include Discogs
+
   belongs_to :artist
   has_many :songs
-
-  include HTTParty
-  base_uri 'https://api.discogs.com/'
 
   def update_songs
     tracks = get_songs
@@ -25,14 +26,5 @@ class Record < ActiveRecord::Base
   def get_songs
     record = discogs_query('/masters/' + discogs_id.to_s)
     record ? record['tracklist'] : false
-  end
-
-  def discogs_query(path, params = {})
-    params = params.merge(token: ENV['DISCOGS_TOKEN'])
-    response = self.class.get(path, query: params)
-    success = response.empty? || response['message'] != 'The requested resource was not found.'
-    success ? response : false
-  rescue
-    false
   end
 end
