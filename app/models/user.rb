@@ -1,12 +1,13 @@
 class User < ActiveRecord::Base
+  include LastFM
+
   devise :database_authenticatable, :rememberable, :trackable,
          :omniauthable, omniauth_providers: [:lastfm]
 
   has_many :favorites
   has_many :artists, through: :favorites
 
-  include HTTParty
-  base_uri 'http://ws.audioscrobbler.com/2.0/'
+  validates :username, uniqueness: true
 
   def update_info
     user_info = get_user_info
@@ -57,40 +58,5 @@ class User < ActiveRecord::Base
       u.playcount = auth.extra.raw_info.playcount
     end
     user
-  end
-
-  private
-
-  def email_required?
-    false
-  end
-
-  def get_user_info
-    result = lastfm_query(
-      method: 'user.getinfo',
-      user: username
-    )
-    result ? result['user'] : false
-  end
-
-  def get_top_artists(timeframe, number)
-    result = lastfm_query(
-      method: 'user.gettopartists',
-      user: username,
-      period: timeframe,
-      limit: number
-    )
-    result ? result['topartists']['artist'] : false
-  end
-
-  def lastfm_query(params)
-    params = params.merge(
-      api_key: ENV['LASTFM_KEY'],
-      format: 'json'
-    )
-    response = self.class.get('', query: params)
-    response.keys.include?('error') ? false : response
-  rescue
-    false
   end
 end

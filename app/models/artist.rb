@@ -1,13 +1,12 @@
 class Artist < ActiveRecord::Base
+  include Discogs
+
   has_many :users, through: :favorites
   has_many :records
   has_many :songs, through: :records
 
   validates :name, presence: true
   validates :name, allow_nil: true, uniqueness: { case_sensitive: false }
-
-  include HTTParty
-  base_uri 'https://api.discogs.com/'
 
   attr_writer :discogs_id
 
@@ -98,47 +97,5 @@ class Artist < ActiveRecord::Base
       record.update_songs
       reload
     end
-  end
-
-  def get_discogs_id
-    response = discogs_query('/database/search', q: name)
-    if response
-      response['results'].each do |result|
-        type = result['type']
-        id = result ['id']
-        return id if type == 'artist'
-      end
-    end
-    nil
-  end
-
-  def get_discogs_image
-    response = discogs_query('/artists/' + discogs_id.to_s)
-    if response
-      images = response['images']
-      return images.first['uri'] if images
-    end
-    nil
-  end
-
-  def get_artist_records_page(page_num)
-    discogs_query(
-      '/artists/' + discogs_id.to_s + '/releases',
-      sort: 'year',
-      sort_order: 'asc',
-      page: page_num,
-      per_page: 100
-    )
-  rescue
-    false
-  end
-
-  def discogs_query(path, params = {})
-    params = params.merge(token: ENV['DISCOGS_TOKEN'])
-    response = self.class.get(path, query: params)
-    success = response.empty? || response['message'] != 'The requested resource was not found.'
-    success ? response : false
-  rescue
-    false
   end
 end

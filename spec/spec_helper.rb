@@ -29,4 +29,8 @@ RSpec.configure do |config|
   config.before :suite do
     FAVORITES_NUM = 5
   end
+
+  config.before :each do
+    User.create(username: 'last.fm')
+  end
 end
