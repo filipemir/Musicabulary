@@ -15,7 +15,7 @@
     <div class="main">
 
       <% flash.each do |key, msg| %>
-        <%= content_tag :div, msg, id: key %>
+        <%= content_tag :div, msg, id: key, class: "flash" %>
       <% end %>
 
       <div class="content">
