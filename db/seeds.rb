@@ -20,7 +20,7 @@ def create_song(artist, record, song_info)
       song.lyrics = song.scrape_song_lyrics
       # unless song.lyrics.nil? && Rails.env == "development"
       #   CSV.open(filepath, 'wb') { |file| file << [song.lyrics] }
-      # end
+      # endZ
     end
 
     song.save
