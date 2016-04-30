@@ -9,6 +9,7 @@ def create_song(artist, record, song_info)
     clean_title = song.clean(song.title)
     filepath = "./db/lyrics_archive/#{clean_artist}-#{clean_title}.csv"
 
+
     # if Rails.env == "development" && File.file?(filepath)
     #   puts filepath
     #   song.lyrics = CSV.read(filepath).flatten[0]
