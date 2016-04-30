@@ -8,16 +8,18 @@ def create_song(artist, record, song_info)
     clean_artist = song.clean(artist.name)
     clean_title = song.clean(song.title)
     filepath = "./db/lyrics_archive/#{clean_artist}-#{clean_title}.csv"
-    if File.file?(filepath)
-      puts filepath
-      song.lyrics = CSV.read(filepath).flatten[0]
-      song.save
-    end
+
+    # if Rails.env == "development" && File.file?(filepath)
+    #   puts filepath
+    #   song.lyrics = CSV.read(filepath).flatten[0]
+    #   song.save
+    # end
+
     if song.lyrics.nil? || song.lyrics == ''
       song.lyrics = song.scrape_song_lyrics
-      unless song.lyrics.nil?
-        CSV.open(filepath, 'wb') { |file| file << [song.lyrics] }
-      end
+      # unless song.lyrics.nil? && Rails.env == "development"
+      #   CSV.open(filepath, 'wb') { |file| file << [song.lyrics] }
+      # end
     end
 
     song.save
