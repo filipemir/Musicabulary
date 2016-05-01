@@ -18,7 +18,7 @@ var height = parseInt(d3.select(".bubble-chart").style("height")) - margins * 2;
 var canvasWidth = width;
 var canvasHeight = height;
 
-var baselineHeight = height / 2 + margins;
+var baselineHeight = 8 * diameter;
 
 // Initialize data array
 dataset = []
@@ -38,7 +38,19 @@ var xScale = d3.scale.linear()
 svg.append("line")
   .attr("x1", xScale.range()[0])
   .attr("x2", xScale.range()[1])
-  .attr("transform", "translate(0," + baselineHeight + ")");
+  .attr("transform", "translate(0," + baselineHeight + ")")
+  .classed("baseline", true);
+
+var dividerNum = 6;
+for (var i = 1; i < dividerNum; i++) {
+  var x = xScale.range()[1] * i / dividerNum
+  svg.append("line")
+    .attr("x1", x)
+    .attr("x2", x)
+    .attr("y1", baselineHeight - 250)
+    .attr("y2", baselineHeight + 200)
+    .classed("divider", true)
+  };
 
 // Quadtree to manage data conflicts
 var quadtree = d3.geom.quadtree()

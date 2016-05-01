@@ -1,27 +1,33 @@
 @import 'application';
 
-svg {
+.top-artists {
+  position: relative;
   width: 100%;
-  height: 100%;
-  line {
-    stroke-width: 3;
-    stroke: $orange;
-  }
+  height: 700px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .bubble-chart {
   margin: 0 auto;
   height: 100%;
   flex: 1;
-}
 
-.top-artists {
-  position: relative;
   width: 100%;
-  height: 650px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
+
+  .baseline {
+    stroke-width: 3;
+    stroke: $orange;
+  }
+
+  .divider {
+    stroke-width: 1;
+    stroke: black;
+    stroke-dasharray: 1 2;
+    stroke-linecap: 'round';
+  }
 }
 
 .artist {
