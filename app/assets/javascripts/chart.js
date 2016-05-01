@@ -4,11 +4,11 @@ var svg = d3.select("svg.bubble-chart");
 var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
-var radius = 20;
+var radius = 22;
 var padding = 4;
 var margins = 10 + radius;
 var diameter = 2 * radius;
-var popupWidth = 270;
+var popupWidth = 190;
 
 var digitsRegex = /\d+/;
 var prettyInt = d3.format(",");
@@ -111,7 +111,7 @@ var attachPopUp = function(d, i) {
   var artistID = digitsRegex.exec(bubble.attr("id"))[0];
   var popup = d3.select('#popup-' + artistID);
   bubble.on("mouseover", function() {
-    var x = parseFloat(d3.select(this).style("left")) - popupWidth/2 + radius;
+    var x = parseFloat(d3.select(this).style("left")) - popupWidth / 2 + radius;
     var y = parseFloat(d3.select(this).style("top")) + diameter + padding + 10;
     popup.classed("hidden", false);
     popup.style("left", x + "px")

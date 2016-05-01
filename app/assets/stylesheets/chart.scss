@@ -30,8 +30,8 @@ svg {
 
 .artist-bubble {
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   border: solid 2px black;
   position: absolute;
@@ -46,18 +46,26 @@ svg {
 }
 
 .popup {
-  font: 'Open Sans';
-  color: white;
   position: absolute;
+  box-sizing: border-box;
+  font-family: $body-font;
+  font-size: 14px;
+  text-align: left;
+  color: white;
   height: auto;
   padding: 10px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.15);
-  text-align: left;
   background-color: $orange;
   border-radius: 3px;
-  width: 250px;
+  width: 190px;
   margin-left: 0;
   margin-top: 0;
+  .name {
+    font-weight: 700;
+  }
+  p {
+    margin: 0;
+  }
 }
 
 .popup:after {
