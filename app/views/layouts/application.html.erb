@@ -15,7 +15,7 @@
     <div class="main">
 
       <% flash.each do |key, msg| %>
-        <%= content_tag :div, msg, id: key %>
+        <%= content_tag :div, msg, id: key, class: "flash" %>
       <% end %>
 
       <div class="content">
@@ -32,6 +32,7 @@
   </body>
 
 
-  <%= javascript_include_tag "application", params[:controller]%>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "chart" %>
 
 </html>

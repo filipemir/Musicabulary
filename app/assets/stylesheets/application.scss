@@ -135,3 +135,23 @@ h1, h2, h3, h4, h5, h6 {
 .hidden {
   display: none;
 }
+
+.flash {
+  width: 80%;
+  padding: 7px;
+  border-left-width: 5px;
+  border-radius: 3px;
+  margin: 10px auto;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+
+  border: 1px solid $orange;
+  background-color: rgba($orange, 0.1); /*Same color as the left border with reduced alpha to 0.1*/
+  color: $orange;
+
+  &#error {
+  border: 1px solid #d9534f;
+  background-color: rgba(217, 83, 79, 0.1); /*Same color as the left border with reduced alpha to 0.1*/
+  color: #d9534f;
+  }
+}
