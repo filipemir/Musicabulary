@@ -11,13 +11,17 @@ svg {
 
 .bubble-chart {
   margin: 0 auto;
-  background-color: red;
   height: 100%;
+  flex: 1;
 }
 
 .top-artists {
   position: relative;
-  min-height: 100%;
+  width: 100%;
+  min-height: 700px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .artist {
@@ -35,8 +39,6 @@ svg {
   background-position: center center;
   background-size: cover;
   background-color: $beige-darkest;
-  font: 'Open Sans';
-  font-size: 5px;
 
   &:hover {
     border-color: $orange;
@@ -44,6 +46,7 @@ svg {
 }
 
 .popup {
+  font: 'Open Sans';
   color: white;
   position: absolute;
   height: auto;

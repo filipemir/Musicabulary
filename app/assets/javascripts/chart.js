@@ -4,17 +4,17 @@ var svg = d3.select("svg.bubble-chart");
 var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
-var margins = 200;
 var radius = 20;
 var padding = 4;
+var margins = 10 + radius;
 var diameter = 2 * radius;
 var popupWidth = 270;
 
 var digitsRegex = /\d+/;
 var prettyInt = d3.format(",");
 
-var width = parseInt(d3.select(".top-artists").style("width")) - margins * 2;
-var height = parseInt(d3.select(".top-artists").style("width")) - margins * 2;;
+var width = parseInt(d3.select(".bubble-chart").style("width")) - margins * 2;
+var height = parseInt(d3.select(".bubble-chart").style("height")) - margins * 2;
 var canvasWidth = width;
 var canvasHeight = height;
 
@@ -33,11 +33,11 @@ var max = 1001;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
-  .range([margins, width + margins]);
-debugger;
+  .range([margins, width]);
+
 svg.append("line")
-  .attr("x1", xScale.range()[0] + radius)
-  .attr("x2", xScale.range()[1] + radius )
+  .attr("x1", xScale.range()[0])
+  .attr("x2", xScale.range()[1])
   .attr("transform", "translate(0," + baselineHeight + ")");
 
 // Quadtree to manage data conflicts
@@ -165,7 +165,7 @@ function rescale(newValue) {
 
 function placeBubble(d, i) {
     bubble = d3.select(this);
-    var xScaled = xScale(d.x) + 'px';
+    var xScaled = xScale(d.x) - radius + 'px';
     bubble.transition().delay(100 * i).duration(100)
       .style("left", xScaled)
       .style("top", calculateOffset());
