@@ -28,8 +28,8 @@ while(i--)dataset.push({
   startY: 0
 });
 
-var min = 1000;
-var max = 1001;
+var min = 720;
+var max = 780;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
@@ -50,6 +50,13 @@ for (var i = 1; i < dividerNum; i++) {
     .attr("y1", baselineHeight - 250)
     .attr("y2", baselineHeight + 200)
     .classed("divider", true)
+
+  var text = '1,000' + (i === 1 ? ' words' : '')
+  svg.append("text")
+    .classed("divider-num", true)
+    .attr("x", x - 23)
+    .attr("y", baselineHeight - 255)
+    .text(text)
   };
 
 // Quadtree to manage data conflicts
