@@ -18,7 +18,7 @@ var height = parseInt(d3.select(".bubble-chart").style("height")) - margins * 2;
 var canvasWidth = width;
 var canvasHeight = height;
 
-var baselineHeight = height / 2;
+var baselineHeight = height / 2 + margins;
 
 // Initialize data array
 dataset = []
