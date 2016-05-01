@@ -9,28 +9,21 @@
   </head>
 
   <body>
-
     <%= render 'layouts/topbar' %>
 
     <div class="main">
 
-      <% flash.each do |key, msg| %>
-        <%= content_tag :div, msg, id: key, class: "flash" %>
-      <% end %>
-
       <div class="content">
+        <% flash.each do |key, msg| %>
+          <%= content_tag :div, msg, id: key, class: "flash" %>
+        <% end %>
 
         <%= yield %>
-
       </div>
 
     </div>
-
-  </div>
-  <%= render 'layouts/footer' %>
-
+    <%= render 'layouts/footer' %>
   </body>
-
 
   <%= javascript_include_tag "application" %>
   <%= javascript_include_tag "chart" %>

@@ -48,19 +48,24 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 0;
   position: relative;
   top: 100px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .content {
-  padding: 10px 40px;
-}
-
-.text {
   max-width: 1000px;
+  width: 100%;
+  padding: 20px 40px 10px 0px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   margin: 0 auto;
   font-size: 16px;
 
   .title {
     text-align: center;
+    text-transform: uppercase;
   }
 }
 
@@ -82,26 +87,27 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .button {
-  width: 100px;
+  width: 160px;
   background: transparent; 
   padding: 15px 0;
   overflow: hidden;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
   position: fixed;
   top: 18px;
   right: 40px;
   transition: background-color 0.1s;
   background-position: center center;
-}
 
-.sign-in:hover {
-  background-color: #B90000;
-  color: transparent;
-  border-color: #B90000;
-  background-image: url(http://static-web.last.fm/static/images/footer_logo.ddcfd65712a6.png);
-  background-repeat: no-repeat;
-  background-position: center center;
+  &.sign-in:hover {
+    background-color: #B90000;
+    color: transparent;
+    border-color: #B90000;
+    background-image: url(http://static-web.last.fm/static/images/footer_logo.ddcfd65712a6.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
 }
 
 .footer {
@@ -131,7 +137,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .flash {
-  width: 80%;
+  width: 100%;
   padding: 7px;
   border-left-width: 5px;
   border-radius: 3px;
@@ -140,12 +146,11 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 16px;
 
   border: 1px solid $orange;
-  background-color: rgba($orange, 0.1); /*Same color as the left border with reduced alpha to 0.1*/
+  background-color: rgba($orange, 0.1);
   color: $orange;
 
   &#error {
-  border: 1px solid #d9534f;
-  background-color: rgba(217, 83, 79, 0.1); /*Same color as the left border with reduced alpha to 0.1*/
-  color: #d9534f;
+    border: 1px solid #d9534f;
+    background-color: rgba(217, 83, 79, 0.1);
   }
 }

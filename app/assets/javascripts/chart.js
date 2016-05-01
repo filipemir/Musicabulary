@@ -1,32 +1,31 @@
 // Adapted from Amelia Bellamy-Royds' code here: http://fiddle.jshell.net/6cW9u/8/
-var svg = d3.select("svg.bubble-chart");
 var chart = d3.select("div.top-artists")
+var svg = d3.select("svg.bubble-chart");
 var bubbles = d3.selectAll("div.artist-bubble")
 
 // Set spatial variables
-var margins = 100;
-var padding = 4;
 var radius = 20;
+var padding = 4;
+var margins = 10 + radius;
 var diameter = 2 * radius;
 var popupWidth = 270;
 
 var digitsRegex = /\d+/;
 var prettyInt = d3.format(",");
 
-var width = window.getComputedStyle(svg[0][0])["width"];
-width = digitsRegex.exec(width)[0];
-height = 0.3 * width;
-var canvasWidth = width - 2 * margins;
-var canvasHeight = height - 2 * margins;
+var width = parseInt(d3.select(".bubble-chart").style("width")) - margins * 2;
+var height = parseInt(d3.select(".bubble-chart").style("height")) - margins * 2;
+var canvasWidth = width;
+var canvasHeight = height;
 
-var baselineHeight = height + margins;
+var baselineHeight = height / 2 + margins;
 
 // Initialize data array
 dataset = []
 var N = bubbles[0].length, i = N;
 while(i--)dataset.push({ 
   startX: margins - radius + i * (canvasWidth / (N - 1)),
-  startY: margins / 2
+  startY: 0
 });
 
 var min = 1000;
@@ -34,11 +33,11 @@ var max = 1001;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
-  .range([margins - radius, width - margins - radius]);
+  .range([margins, width]);
 
 svg.append("line")
-  .attr("x1", xScale.range()[0] + radius)
-  .attr("x2", xScale.range()[1] + radius )
+  .attr("x1", xScale.range()[0])
+  .attr("x2", xScale.range()[1])
   .attr("transform", "translate(0," + baselineHeight + ")");
 
 // Quadtree to manage data conflicts
@@ -166,7 +165,7 @@ function rescale(newValue) {
 
 function placeBubble(d, i) {
     bubble = d3.select(this);
-    var xScaled = xScale(d.x) + 'px';
+    var xScaled = xScale(d.x) - radius + 'px';
     bubble.transition().delay(100 * i).duration(100)
       .style("left", xScaled)
       .style("top", calculateOffset());
@@ -193,3 +192,32 @@ bubbles.data(dataset)
   .each(setInitialPosition)
   .each(attachPopUp)
   .each(setWordiness)
+
+
+// function resize() {
+//     var width = parseInt(d3.select("#graph").style("width")) - margin * 2;
+//     var height = parseInt(d3.select("#graph").style("height")) - margin * 2;
+
+//     /* Update the range of the scale with new width/height */
+//     xScale.range([0, width]).nice(d3.time.year);
+//     yScale.range([height, 0]).nice();
+
+//      Update the axis with the new scale 
+//     graph.select('.x.axis')
+//       .attr("transform", "translate(0," + height + ")")
+//       .call(xAxis);
+
+//     graph.select('.y.axis')
+//       .call(yAxis);
+
+//     /* Force D3 to recalculate and update the line */
+//     graph.selectAll('.line')
+//       .attr("d", line);
+//   }
+
+//   d3.select(window).on('resize', resize); 
+
+//   resize();
+// });
+
+
