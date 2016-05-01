@@ -54,22 +54,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .content {
+  max-width: 1000px;
+  width: 100%;
   padding: 10px 40px;
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.text {
-  max-width: 1000px;
   margin: 0 auto;
   font-size: 16px;
 
   .title {
     text-align: center;
   }
-
-  padding-bottom: 40px;
 }
 
 #logo {
@@ -121,7 +117,6 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
   height: $footer-height;
   background-position: 0 -500px;
-
 }
 
 .clearfix:before,
@@ -141,7 +136,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .flash {
-  width: 80%;
+  width: 100%;
   padding: 7px;
   border-left-width: 5px;
   border-radius: 3px;
@@ -150,12 +145,11 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 16px;
 
   border: 1px solid $orange;
-  background-color: rgba($orange, 0.1); /*Same color as the left border with reduced alpha to 0.1*/
+  background-color: rgba($orange, 0.1);
   color: $orange;
 
   &#error {
-  border: 1px solid #d9534f;
-  background-color: rgba(217, 83, 79, 0.1); /*Same color as the left border with reduced alpha to 0.1*/
-  color: #d9534f;
+    border: 1px solid #d9534f;
+    background-color: rgba(217, 83, 79, 0.1);
   }
 }
