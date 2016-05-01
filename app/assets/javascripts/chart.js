@@ -11,7 +11,7 @@ var diameter = 2 * radius;
 var popupWidth = 190;
 
 var digitsRegex = /\d+/;
-var prettyInt = d3.format(",");
+var prettyInt = d3.format(",.0f");
 
 var width = parseInt(d3.select(".bubble-chart").style("width")) - margins * 2;
 var height = parseInt(d3.select(".bubble-chart").style("height")) - margins * 2;
@@ -28,8 +28,8 @@ while(i--)dataset.push({
   startY: 0
 });
 
-var min = 720;
-var max = 780;
+var min = 600;
+var max = 1200;
 
 var xScale = d3.scale.linear()
   .domain([min, max])
@@ -43,21 +43,23 @@ svg.append("line")
 
 var dividerNum = 6;
 for (var i = 1; i < dividerNum; i++) {
-  var x = xScale.range()[1] * i / dividerNum
+  var x = xScale.domain()[0] + (max - min) * i / dividerNum;
+  var scaledX = xScale(x);
   svg.append("line")
-    .attr("x1", x)
-    .attr("x2", x)
+    .attr("x1", scaledX)
+    .attr("x2", scaledX)
     .attr("y1", baselineHeight - 250)
     .attr("y2", baselineHeight + 200)
-    .classed("divider", true)
+    .classed("divider", true);
 
-  var text = '1,000' + (i === 1 ? ' words' : '')
+  var text = prettyInt(x) + (i === 1 ? ' words' : '')
+  var pxOffset = prettyInt(x).length * 4;
   svg.append("text")
     .classed("divider-num", true)
-    .attr("x", x - 23)
+    .attr("x", scaledX - pxOffset)
     .attr("y", baselineHeight - 255)
-    .text(text)
-  };
+    .text(text);
+};
 
 // Quadtree to manage data conflicts
 var quadtree = d3.geom.quadtree()
