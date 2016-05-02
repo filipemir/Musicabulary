@@ -52,7 +52,7 @@ for (var i = 1; i < dividerNum; i++) {
     .attr("y2", baselineHeight + 200)
     .classed("divider", true);
 
-  var text = prettyInt(x) + (i === 1 ? ' words' : '')
+  var text = prettyInt(x)
   var pxOffset = prettyInt(x).length * 4;
   svg.append("text")
     .classed("divider-num", true)
@@ -181,18 +181,36 @@ function rescale(newValue) {
   loaded = bubbles.filter(function(d, i) {
     return !d3.select(this).classed('loading');
   });
+  scaleNumbers = d3.selectAll('.divider-num');
+  scaleNumbers.each(updateScaleNumber)
   loaded.each(placeBubble);
 };
 
+function updateScaleNumber(d, i) {
+  var scaleNumber = d3.select(this);
+  var oldX = parseInt(scaleNumber.text().replace(/,/, ''));
+  var x = xScale.domain()[0] + (max - min) * (i + 1) / dividerNum;
+  var scaledX = xScale(x);
+  var roundedX = Math.round(x);
+  scaleNumber.transition().duration(500)
+    .tween(this.textContent, function() {
+      var i = d3.interpolate(oldX, roundedX);
+      return function(t) {
+        var intermediate = Math.round(i(t));
+        this.textContent = prettyInt(intermediate);
+      };
+    });
+};
+
 function placeBubble(d, i) {
-    bubble = d3.select(this);
-    var xScaled = xScale(d.x) - radius + 'px';
-    bubble.transition().delay(100 * i).duration(100)
-      .style("left", xScaled)
-      .style("top", calculateOffset());
-    bubble.classed("loading", false);
-    quadroot.add(d);
-    updatePopup(bubble, d.x);
+  var bubble = d3.select(this);
+  var xScaled = xScale(d.x) - radius + 'px';
+  bubble.transition().delay(100 * i).duration(100)
+    .style("left", xScaled)
+    .style("top", calculateOffset());
+  bubble.classed("loading", false);
+  quadroot.add(d);
+  updatePopup(bubble, d.x);
 };
 
 var updatePopup = function(bubble, wordiness, total_words) {
