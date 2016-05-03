@@ -3,7 +3,7 @@
 ![Coverage Status](https://coveralls.io/repos/filipemir/argot/badge.png)
 
 # Musicabulary
-Musicabulary (previously known as Argot, hence the repo name) is a webapp designed to help last.fm users take a peek at the lyrical diversity of their favorite musicians. I created it during a two-week period as my capstone project for Launch Academy. See it live [here](http://musicabulary.herokuapp.com/).
+Musicabulary is a webapp designed to help last.fm users take a peek at the lyrical diversity of their favorite musicians. I created it during a two-week period as my capstone project for Launch Academy. See it live [here](http://musicabulary.herokuapp.com/).
 
 ### Key Features
 * last.fm login implemented using OmniAuth
