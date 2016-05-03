@@ -12,10 +12,18 @@ Musicabulary is a webapp designed to help last.fm users take a peek at the lyric
 * Charts results using d3.js
 
 ### Deploying Musicabulary
-Running Musicabulary on your local machine couldn't be easier. Just clone the repo and do the following:
+To run Musicabulary on your local machine clone the repo and do the following:
 * `bundle install`
 * `bundle exec rake db:setup`
-* `rails s`
+
+You'll need to add the last.fm and discogs APIs keys to your environmental variables. First, create new accounts [here](http://www.last.fm/api/account/create) and [here](https://www.discogs.com/settings/developers). Then create a `.env` file in your root directory and add your values as follows:
+```
+LASTFM_KEY=<your last.fm key>
+LASTFM_SECRET=<your last.fm secret>
+DISCOGS_TOKEN=<your discogs token>
+``` 
+
+Once you have done that you should be all set. Run `rails s`
 
 Note that running `bundle exec rake db:setup` sets off `seeds.rb`, which seeds the database with the songs for around 200 artists. Since each song is a different HTTP request, setting up the database can take quite some time (I've seen it run over an hour). If you want to speed up the process for subsequent runs, uncomment the commented-out lines in the `seeds.rb` file before you run it the first time. This will tell the seeder file to store each retrieved lyric in a CSV file in `db/lyrics_archive`. In addition, it directs the seeder file to check prior to scraping each song lyric if a CSV file for the respective song is present locally. If it is, the HTTP request will be skipped, which greatly increases loading speeds. 
 
