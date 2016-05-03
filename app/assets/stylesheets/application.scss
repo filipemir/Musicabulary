@@ -22,6 +22,25 @@ $background: $light-gray;
 
 $footer-height: 150px;
 
+@mixin flexbox() {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+
+  -webkit-flex-direction: column;
+  -ms-flex-firection: column;
+  flex-direction: column;
+}
+
+@mixin flex($values) {
+  -webkit-box-flex: $values;
+  -moz-box-flex:  $values;
+  -webkit-flex:  $values;
+  -ms-flex:  $values;
+  flex:  $values;
+}
 
 html {
   height: 100%
@@ -47,21 +66,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .main {
+  @include flexbox();
   z-index: 0;
   position: relative;
   top: 100px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
 .content {
+  @include flexbox();
   max-width: 900px;
   width: 100%;
   padding: 20px 40px 10px 0px;
   height: 100%;
-  display: flex;
-  flex-direction: column;
   margin: 0 auto;
   font-size: 16px;
 

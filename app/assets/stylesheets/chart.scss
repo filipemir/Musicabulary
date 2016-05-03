@@ -1,19 +1,18 @@
 @import 'application';
 
 .top-artists {
+  @include flexbox();
+  @influde flex(1);
   position: relative;
   width: 110%;
   left: -5%;
   height: 700px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
 }
 
 .bubble-chart {
+  @include flex(1);
   margin: 0 auto;
   height: 100%;
-  flex: 1;
 
   width: 100%;
   height: 100%;
