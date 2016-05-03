@@ -192,7 +192,7 @@ function updateScaleNumber(d, i) {
   var x = xScale.domain()[0] + (max - min) * (i + 1) / dividerNum;
   var scaledX = xScale(x);
   var roundedX = Math.round(x);
-  scaleNumber.transition().duration(2000)
+  scaleNumber.transition().duration(4000)
     .tween(this.textContent, function() {
       var i = d3.interpolate(oldX, roundedX);
       return function(t) {
