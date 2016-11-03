@@ -12,11 +12,15 @@ Musicabulary is a webapp designed to help last.fm users take a peek at the lyric
 * Charts results using d3.js
 
 ### Deploying Musicabulary
-To run Musicabulary on your local machine clone the repo and do the following:
+To run Musicabulary on your local machine, you'll ned to have postgres. Easiest way to do that is to use http://postgresapp.com/
+
+Then clone the repo and do the following:
 * `bundle install`
 * `bundle exec rake db:setup`
 
-You'll need to add the last.fm and discogs APIs keys to your environmental variables. First, create new accounts [here](http://www.last.fm/api/account/create) and [here](https://www.discogs.com/settings/developers). Then create a `.env` file in your root directory and add your values as follows:
+You'll need to add the last.fm and discogs APIs keys to your environmental variables. First, create new accounts [here](http://www.last.fm/api/account/create) and [here](https://www.discogs.com/settings/developers). When you create you last.fm account you'll need to specify a Omniauth callback URL. The path you'll want to use is `/users/auth/lastfm/callback`, so if you were devleoping locally you'll want to enter `http://localhost:3000//users/auth/lastfm/callback`, replacing 3000 with whatever port you're using. 
+
+Once you've set up your API keys, create a `.env` file in your root directory and add your values as follows:
 ```
 LASTFM_KEY=<your last.fm key>
 LASTFM_SECRET=<your last.fm secret>
