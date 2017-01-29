@@ -116,7 +116,7 @@ RSpec.describe User do
       end
 
       it 'updates user image' do
-        expect(user.image).to eq('http://img2-ak.lst.fm/i/u/300x300/3986da997db38257ff069000e7467d32.png')
+        expect(user.image).to eq('https://lastfm-img2.akamaized.net/i/u/300x300/3986da997db38257ff069000e7467d32.png')
       end
 
       it 'updates user playcount' do
