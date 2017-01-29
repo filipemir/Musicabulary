@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .content {
   @include flexbox();
-  max-width: 900px;
+  max-width: 750px;
   width: 100%;
   padding: 20px 40px 10px 0px;
   height: 100%;
@@ -116,14 +116,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .banner, .topbar, .footer {
-  background-image: url(http://cdn.barnimages.com/wp-content/uploads/2015/09/2015-09-21-abigailkeenan-001-768x519@2x.jpg);
+  background-image: url(https://s3.amazonaws.com/musicabulary/records.jpg);
   background-size: cover;
   background-attachment: fixed;
 }
 
 .button {
   width: 160px;
-  background: transparent; 
+  background: transparent;
   padding: 15px 0;
   overflow: hidden;
   border: none;
