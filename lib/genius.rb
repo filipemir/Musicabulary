@@ -24,6 +24,7 @@ module Genius
     result.strip
     result == '' ? nil : result
   rescue
+    puts 'Genius scraping failed'
     nil
   end
 end

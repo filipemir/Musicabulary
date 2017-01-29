@@ -48,6 +48,7 @@ module Discogs
     success = response.empty? || response['message'] != 'The requested resource was not found.'
     success ? response : false
   rescue
+    puts 'Discogs request failed'
     false
   end
 end

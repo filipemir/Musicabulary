@@ -39,6 +39,7 @@ module LastFM
     response = self.class.get('', query: params)
     response.keys.include?('error') ? false : response
   rescue
+    puts 'lastfm request failed'
     false
   end
 end

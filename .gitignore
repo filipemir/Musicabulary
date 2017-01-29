@@ -15,3 +15,5 @@
 spec/cassettes
 /coverage
 db/lyrics_archive
+
+.DS_Store
