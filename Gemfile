@@ -48,6 +48,7 @@ gem 'omniauth-lastfm'
 gem 'd3-rails'
 gem 'pry'
 gem 'pry-rails'
+gem 'faraday'
 
 gem 'rails_12factor', group: :production
 gem 'puma', group: :production

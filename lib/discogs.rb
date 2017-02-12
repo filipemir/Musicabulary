@@ -1,7 +1,6 @@
 module Discogs
   def self.included(receiving_class)
-    receiving_class.send :include, HTTParty
-    receiving_class.send :base_uri, 'https://api.discogs.com/'
+    receiving_class.send :include, Faraday
   end
 
   def get_discogs_id
@@ -44,9 +43,9 @@ module Discogs
 
   def discogs_query(path, params = {})
     params = params.merge(token: ENV['DISCOGS_TOKEN'])
-    response = self.class.get(path, query: params)
-    success = response.empty? || response['message'] != 'The requested resource was not found.'
-    success ? response : false
+    response = Faraday.get('https://api.discogs.com' + path, params)
+    success = response.status == 200
+    success ? JSON.parse(response.body) : false
   rescue
     puts 'Discogs request failed'
     false
