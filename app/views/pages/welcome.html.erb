@@ -14,17 +14,16 @@
     <div class="main welcome">
 
       <div class="content">
-
-        <% flash.each do |key, msg| %>
-          <%= content_tag :div, msg, id: key, class: "flash" %>
-        <% end %>
-
         <div class="text">
+          <% flash.each do |key, msg| %>
+            <%= content_tag :div, msg, id: key, class: "flash" %>
+          <% end %>
+
           <span class="title"><h1>A Look At Lyrical Diversity In Music</h1></span>
 
-          <p>Musicabulary lets last.fm’s users explore how their favorite artists compare to each other when ranked by the wordiness of their lyrics. It approximates an artist’s lyrical diversity by counting the number of unique words within their first 3,500 words on record. This small sample allows it to make comparisons across artists, even when they have only released a handful of records.</p>
+          <p>Musicabulary is a web app that lets last.fm’s users explore how their favorite artists compare to each other when ranked by the wordiness of their lyrics. It was built as a pet project over a two-week period. It approximates an artist’s lyrical diversity by counting the number of unique words within their first 3,500 words on record. This small sample allows it to make comparisons across artists, even when they have only released a handful of records.</p>
 
-          <p>If you have a last.fm account, you should <%= link_to "sign in", user_lastfm_omniauth_authorize_path %> to take a look at your results. Unfortunately, if you don’t, you won’t be able to see your own personal chart quite yet. I’m working on that. In the meantime, you can take a peek at a sample below. Here’s what the chart looks like for last.fm’s top 50 artists:</p>
+          <p>This app was built as a pet project over a two-week period. It does not currently accept any new users, but you can see a sample of its functionality below. Here’s what your chart would look like if you were last.fm itself:</p>
         </div>
 
         <div class="top-artists">
