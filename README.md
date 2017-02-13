@@ -3,9 +3,9 @@
 ![Coverage Status](https://coveralls.io/repos/filipemir/argot/badge.png)
 
 # Musicabulary
-Musicabulary is a little website I created during a two week period as the capstone for my time at [Launch Academy](https://launchacademy.com/). Its stated purpose was to help [last.fm](http://www.last.fm/) users take a peek at the lyrical diversity of their favorite musicians. Its actual purpose was to give me a reason to dip my toes in [d3.js](https://d3js.org/).
+Musicabulary is a little web app I created during a two week period as the capstone for my time at [Launch Academy](https://launchacademy.com/). Its stated purpose was to help [last.fm](http://www.last.fm/) users take a peek at the lyrical diversity of their favorite musicians. Its actual purpose was to give me a reason to dip my toes in [d3.js](https://d3js.org/).
 
-I am not currently hosting the app anywhere as the database costs were higher than what I was willing to pay. However, this is what it looked like when it was live:
+See it live [here](http://musicabulary.herokuapp.com/users/auth/lastfm/callback).
 
 ![Overview](https://github.com/filipemir/Musicabulary/blob/master/app/assets/images/overview-gif.gif)
 
