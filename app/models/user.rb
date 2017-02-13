@@ -52,7 +52,11 @@ class User < ActiveRecord::Base
   end
 
   def self.from_omniauth(auth)
-    user = where(provider: auth.provider, username: auth.uid).first_or_create do |u|
+    # using #first_or_create instead of #first will make it so that new users
+    # will be added to the database. Usinf #first will make it so that only
+    # exisiting users will be logged in
+    # user = where(username: auth.uid).first_or_create do |u|
+    user = where(username: auth.uid).first do |u|
       u.password = Devise.friendly_token[0, 20]
       u.image = auth.info.image
       u.playcount = auth.extra.raw_info.playcount
