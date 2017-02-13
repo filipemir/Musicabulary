@@ -5,7 +5,7 @@
 # Musicabulary
 Musicabulary is a little web app I created during a two week period as the capstone for my time at [Launch Academy](https://launchacademy.com/). Its stated purpose was to help [last.fm](http://www.last.fm/) users take a peek at the lyrical diversity of their favorite musicians. Its actual purpose was to give me a reason to dip my toes in [d3.js](https://d3js.org/).
 
-See it live [here](http://musicabulary.herokuapp.com/users/auth/lastfm/callback).
+See it live [here](http://musicabulary.herokuapp.com).
 
 ![Overview](https://github.com/filipemir/Musicabulary/blob/master/app/assets/images/overview-gif.gif)
 
