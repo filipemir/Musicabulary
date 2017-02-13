@@ -19,11 +19,13 @@
           <%= content_tag :div, msg, id: key, class: "flash" %>
         <% end %>
 
-        <span class="title"><h1>A Look At Lyrical Diversity In Music</h1></span>
+        <div class="text">
+          <span class="title"><h1>A Look At Lyrical Diversity In Music</h1></span>
 
-        <p>Musicabulary lets last.fm’s users explore how their favorite artists compare to each other when ranked by the wordiness of their lyrics. It approximates an artist’s lyrical diversity by counting the number of unique words within their first 3,500 words on record. This small sample allows it to make comparisons across artists, even when they have only released a handful of records.</p>
+          <p>Musicabulary lets last.fm’s users explore how their favorite artists compare to each other when ranked by the wordiness of their lyrics. It approximates an artist’s lyrical diversity by counting the number of unique words within their first 3,500 words on record. This small sample allows it to make comparisons across artists, even when they have only released a handful of records.</p>
 
-        <p>If you have a last.fm account, you should <%= link_to "sign in", user_lastfm_omniauth_authorize_path %> to take a look at your results. Unfortunately, if you don’t, you won’t be able to see your own personal chart quite yet. I’m working on that. In the meantime, you can take a peek at a sample below. Here’s what the chart looks like for last.fm’s top 50 artists:</p>
+          <p>If you have a last.fm account, you should <%= link_to "sign in", user_lastfm_omniauth_authorize_path %> to take a look at your results. Unfortunately, if you don’t, you won’t be able to see your own personal chart quite yet. I’m working on that. In the meantime, you can take a peek at a sample below. Here’s what the chart looks like for last.fm’s top 50 artists:</p>
+        </div>
 
         <div class="top-artists">
           <span class="title">
@@ -33,15 +35,17 @@
           <%= render 'layouts/chart' %>
         </div>
 
-        <p>I don’t aim to suggest that this metric is a good proxy for lyricism or any other artistic quality really. The results are heavily influenced by genre and decade, among a lot of other variables: hip hop artists unsurprisingly tend to come out on top, while musicians from the 50s and 60s tend to rank close to the bottom. When I look at my own results, I find that Dylan (943 words) ranks below the average and is almost 400 words behind The Menzingers (1,315 words). If there is anyone out there interested in arguing that The Menzingers’ lyricism surpasses Dylan’s, I’d love to hear from you.</p>
+        <div class="text">
+          <p>I don’t aim to suggest that this metric is a good proxy for lyricism or any other artistic quality really. The results are heavily influenced by genre and decade, among a lot of other variables: hip hop artists unsurprisingly tend to come out on top, while musicians from the 50s and 60s tend to rank close to the bottom. When I look at my own results, I find that Dylan (943 words) ranks below the average and is almost 400 words behind The Menzingers (1,315 words). If there is anyone out there interested in arguing that The Menzingers’ lyricism surpasses Dylan’s, I’d love to hear from you.</p>
 
-        <p>Still, I find the results interesting as just another way of thinking about my favorite music. I figured others might as well. I built this project as a way to dip my toe into d3.js. Playing around with last.fm’s data was the icing on the cake. If you’re interested in more details about the implementation of the project, click <a href="https://github.com/filipemir/musicabulary">here</a> to take a look at the github repo.</p>
+          <p>Still, I find the results interesting as just another way of thinking about my favorite music. I figured others might as well. I built this project as a way to dip my toe into d3.js. Playing around with last.fm’s data was the icing on the cake. If you’re interested in more details about the implementation of the project, click <a href="https://github.com/filipemir/musicabulary">here</a> to take a look at the github repo.</p>
 
-        <p>This entire project is heavily indebted, both in substance and style, to the great work by <a href="http://www.mdaniels.com/">Matt Daniels</a> and the other folks at <a href="http://poly-graph.co/">Polygraph</a>. I had the initial idea for the project after reading Daniels’ post about <a href="http://poly-graph.co/vocabulary.html">The Largest Vocabulary in Hip Hop</a>. I tried to follow his methodology wherever possible, but using 35,000 words as he did made load times impossibly slow. It also excluded far too many more recent artists, especially those outside of hip hop. As a result of the smaller sample, I’m admittedly capturing a less representative picture of each artist’s lyrics, leaning heavily towards their earlier discography. This is not entirely fair towards older artists, whose first couple of records may not be the records they are most remembered for. Nonetheless, I find that the results are still, to steal Daniels’ words, “directionally interesting.” Hopefully you agree.</p>
+          <p>This entire project is heavily indebted, both in substance and style, to the great work by <a href="http://www.mdaniels.com/">Matt Daniels</a> and the other folks at <a href="http://poly-graph.co/">Polygraph</a>. I had the initial idea for the project after reading Daniels’ post about <a href="http://poly-graph.co/vocabulary.html">The Largest Vocabulary in Hip Hop</a>. I tried to follow his methodology wherever possible, but using 35,000 words as he did made load times impossibly slow. It also excluded far too many more recent artists, especially those outside of hip hop. As a result of the smaller sample, I’m admittedly capturing a less representative picture of each artist’s lyrics, leaning heavily towards their earlier discography. This is not entirely fair towards older artists, whose first couple of records may not be the records they are most remembered for. Nonetheless, I find that the results are still, to steal Daniels’ words, “directionally interesting.” Hopefully you agree.</p>
 
-        <p>If you find this even remotely interesting, do yourself a favor and take a look at Polygraph’s work on music. Here are a few links to get you started: <a href="http://poly-graph.co/timeless/">Using Spotify to Measure the Popularity of Older Music</a>, <a href="http://poly-graph.co/punk/">Using Playlist to Crowdsource the Definition of Punk</a>, and a fascinating look at <a href="http://poly-graph.co/billboard/">what Hip Hop has sounded like over the years</a>.</p>
+          <p>If you find this even remotely interesting, do yourself a favor and take a look at Polygraph’s work on music. Here are a few links to get you started: <a href="http://poly-graph.co/timeless/">Using Spotify to Measure the Popularity of Older Music</a>, <a href="http://poly-graph.co/punk/">Using Playlist to Crowdsource the Definition of Punk</a>, and a fascinating look at <a href="http://poly-graph.co/billboard/">what Hip Hop has sounded like over the years</a>.</p>
 
-        <p>I relied on code samples and tutorials by Amelia Bellamy-Royds. <a href="http://fiddle.jshell.net/6cW9u/8/">This fiddle</a> was particularly helpful. I’m also grateful to <a href="http://www.abigailkeenan.com/">Abigail Keenan</a> for the beautiful picture on my headers and footers. You should check out her work. </p>
+          <p>I relied on code samples and tutorials by Amelia Bellamy-Royds. <a href="http://fiddle.jshell.net/6cW9u/8/">This fiddle</a> was particularly helpful. I’m also grateful to <a href="http://www.abigailkeenan.com/">Abigail Keenan</a> for the beautiful picture on my headers and footers. You should check out her work. </p>
+        </div>
 
       </div>
 

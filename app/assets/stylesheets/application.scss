@@ -75,7 +75,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .content {
   @include flexbox();
-  max-width: 750px;
+  max-width: 900px;
   width: 100%;
   padding: 20px 40px 10px 0px;
   height: 100%;
@@ -90,6 +90,11 @@ h1, h2, h3, h4, h5, h6 {
     h2 {
       color: $orange;
     }
+  }
+
+  .text {
+    max-width: 700px;
+    margin: 0 auto;
   }
 
   a {
@@ -112,6 +117,7 @@ h1, h2, h3, h4, h5, h6 {
 
   &.small {
     font-size: 24px;
+    padding-top: 12px;
   }
 }
 
